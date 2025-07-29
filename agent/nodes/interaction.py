@@ -30,3 +30,5 @@ def generate_response(state: ConversationState) -> ConversationState:
     response = llm.invoke(messages_for_llm)
     state['messages'].append({"role": "agent", "content": response.content})
     return state
+
+#768963

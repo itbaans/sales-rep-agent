@@ -1,0 +1,16 @@
+{
+  "company_profile": {
+    "name": "DevCraft Solutions",
+    "services": [
+      "Custom web application development",
+      "Mobile app development (iOS/Android)",
+      "Cloud infrastructure and DevOps",
+      "Legacy system modernization"
+    ],
+    "tech_expertise": ["React", "Node.js", "Python", "AWS", "Docker"],
+    "team_size": 25,
+    "avg_project_value": "$75K",
+    "industries": ["Healthcare", "Fintech", "E-commerce"],
+    "certifications": ["AWS Partner", "SOC 2 Compliant"]
+  }
+}
