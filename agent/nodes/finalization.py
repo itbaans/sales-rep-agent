@@ -1,17 +1,17 @@
 from agent.state import ConversationState
+from agent.services.memory_manager import save_memory
 
-def update_conversation_summary(state: ConversationState) -> ConversationState:
-    print("---NODE: UPDATE_CONVERSATION_SUMMARY---")
-    # In a real app, you would use an LLM to summarize state['messages']
-    state['conversation_summary'] = "The lead expressed interest in our React and AWS services and asked for a case study."
-    return state
+def update_summary_and_insights(state: ConversationState) -> ConversationState:
+    print("---NODE: UPDATE_SUMMARY_AND_INSIGHTS---")
+    # In a real app, an LLM would generate these from state['messages']
+    state['conversation_summary'] = "Lead asked for a case study and was provided one. They seem interested in our HealthTech experience."
+    lead_insights = {"key_interest_expressed": "HealthTech case study"}
+    state['next_actions'] = ["Follow up with a detailed proposal.", "Schedule a demo."]
 
-def update_lead_insights(state: ConversationState) -> ConversationState:
-    print("---NODE: UPDATE_LEAD_INSIGHTS---")
-    state['lead_insights'] = {"key_interest": "React, AWS", "next_step": "Send HealthTech case study"}
-    return state
-
-def update_next_actions(state: ConversationState) -> ConversationState:
-    print("---NODE: UPDATE_NEXT_ACTIONS---")
-    state['next_actions'] = ["Email Jennifer Martinez the HealthTech case study.", "Schedule follow-up for next week."]
+    # Save to Long-Term Memory
+    save_memory(
+        state['lead_id'], 
+        state['conversation_summary'],
+        lead_insights
+    )
     return state

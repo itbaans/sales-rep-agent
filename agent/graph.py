@@ -1,47 +1,76 @@
+import json
 from langgraph.graph import StateGraph, END
 from agent.state import ConversationState
-from agent.nodes import data_retrieval, interaction, routing, tools, finalization
+from agent.nodes import data_retrieval, reasoning, finalization, interaction # <-- import interaction
+
+# --- Keep this router for the main reasoning loop ---
+def should_continue_reasoning(state: ConversationState) -> str:
+    # (This function remains unchanged)
+    # ...
+    last_thought_str = state.get('scratchpad', [])[-1]
+    action_json = json.loads(last_thought_str.split('```json\n')[-1].split('```')[0])
+    action = action_json.get('action', {})
+    if action.get("tool") == "generate_response":
+        final_answer = action.get("answer", "I'm not sure how to respond to that.")
+        state['messages'].append({"role": "agent", "content": final_answer})
+        print(f"\nAgent: {state['messages'][-1]['content']}\n")
+        return "end_turn"
+    elif action.get("tool") == "end_conversation":
+        return "end_conversation"
+    else:
+        return "execute_tool"
+
+# --- NEW ROUTER to handle the first turn ---
+def route_first_turn(state: ConversationState) -> str:
+    """
+    Checks if this is the first message.
+    If messages list is empty, it's the agent's first outreach.
+    Otherwise, it's an ongoing conversation.
+    """
+    if not state.get('messages'):
+        return "generate_opening_statement"
+    else:
+        return "think"
 
 def create_agent_graph() -> StateGraph:
-    """Builds the LangGraph agent."""
     workflow = StateGraph(ConversationState)
 
-    # Add nodes
-    workflow.add_node("retrieve_lead_data", data_retrieval.retrieve_lead_data)
-    workflow.add_node("retrieve_company_data", data_retrieval.retrieve_company_data)
-    workflow.add_node("generate_initial_prompt", interaction.generate_initial_prompt)
-    workflow.add_node("generate_response", interaction.generate_response)
-    workflow.add_node("retrieve_from_knowledge_base", tools.retrieve_from_knowledge_base)
-    workflow.add_node("update_conversation_summary", finalization.update_conversation_summary)
-    workflow.add_node("update_lead_insights", finalization.update_lead_insights)
-    workflow.add_node("update_next_actions", finalization.update_next_actions)
-    workflow.add_node("process_user_response", interaction.process_user_response)
+    # Add ALL nodes, including the new one
+    workflow.add_node("load_initial_data", data_retrieval.load_initial_data)
+    workflow.add_node("generate_opening_statement", interaction.generate_opening_statement)
+    workflow.add_node("think", reasoning.think)
+    workflow.add_node("execute_tool", reasoning.execute_tool)
+    workflow.add_node("finalize", finalization.update_summary_and_insights)
+    workflow.add_node("process_user_input", interaction.process_user_input)
 
-    # Set entry point and build edges
-    workflow.set_entry_point("retrieve_lead_data")
-    workflow.add_edge("retrieve_lead_data", "retrieve_company_data")
-    workflow.add_edge("retrieve_company_data", "generate_initial_prompt")
+    # Set Entry Point
+    workflow.set_entry_point("load_initial_data")
 
-    workflow.add_edge("generate_initial_prompt", "process_user_response")
-    
-    
-    # This is the main interactive part. After each agent response, we wait for user input.
-    # The router then decides where to go next.
+    # This new conditional edge is the key to solving the problem
     workflow.add_conditional_edges(
-        "process_user_response", # The source node will be where the conversation loop starts
-        routing.router,
+        "load_initial_data",
+        route_first_turn,
         {
-            "retrieve_from_knowledge_base": "retrieve_from_knowledge_base",
-            "generate_response": "generate_response",
-            "end_conversation": "update_conversation_summary",
+            "generate_opening_statement": "generate_opening_statement",
+            "think": "think", # If conversation exists, go straight to thinking
         }
     )
-    workflow.add_edge("retrieve_from_knowledge_base", "generate_response")
-    workflow.add_edge("generate_response", "process_user_response")
 
-    # Finalization flow
-    workflow.add_edge("update_conversation_summary", "update_lead_insights")
-    workflow.add_edge("update_lead_insights", "update_next_actions")
-    workflow.add_edge("update_next_actions", END)
+    # The agent's opening statement ends its turn. It must wait for a user response.
+    workflow.add_edge("generate_opening_statement", "process_user_input")
+
+    # The main reasoning loop remains the same
+    workflow.add_edge("process_user_input", "think")
+    workflow.add_conditional_edges(
+        "think",
+        should_continue_reasoning,
+        {
+            "execute_tool": "think",
+            "end_turn": "process_user_input",
+            "end_conversation": "finalize",
+        },
+    )
+    
+    workflow.add_edge("finalize", END)
 
     return workflow.compile()

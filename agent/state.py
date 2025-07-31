@@ -1,16 +1,21 @@
-from typing import List, Dict, TypedDict, Optional
+from typing import List, Dict, TypedDict, Optional, Any
 
 class ConversationState(TypedDict):
-    """Defines the state of the conversation."""
+    """Defines the complete state of the agent's 'working memory'."""
+    # Core identifiers
     lead_id: str
-    user_input: Optional[str]
+    user_input: Optional[str] # <-- Make explicitly Optional
+
+    # Context Components
+    long_term_memory: Dict[str, Any]
     messages: List[Dict]
-    
-    # Data loaded at the beginning
+    retrieved_docs: List[str]
+    scratchpad: List[str]
+
+    # Data loaded for the session
     lead_data: Dict
     company_data: Dict
-    
-    # State updated at the end
+
+    # Finalization outputs
     conversation_summary: Optional[str]
-    lead_insights: Optional[Dict]
     next_actions: Optional[List[str]]
