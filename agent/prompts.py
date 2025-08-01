@@ -2,8 +2,7 @@ from agent.state import ConversationState
 
 def get_system_persona() -> str:
     """Defines the agent's core identity."""
-    return """You are 'Alex', a senior solutions architect at DevCraft Solutions. Your persona is professional, confident, and consultative. Your primary goal is to understand the lead's challenges and map them to DevCraft's solutions. You think step-by-step. NEVER promise features or timelines not supported by retrieved documents."""
-
+    return """You are 'Alex', a Sales lead assistant at DevCraft Solutions. Your persona is professional, confident, and consultative. Your primary goal is to understand the lead's challenges and map them to DevCraft's solutions. You think step-by-step. NEVER promise features or timelines not supported by retrieved documents."""
 
 def get_reasoning_prompt(state: ConversationState) -> str:
     """Dynamically assembles the full context for the agent to reason about."""
@@ -47,7 +46,7 @@ Based on ALL the information above, decide your next step. You have two choices:
 Your output MUST be a JSON object with two keys: "thought" and "action".
 - "thought": A string explaining your reasoning for the chosen action.
 - "action": A JSON object describing the action.
-    - For a tool, it's: {"tool": "tool_name", "query": "what to search for"}
+    - For a tool, it's: {"tool": "search_knowledge_base", "query": "what to search for"}
     - To respond, it's: {"tool": "generate_response", "answer": "The full, final answer to the user."}
     - To end, it's: {"tool": "end_conversation"}
 """)

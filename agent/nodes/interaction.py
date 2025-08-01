@@ -1,26 +1,55 @@
 from agent.state import ConversationState
 from agent.services.llm_service import get_llm
-
+from agent.prompts import get_system_persona
 
 def generate_opening_statement(state: ConversationState) -> ConversationState:
     """
-    Generates the initial, agent-initiated message based on lead data and memory.
+    Generates the agent's opening message by inspecting lead data, company data,
+    and any long-term memory. Invokes Gemini LLM to decide tone and content
+    for either initial outreach or a follow-up.
     """
     print("---NODE: GENERATE_OPENING_STATEMENT---")
-    lead = state['lead_data']
-    ltm = state['long_term_memory']
-    
-    # Example of a slightly more dynamic opener
-    last_summary = ltm.get('last_interaction_summary', '')
-    
-    if "Initial contact" in last_summary or not last_summary:
-        prompt = f"""Hello {lead.get('name', 'there')}, this is Alex from DevCraft Solutions. I'm reaching out because I saw you're the {lead.get('role')} at {lead.get('company')} and noted your team's focus on projects involving {lead.get('tech_stack_preference', 'modern technologies')}. Given your work, I thought our expertise in legacy system modernization might be relevant. How are you currently approaching these challenges?"""
-    else:
-        # A follow-up prompt
-        prompt = f"""Hi {lead.get('name', 'there')}, it's Alex from DevCraft Solutions again. Just following up on our last conversation where we discussed: '{last_summary}'. Do you have any further questions I can help with today?"""
 
-    state['messages'].append({"role": "agent", "content": prompt})
-    print(f"\nAgent: {state['messages'][-1]['content']}\n")
+    # Retrieve data from state
+    lead = state.get('lead_data', {})
+    memory = state.get('long_term_memory', {})
+    company = state.get('company_data', {})
+
+    # Construct a clear instruction for the LLM
+    base_instruction = (
+        "Using the provided data, craft an opening statement. "
+        "Decide if it's an initial outreach or follow-up, reference past interaction if any. "
+        "Important: respond ONLY with the opening statement itself—do NOT include any lead-in text such as 'Okay, here's...' or additional commentary."
+    )
+
+    # Assemble context sections
+    company_section = f"## COMPANY DATA ##\n{company!r}"
+    lead_section = f"## LEAD DATA ##\n{lead!r}"
+    memory_section = f"## PAST MEMORY ##\n{memory!r}" if memory else "## PAST MEMORY ##\nNone"
+
+    # Build message list for Gemini LLM
+    prompt = [
+        f"##SYSTEM: {get_system_persona()}",
+        f"{base_instruction}\n{company_section}\n{lead_section}\n{memory_section}"
+    ]
+
+    # Initialize and invoke Gemini
+    llm = get_llm()
+    response = llm.invoke(prompt).content
+
+    # Safely extract generated text
+    try:
+        llm_output = response.generations[0][0].text.strip()
+    except Exception:
+        llm_output = str(response)
+
+    # Append the LLM's reply to conversation history
+    state.setdefault('messages', []).append({
+        'role': 'agent',
+        'content': llm_output
+    })
+
+    print(f"\nAgent: {llm_output}\n")
     return state
 
 
@@ -31,18 +60,3 @@ def process_user_input(state: ConversationState) -> ConversationState:
     state['messages'].append({"role": "user", "content": user_input})
     return state
 
-
-# def generate_response(state: ConversationState) -> ConversationState:
-#     print("---NODE: GENERATE_RESPONSE---")
-#     llm = get_llm()
-#     # You can build a more sophisticated prompt template here
-#     system_prompt = "You are a helpful sales assistant from DevCraft Solutions."
-    
-#     messages_for_llm = [SystemMessage(content=system_prompt)]
-#     for msg in state['messages']:
-#         if msg['role'] == 'user':
-#             messages_for_llm.append(HumanMessage(content=msg['content']))
-
-#     response = llm.invoke(messages_for_llm)
-#     state['messages'].append({"role": "agent", "content": response.content})
-#     return state

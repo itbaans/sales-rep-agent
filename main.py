@@ -21,5 +21,5 @@ def run_conversation():
 
 
 if __name__ == "__main__":
-    #run_conversation()
-    visualize_graph()
+    run_conversation()
+    #visualize_graph()

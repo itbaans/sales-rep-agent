@@ -7,10 +7,12 @@ from agent.services.knowledge_retriever import search_knowledge_base
 def think(state: ConversationState) -> ConversationState:
     print("---NODE: THINK---")
     prompt = get_reasoning_prompt(state)
+    #print(prompt)
     llm = get_llm()
     
     response_str = llm.invoke(prompt).content
     state['scratchpad'].append(f"LLM Reasoning Output:\n{response_str}")
+    print(response_str)
 
     # The LLM's JSON output is stored in the scratchpad for routing
     return state
@@ -33,6 +35,7 @@ def execute_tool(state: ConversationState) -> ConversationState:
     if tool == "search_knowledge_base":
         query = action.get("query", "")
         result = search_knowledge_base(query)
+        print(result)
         observation = f"Observation: Found the following information: {result}"
         state['retrieved_docs'].append(result) # Add to dedicated doc storage
     else:
