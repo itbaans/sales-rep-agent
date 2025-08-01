@@ -12,7 +12,10 @@ def generate_opening_statement(state: ConversationState) -> ConversationState:
 
     # Retrieve data from state
     lead = state.get('lead_data', {})
-    memory = state.get('long_term_memory', {})
+    memory = state['long_term_memory'].get('detailed_memory', '') if state.get('long_term_memory') else None
+    # If no memory exists, we set it to an empty string
+    if not memory:
+        memory = "No past interactions recorded."
     company = state.get('company_data', {})
 
     # Construct a clear instruction for the LLM

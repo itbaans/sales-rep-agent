@@ -13,6 +13,9 @@ def should_continue_reasoning(state: ConversationState) -> str:
         print(f"\nAgent: {state['messages'][-1]['content']}\n")
         return "end_turn"
     elif action.get("tool") == "end_conversation":
+        final_answer = action.get("answer", "I'm not sure how to respond to that.")
+        state['messages'].append({"role": "agent", "content": final_answer})
+        print(f"\nAgent: {state['messages'][-1]['content']}\n")
         return "end_conversation"
     else:
         return "execute_tool"

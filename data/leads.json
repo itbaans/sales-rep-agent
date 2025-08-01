@@ -6,10 +6,6 @@
     "decision_authority": "High - can approve up to $200K",
     "contact_preference": "Email, weekday mornings",
     "project_need": "Patient portal web application",
-    "budget_range": "$80K-120K",
-    "timeline": "8 months",
-    "tech_stack_preference": "React, AWS cloud",
-    "current_pain": "Legacy system integration challenges"
-
+    "budget_range": "$80K-120K"
   }
 }

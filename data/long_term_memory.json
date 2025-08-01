@@ -1,13 +1,25 @@
 {
   "lead_2024_0156": {
-    "key_pain_points": [
-      "legacy system integration"
-    ],
-    "key_interests": [
-        "React",
-        "AWS"
-    ],
-    "last_interaction_summary": "Initial contact made. Lead is VP of Eng.",
-    "sentiment_trend": "Neutral"
+    "summary": "The lead, VP of Engineering at HealthTech Innovations, is interested in custom web application development, particularly a patient portal web application. The lead inquired about DevCraft's experience in healthcare, and was provided a HealthTech case study demonstrating a 40% reduction in patient onboarding time. The lead will contact later. The lead also requested a reminder of the previous discussion.",
+    "detailed_memory": {
+      "key_pain_points_confirmed": [],
+      "solutions_of_interest": [
+        "Custom web application development",
+        "Patient portal web application"
+      ],
+      "budget_confirmed": null,
+      "timeline_confirmed": null,
+      "key_questions_asked_by_lead": [
+        "Tell me about your experience in healthcare"
+      ],
+      "relevant_docs_provided": [
+        "Our HealthTech case study shows a 40% reduction in patient onboarding time. This was provided to answer the lead's question about DevCraft's experience in the healthcare industry."
+      ],
+      "overall_sentiment": "Neutral",
+      "next_steps": [
+        "Lead will contact later"
+      ],
+      "miscellaneous_notes": "Lead is VP of Engineering at HealthTech Innovations and has a project need for a patient portal web application. Decision authority is high (up to $200K). Contact preference is email, weekday mornings. The conversation was brief and the lead ended it abruptly. The lead asked for a reminder of the previous discussion."
+    }
   }
 }
