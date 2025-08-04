@@ -9,3 +9,4 @@ def search_knowledge_base(query: str) -> str:
     if "healthcare" in query.lower():
         return "Our HealthTech case study shows a 40% reduction in patient onboarding time."
     return "No specific information found. We have expertise in React, AWS, and legacy system modernization."
+
