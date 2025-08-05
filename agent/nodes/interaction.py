@@ -57,7 +57,6 @@ def generate_opening_statement(state: ConversationState) -> ConversationState:
 
 
 def process_user_input(state: ConversationState) -> ConversationState:
-
     user_input = input("Your response: ")
     state['user_input'] = user_input
     state['messages'].append({"role": "user", "content": user_input})
