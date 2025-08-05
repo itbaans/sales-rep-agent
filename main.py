@@ -1,8 +1,7 @@
-# main.py
-
 import pprint
 from agent.graph import create_agent_graph
 from IPython.display import Image, display
+from vectorstores.create_knowledge_bases import initialize_vector_knowledge
 
 app = create_agent_graph()
 
@@ -21,5 +20,6 @@ def run_conversation():
 
 
 if __name__ == "__main__":
+    initialize_vector_knowledge()
     run_conversation()
     #visualize_graph()
