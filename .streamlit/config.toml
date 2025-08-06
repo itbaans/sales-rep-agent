@@ -1,0 +1,23 @@
+[global]
+developmentMode = false
+showWarningOnDirectExecution = false
+
+[server]
+headless = false
+enableCORS = false
+enableXsrfProtection = false
+maxUploadSize = 200
+
+[browser]
+gatherUsageStats = false
+
+[theme]
+primaryColor = "#1976d2"
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#f5f5f5"
+textColor = "#262730"
+font = "sans serif"
+
+[logger]
+level = "info"
+messageFormat = "%(asctime)s %(message)s"
