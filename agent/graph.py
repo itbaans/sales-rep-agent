@@ -1,19 +1,43 @@
 import json
 from langgraph.graph import StateGraph, END
 from agent.state import ConversationState
-from agent.nodes import data_retrieval, reasoning, finalization, interaction # <-- import interaction
+from agent.nodes import data_retrieval, reasoning, finalization, interaction
+from agent.services.turn_manager import TurnManager
 
 def should_continue_reasoning(state: ConversationState) -> str:
-    last_thought_str = state.get('scratchpad', [])[-1]
-    action_json = json.loads(last_thought_str.split('```json\n')[-1].split('```')[0])
-    action = action_json.get('action', {})
-    if action.get("tool") == "generate_response":
+    # Get reasoning from current turn actions
+    current_actions = state.get('current_turn_actions', [])
+    reasoning_actions = [action for action in current_actions if action['action_type'] == 'llm_reasoning']
+    
+    if not reasoning_actions:
+        return "execute_tool"  # No reasoning yet, continue
+    
+    last_reasoning = reasoning_actions[-1]['details']['reasoning_output']
+    
+    try:
+        action_json = json.loads(last_reasoning.split('```json\n')[-1].split('```')[0])
+        action = action_json.get('action', {})
+    except json.JSONDecodeError:
+        return "execute_tool"  # Continue if can't parse
+    
+    tool = action.get("tool")
+    
+    if tool == "generate_response":
         final_answer = action.get("answer", "I'm not sure how to respond to that.")
+        
+        # Finalize the turn before ending
+        TurnManager.finalize_turn(state, final_answer)
+        
         state['messages'].append({"role": "agent", "content": final_answer})
         print(f"\nAgent: {state['messages'][-1]['content']}\n")
         return "end_turn"
-    elif action.get("tool") == "end_conversation":
-        final_answer = action.get("answer", "I'm not sure how to respond to that.")
+        
+    elif tool == "end_conversation":
+        final_answer = action.get("answer", "Thank you for your time. Have a great day!")
+        
+        # Finalize the turn before ending conversation
+        TurnManager.finalize_turn(state, final_answer)
+        
         state['messages'].append({"role": "agent", "content": final_answer})
         print(f"\nAgent: {state['messages'][-1]['content']}\n")
         return "end_conversation"
@@ -24,7 +48,7 @@ def should_continue_reasoning(state: ConversationState) -> str:
 def create_agent_graph() -> StateGraph:
     workflow = StateGraph(ConversationState)
 
-    # Add ALL nodes, including the new one
+    # Add ALL nodes
     workflow.add_node("load_initial_data", data_retrieval.load_initial_data)
     workflow.add_node("generate_opening_statement", interaction.generate_opening_statement)
     workflow.add_node("think", reasoning.think)
@@ -35,15 +59,11 @@ def create_agent_graph() -> StateGraph:
     # Set Entry Point
     workflow.set_entry_point("load_initial_data")
 
-    # This new conditional edge is the key to solving the problem
-    workflow.add_edge(
-        "load_initial_data", "generate_opening_statement"
-    )
-
-    # The agent's opening statement ends its turn. It must wait for a user response.
+    # Flow edges
+    workflow.add_edge("load_initial_data", "generate_opening_statement")
     workflow.add_edge("generate_opening_statement", "process_user_input")
 
-    # The main reasoning loop remains the same
+    # Main reasoning loop
     workflow.add_edge("process_user_input", "think")
     workflow.add_conditional_edges(
         "think",

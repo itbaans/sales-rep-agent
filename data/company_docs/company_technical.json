@@ -1,0 +1,72 @@
+{
+  "Digital & Core Banking Transformation": {
+    "details": "Expertise in implementing Temenos Transact and Infinity platforms across major banks (e.g. Bank of Punjab, Invest Bank, Samba, JS Bank). Recognized as Temenos MEA Delivery Partner of the Year 2023.",
+    "industry_focus": ["Banking & Financial Services"],
+    "approx_certified_experts": 500,
+    "notes": "Over 125 bank implementations globally; some post-rollout support still undocumented",
+    "strength_level": "High"
+  },
+  "Cloud-native Banking Services": {
+    "details": "Co‑developed with PTCL a cloud-hosted core/digital banking stack in Pakistan; go-live in under 90 days for first customer.",
+    "industry_focus": ["Banking"],
+    "certification": null,
+    "notes": "Cloud provider unspecified; likely PTCL/dedicated infrastructure",
+    "strength_level": "Medium"
+  },
+  "AI, ML & NLP Solutions": {
+    "details": "Built 'Hami', AI-powered physician assistant app with chat-based clinical suggestion engine. Reports of initial UX bugs and scaling still ongoing.",
+    "industry_focus": ["Healthcare Tech", "AI"],
+    "approx_certified_experts": null,
+    "notes": "Python/Node.js/React stack; AI team reportedly ~20 data scientists",
+    "strength_level": "Growing"
+  },
+  "Data & Analytics / Data Warehousing": {
+    "details": "Projects for GCC banking clients to build credit-risk data warehouses; reduced latency from overnight to near real-time reports.",
+    "industry_focus": ["Banking", "Analytics"],
+    "tools_used": ["SQL Server DW", "Informatica?", "Tableau/Power BI"],
+    "notes": "Adoption sometimes partial; analytics layer inconsistent across users",
+    "strength_level": "Medium"
+  },
+  "Robotic Process Automation (RPA)": {
+    "details": "Implemented bots using Automation Anywhere to automate back office workflows in Allied Bank and others.",
+    "industry_focus": ["Banking", "BPO"],
+    "metrics": {"typical_duration_months": 3},
+    "notes": "ROI metrics generally internal only, automation scope sometimes limited",
+    "strength_level": "Medium"
+  },
+  "ERP Implementation & Integration": {
+    "details": "Delivered large Dynamics 365 ERP rollout (Outfitters, retail) integrating finance, retail ops, e‑commerce. Some modules delayed or phased.",
+    "industry_focus": ["Retail", "Manufacturing"],
+    "tools_used": ["Dynamics 365", "SQL Server", "Custom middleware"],
+    "notes": "Some integration delays reported; middleware architecture still unclear",
+    "strength_level": "Medium–High"
+  },
+  "Digital Portals & Mobile Apps": {
+    "details": "Built self-care portals for Gulf telecoms and logistics mobile apps (driver & dispatcher). Some prototypes paused due to low adoption.",
+    "industry_focus": ["Telecom", "Logistics"],
+    "tools_used": ["Angular, React Native, Flutter", "REST APIs", "Firebase/Oracle backend"],
+    "notes": "Varying user adoption; maintenance unclear",
+    "strength_level": "Developing"
+  },
+  "Emerging Tech Lab & IoT/Blockchain R&D": {
+    "details": "Studio 77 innovation space hosting AI/IoT/Blockchain experiments. Internal Proof-of-concepts on blockchain use cases and IoT telemetry.",
+    "industry_focus": ["IoT", "Blockchain"],
+    "tools_used": null,
+    "notes": "Labs exist but most POCs did not go commercial; ROI unclear",
+    "strength_level": "Low–Experimental"
+  },
+  "Managed Services & IT Infrastructure": {
+    "details": "Offers retainer-based support across cloud migrations, managed infrastructure, help desk and network services.",
+    "industry_focus": ["Enterprise IT", "Cloud"],
+    "tools_used": ["Azure, AWS, possibly Google Cloud"],
+    "notes": "Service tax at ~15–16%; internal SLAs vary; cloud provider often client-driven",
+    "strength_level": "Medium"
+  },
+  "DevOps, Agile Engineering Practices": {
+    "details": "Uses modern DevOps tools, CICD, agile frameworks, automated testing; supports cross-functional teams built in Studio 77 environment.",
+    "industry_focus": ["Enterprise Software"],
+    "tools_used": ["Git, Jenkins, Docker/K8s?", "JIRA/Agile boards"],
+    "notes": "Details vague; some complaints about poor project management practices internally",
+    "strength_level": "Medium"
+  }
+}

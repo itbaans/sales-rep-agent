@@ -1,0 +1,102 @@
+{
+  "Aga Khan University Hospital OR Management": {
+    "client": "Aga Khan University Hospital",
+    "industry": "Healthcare",
+    "location": "Karachi, Pakistan",
+    "year": 2023,
+    "description": "Tablet-based Operating Room scheduling and checklist system. Staff coordination dashboard, shift reporting, nurses' notifications. Implementation overlapped with existing legacy system, some integration gaps noted. User acceptance training delivered but full adoption not confirmed.",
+    "benefits": ["efficiency", "data accuracy"],
+    "metrics": null,
+    "tech_stack": "Android tablets, web dashboards (possibly Angular), backend Java/.NET unclear"
+  },
+  "Dynamics 365 ERP Rollout for Outfitters": {
+    "client": "Outfitters",
+    "industry": "Retail",
+    "location": "Pakistan",
+    "year": 2022,
+    "description": "End-to-end rollout of Microsoft Dynamics 365 ERP for retail, finance and e-commerce integration. Middleware connectors built in-house. 7‑month implementation; some modules went live earlier than planned. Internal delays due to vendor coordination issues mentioned.",
+    "benefits": ["timely decision making", "process unification", "reduced manual reporting"],
+    "metrics": null,
+    "tech_stack": "Dynamics 365, SQL Server, middleware (custom APIs), front-end UI unclear"
+  },
+  "Allied Bank RPA Automation": {
+    "client": "Allied Bank",
+    "industry": "Banking",
+    "location": "Pakistan",
+    "year": 2022,
+    "description": "Built bots using Automation Anywhere to automate account opening, password reset workflows, and basic customer service requests. Delivered within 3 months, but lacked detailed baseline metrics. Internal user feedback: fewer manual errors, though no ROI numbers made public.",
+    "benefits": ["operational efficiency", "reduced manual workload", "faster turnaround"],
+    "metrics": {"duration_months": 3},
+    "tech_stack": "Automation Anywhere, VB scripting, some API integration"
+  },
+  "Islamic Bank API Platform": {
+    "client": "Islamic Bank of Pakistan",
+    "industry": "Islamic Banking",
+    "location": "Pakistan",
+    "year": null,
+    "description": "Implemented API management platform to modernize old core banking backend, enabling mobile onboarding and third-party apps. Vague on exact architecture. Some concerns raised internally about latency and legacy-system constraints.",
+    "benefits": ["modern onboarding", "digital access"],
+    "metrics": null,
+    "tech_stack": ""
+  },
+  "Hami AI‑assistant Platform": {
+    "client": "Boston Health AI / Hami",
+    "industry": "Healthcare Tech",
+    "location": "Global",
+    "year": 2024,
+    "description": "Partnered to launch 'Hami', an AI-powered physician assistant mobile/web app. Includes chat-based recommendation engine, symptom triage, and physician availability suggestions. Initial user reception good but some bugs reported in early build.",
+    "benefits": ["patient engagement", "AI-driven triage", "physician intake assistance"],
+    "metrics": {"user_base_estimated": "tens of thousands"},
+    "tech_stack": "React Native (mobile), React web, Node.js backend, AI/ML (Python?), unclear cloud provider"
+  },
+  "Unnamed Gulf Telco Self‑Care Portal": {
+    "client": "Unnamed Gulf Telco",
+    "industry": "Telecom",
+    "location": "Middle East",
+    "year": 2023,
+    "description": "Launched mobile + web self‑care portal integrated with billing backend. Reduced support calls. Some post-launch stability issues reported initially; remedied in patch releases",
+    "benefits": ["reduced call‑center volumes", "customer empowerment"],
+    "metrics": {"launch_quick": true, "roi": "est positive"},
+    "tech_stack": "Angular frontend, Java/Spring backend, REST APIs, Oracle billing system integration"
+  },
+  "Manufacturing ERP Integration": {
+    "client": null,
+    "industry": "Manufacturing",
+    "location": "Pakistan",
+    "year": 2021,
+    "description": "Generic ERP integration project synchronizing inventory, finance, and supply modules. No client name, vague notes on phase cancellation midway. Possibly internal PoC.",
+    "benefits": [],
+    "metrics": null,
+    "tech_stack": "Possibly SAP/Fiori or custom .NET solution—details missing"
+  },
+  "Provincial Citizen Services Portal": {
+    "client": "Sindh Provincial Department",
+    "industry": "Government",
+    "location": "Sindh, Pakistan",
+    "year": 2020,
+    "description": "Online public services portal allowing citizens to request permits, file complaints, track application status. Description vague. No usage metrics. Some modules listed but UX feedback not recorded.",
+    "benefits": ["citizen engagement"],
+    "metrics": {"users_monthly": null},
+    "tech_stack": "PHP/LAMP or .NET unspecified, maybe MySQL, front-end basic HTML/CSS"
+  },
+  "Data Warehouse for GCC Bank": {
+    "client": "Unnamed GCC Bank",
+    "industry": "Banking",
+    "location": "Middle East",
+    "year": 2022,
+    "description": "Designed and built a data warehouse and analytics engine focused on credit risk reporting. Reduced data latency from overnight to near-real-time, but dashboards were later only partially adopted by users.",
+    "benefits": ["better risk insight", "faster reporting"],
+    "metrics": {"data_latency": "reduced by hours"},
+    "tech_stack": "ETL (Informatica?), SQL Server DW, Tableau/Power BI front-end, some Python scripts"
+  },
+  "Logistics Mobile App Prototype": {
+    "client": "Local Logistics Co.",
+    "industry": "Logistics",
+    "location": "Pakistan",
+    "year": null,
+    "description": "Prototype for LTL and FTL carrier. Features for drivers (routes, delivery status) and dispatchers (tracking). Low adoption; downloads under 1,000. Project paused due to funding cutoff.",
+    "benefits": ["tracking", "route optimization"],
+    "metrics": {"downloads": "<1,000"},
+    "tech_stack": "Flutter mobile, Firebase backend, Google Maps APIs"
+  }
+}

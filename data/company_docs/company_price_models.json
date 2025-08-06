@@ -1,0 +1,58 @@
+{
+  "Time & Materials (Hourly)": {
+    "description": "Charging clients based on hours worked plus materials; useful for undefined scope or support engagements. Often includes hourly rate plus travel/expenses.",
+    "rate_structure": "USD 50–80/hr typical, may vary regionally",
+    "suitable_for": ["Support contracts", "Ad-hoc change requests", "Consultation"],
+    "notes": "Rate range approximate, internal variations apply; expense markup unspecified.",
+    "overhead_markup_pct": null
+  },
+  "Fixed-price Projects": {
+    "description": "Flat-fee for full scope delivery—requires clear scope definition and milestones. Used for implementations like ERP, BPO migrations.",
+    "rate_structure": null,
+    "suitable_for": ["ERP rollouts", "Platform implementations"],
+    "notes": "Usually requires 30–50% upfront, milestone payments; client penalties for delays may be in contracts (not always disclosed).",
+    "overhead_markup_pct": null
+  },
+  "Monthly Retainer": {
+    "description": "Client pays fixed monthly fee for managed services, support, maintenance; retainer covers allocated capacity.",
+    "rate_structure": "Pakistan service tax ~15–16% may apply",
+    "suitable_for": ["BPO / support", "Managed IT infra"],
+    "notes": "Some deals include volume discounts; tax treatment per province varies → service tax plus corporate tax.",
+    "overhead_markup_pct": null
+  },
+  "Value-based Pricing": {
+    "description": "Pricing based on perceived business value or results (e.g. reduced error rate, turnaround time gain).",
+    "rate_structure": "Premium over cost-plus; often 20–40% above base cost",
+    "suitable_for": ["Data/AI driven solutions", "Digital transformation"],
+    "notes": "Requires strong client agreement on KPIs; seldom used unless C-level sponsor involved.",
+    "overhead_markup_pct": null
+  },
+  "Outcome-based / Performance pricing": {
+    "description": "Vendor paid based on performance metrics—e.g. % of cost savings or increased revenue.",
+    "rate_structure": "E.g. 10–20% of savings",
+    "suitable_for": ["Process automation (RPA)", "Cost optimization engagements"],
+    "notes": "Risk shared; public details rare, often internal pilot offers only with partial buy-in.",
+    "overhead_markup_pct": null
+  },
+  "Cost-plus Pricing": {
+    "description": "Internal cost structure is calculated and a fixed markup is added (e.g. cost + 15%).",
+    "rate_structure": "Variable cost + 15–30% markup",
+    "suitable_for": ["Large BPO deals", "Long-term support contracts"],
+    "notes": "Simpler internally; clients rarely see breakdown; markup bands vary by deal size.",
+    "overhead_markup_pct": 25
+  },
+  "Tiered Bundles (Bundle pricing)": {
+    "description": "Pre-defined service packs offered at different tiers, e.g. Bronze / Silver / Gold bundles with increasing features.",
+    "rate_structure": "Tiered monthly or annual pricing; Silver ~ USD 20k/year, Gold ~ USD 50k",
+    "suitable_for": ["SME digital packages", "Cloud migration support packages"],
+    "notes": "Bundle definitions sometimes inconsistent; service uptime and SLA details may be vague.",
+    "overhead_markup_pct": null
+  },
+  "Hybrid Pricing": {
+    "description": "Mix of fixed fee (project) + T&M/support, or base fee plus performance bonus.",
+    "rate_structure": null,
+    "suitable_for": ["ERP plus post-go-live support", "AI pilot plus scale-out"],
+    "notes": "Often customized and contract-specific; variability high, not standardized.",
+    "overhead_markup_pct": null
+  }
+}

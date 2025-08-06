@@ -15,12 +15,14 @@ def load_initial_data(state: ConversationState) -> ConversationState:
     state['lead_data'] = all_leads.get(lead_id, {})
     
     # Load company data
-    with open('data/company_data.json', 'r') as f:
-        state['company_data'] = json.load(f)
+    with open('data/company_docs/system_in_context.txt', 'r') as f:
+        state['company_data'] = f.read().strip()
         
-    # Initialize other state fields
+    # Initialize turn tracking and other state fields
     state['messages'] = []
-    state['scratchpad'] = []
+    state['scratchpad'] = []  # Now stores structured turn data
     state['retrieved_docs'] = []
+    state['turn_counter'] = 0
+    state['current_turn_actions'] = []
     
     return state

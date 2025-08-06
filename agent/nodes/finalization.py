@@ -39,98 +39,103 @@ def format_final_state_for_synthesis(state: ConversationState) -> str:
         
     return "\n".join(report)
 
-# agent/services/memory_summarizer.py
 
-import json
-from agent.services.llm_service import get_llm
-
-def create_in_context_summary(detailed_memory: dict) -> str:
-
+def create_enhanced_summary(detailed_memory: dict) -> str:
+    """Create a more intelligent summary focusing on sales context"""
     if not detailed_memory:
         return "No summary available."
 
     llm = get_llm()
-    
-    # The detailed memory is converted to a string to be included in the prompt
     memory_str = json.dumps(detailed_memory, indent=2)
 
     prompt = f"""
-        Analyze the following structured JSON data which represents an agent's long-term memory about a sales lead. Your task is to convert this structured data into a concise, natural-language paragraph.
+        Create a concise sales-focused summary from this structured lead memory. This summary will be used by the sales agent in future conversations.
 
-        This summary will be given back to the agent in its next conversation with this lead. Focus on the most important points that the agent should remember for future interactions.
+        **Focus on:**
+        - Current conversation stage and what was accomplished
+        - Key pain points the lead confirmed
+        - Their qualification level (budget, authority, urgency, engagement)
+        - Any objections that need addressing
+        - Next logical steps in the sales process
 
-        **Rules:**
-        - Write in the third person (e.g., "The lead expressed...", "The agent provided...").
-        - Focus on the most important takeaways: confirmed pain points, key interests, and the overall status of the conversation.
-
-        **Structured Memory Data:**
+        **Memory Data:**
         ---
         {memory_str}
         ---
 
-        **Your summary**
+        **Write a natural paragraph summary that helps the sales agent pick up where they left off:**
         """
 
     summary = llm.invoke(prompt).content.strip()
     return summary
 
 def update_summary_and_insights(state: ConversationState) -> ConversationState:
-    
-    print("---NODE: UPDATE_SUMMARY_AND_INSIGHTS (Full State Synthesis)---")
+    print("---NODE: UPDATE_SUMMARY_AND_INSIGHTS (Enhanced with Conversation Intelligence)---")
     
     llm = get_llm()
-    # Create the comprehensive final report for the LLM
     final_report = format_final_state_for_synthesis(state)
     
-    # --- Generate Detailed, Structured Memory (for the agent) ---
+    # Enhanced detailed memory prompt with conversation intelligence
     detailed_prompt = f"""
-        Analyze the following comprehensive 'Final State Report'. Your task is to synthesize ALL of this information into a single, structured JSON object that represents the new state of knowledge about this lead.
+        Analyze the following comprehensive 'Final State Report' and synthesize ALL information into a structured JSON object that represents the new state of knowledge about this lead.
 
-        **Rules:**
-        - Your output must be a single JSON object.
-        - Base your answers on the totality of the information: the original profile, the conversation, and any retrieved documents or agent thoughts.
-        - If a fact is confirmed in the conversation (e.g., budget), use that as the source of truth over the original profile.
-        - Sentiment should be your overall assessment (Positive, Neutral, Negative, Mixed).
+        **Enhanced Analysis - Pay special attention to:**
+        - Conversation stage progression (opening → discovery → interest → objection_handling → closing)
+        - Lead qualification signals (budget authority, timeline urgency, need level)
+        - Buying signals vs. objections detected
+        - Communication style preferences (technical vs. business focused)
+        - Specific pain points that resonated with the lead
 
         **Final State Report:**
         ---
         {final_report}
         ---
 
-        **Output the final, synthesized JSON object and nothing else.**
-        Use the following structure only and avoid any additional text:
+        **Output the enhanced JSON object:**
         {{
+        "projects_of_interest": ["list of strings"],
         "key_pain_points_confirmed": ["list of strings"],
         "solutions_of_interest": ["list of strings"],
         "budget_confirmed": "string or null",
         "timeline_confirmed": "string or null",
+        "decision_authority_level": "High/Medium/Low",
         "key_questions_asked_by_lead": ["list of strings"],
-        "relevant_docs_provided": ["list of strings from retrieved docs and why were they provided and what the interaction was regarding them"],
-        "overall_sentiment": "Positive",
-        "next_steps": ["list of strings"],
+        "relevant_docs_provided": ["list of strings with context"],
+        "buying_signals_detected": ["list of positive signals"],
+        "objections_raised": ["list of concerns/objections"],
+        "conversation_stage_reached": "discovery/interest/objection_handling/closing/nurturing",
+        "lead_qualification_score": {{
+            "budget_fit": 1-10,
+            "authority_level": 1-10,
+            "need_urgency": 1-10,
+            "engagement_level": 1-10
+        }},
+        "communication_style_preference": "technical/business/mixed",
+        "next_steps_agreed": ["list of strings"],
+        "overall_sentiment": "Positive/Neutral/Negative/Mixed",
+        "follow_up_timing": "immediate/1-3 days/1 week/1 month/longer",
         "miscellaneous_notes": "Any other relevant notes or observations"
         }}
         """
+        
     try:
         response_str = llm.invoke(detailed_prompt).content
-        # A simple cleanup to handle potential markdown formatting
         cleaned_response_str = response_str.strip().replace('```json', '').replace('```', '')
         detailed_memory = json.loads(cleaned_response_str)
     except (json.JSONDecodeError, TypeError) as e:
-        print(f"Warning: Failed to parse detailed memory JSON. Error: {e}. Saving empty object.")
-        detailed_memory = {}
+        print(f"Warning: Failed to parse enhanced memory JSON. Error: {e}. Saving basic object.")
+        detailed_memory = {
+            "conversation_stage_reached": state.get('conversation_stage', 'discovery'),
+            "lead_qualification_score": state.get('lead_qualification_score', {}),
+            "buying_signals_detected": state.get('buying_signals_detected', []),
+            "objections_raised": state.get('detected_objections', [])
+        }
 
     if detailed_memory:
-        print("---Generating in-context summary from detailed memory...---")
-        in_context_summary = create_in_context_summary(detailed_memory)
+        print("---Generating enhanced in-context summary from detailed memory...---")
+        in_context_summary = create_enhanced_summary(detailed_memory)
     else:
         in_context_summary = "No detailed memory was generated."
 
-    # Pass all three components to the save function
-    save_memory(
-        state['lead_id'], 
-        detailed_memory,
-        in_context_summary
-    )
-    
+    save_memory(state['lead_id'], detailed_memory, in_context_summary)
     return state

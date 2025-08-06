@@ -1,0 +1,180 @@
+{
+  "company_name": "Systems Limited",
+  "trade_symbol": "SYS",
+  "founded_year": 1977,
+  "founder": "Aezaz Hussain",
+  "company_type": "Public Limited Company",
+  "headquarters": {
+    "city": "Lahore",
+    "country": "Pakistan"
+  },
+  "additional_offices": [
+    {"city": "Karachi", "country": "Pakistan"},
+    {"city": "Islamabad", "country": "Pakistan"},
+    {"city": "Dubai", "country": "UAE"},
+    {"city": "Doha", "country": "Qatar"},
+    {"city": "Riyadh", "country": "Saudi Arabia"},
+    {"city": "Giza", "country": "Egypt"},
+    {"city": "Centurion", "country": "South Africa"},
+    {"city": "Singapore", "country": "Singapore"}
+  ],
+  "industry": "Software & IT services",
+  "nature_of_business": [
+    "Software development",
+    "Software trading",
+    "Business Process Outsourcing (BPO)",
+    "Digital transformation",
+    "Cloud services",
+    "Data and AI services",
+    "Digital infrastructure services",
+    "Security services"
+  ],
+  "subsidiaries": [
+    "Techvista Systems (UAE)",
+    "Systems Arabia (Saudi Arabia)",
+    "Systems Misr (Egypt)",
+    "Techvista Qatar",
+    "NdcTech"
+  ],
+  "geographical_segments": [
+    "Pakistan",
+    "North America",
+    "Middle East & Africa",
+    "Europe",
+    "Asia Pacific"
+  ],
+  "key_people": {
+    "chairman_founder": "Aezaz Hussain",
+    "ceo_md": "Muhammad Asif Peer"
+  },
+  "employees": {
+    "count": 6632,
+    "year": 2024
+  },
+  "financials": {
+    "fiscal_year_end": "December",
+    "currency": "PKR",
+    "latest_financials": {
+      "revenue": 38526984,
+      "profit_after_tax": 6115297,
+      "net_profit_margin_percent": 15.87,
+      "eps": 20.94
+    },
+    "trend": {
+      "2023_revenue": 32037995,
+      "2024_growth": "20%+",
+      "net_profit_2023": 8559160,
+      "net_profit_decline_pct": "28.8%"
+    }
+  },
+  "stock_exchange_listing": {
+    "exchange": "Pakistan Stock Exchange",
+    "component_indices": ["KSE‑100", "KSE‑30"],
+    "isin": "PK0109001013"
+  },
+  "market_cap": {
+    "2023_June_usd_million": 441,
+    "all_time_high_pkrupees": 102000000000
+  },
+  "ownership": {
+    "major_shareholders": [
+      {"name": "Muhammad Arshad Masood", "percent": 65.34},
+      {"name": "Muhammad Asif Peer", "percent": 35.26},
+      {"name": "Aezaz Hussain", "percent": 29.6},
+      {"name": "Neelam Hussain", "percent": 15.03},
+      {"name": "Aizaz Hussain", "percent": 14.83}
+    ],
+    "employee_ownership_percent": 84
+  },
+  "certifications": [
+    "ISO 27001:2013",
+    "ISO 45001:2018",
+    "ISO 14001:2015",
+    "ISO 20000‑1:2018",
+    "SSAE‑16",
+    "ISO 9001:2000"
+  ],
+  "awards_recognition": [
+    "Forbes Asia Best Under a Billion — 2020, 2021, 2022, 2023",
+    "P@SHA ICT Awards",
+    "PSEB IT Export Awards (Top IT exporter 2019, Platinum, multiple years)",
+    "Microsoft Business Applications Inner Circle (2021‑24)",
+    "Microsoft Country Partner of the Year (Pakistan & UAE 2023)",
+    "Asia Money Most Outstanding Company (2021‑23)",
+    "SAP EMEA Top New Partner & Service Excellence"
+  ],
+  "growth_outlook": {
+    "export_cagr_forecast": "≈23% (2025‑27)",
+    "it_export_share_pakistan_2027": "≈6.8%"
+  },
+  "notable_milestones": [
+    "First IT company in Pakistan",
+    "IPO in December 2014",
+    "First Pakistani IT company to enter African market (Johannesburg, 2022)",
+    "First Pakistan IT company to cross PKR 100 billion market cap in Sep 2021"
+  ],
+  "services_overview": {
+    "digital": ["Consulting & strategy", "Commerce", "Business Applications"],
+    "data_ai": ["Data modernization", "Advanced analytics", "Connected intelligence", "Generative AI", "Data management"],
+    "cloud": ["Operations & migration", "App development & integration", "Managed services"],
+    "infrastructure": ["Design & implementation", "IT help desk & support", "Network services", "Edge IT"],
+    "bpo": ["Contact centre", "Digital marketing", "Staff augmentation", "Legal process outsourcing", "Finance & accounting"]
+  },
+  "key_clients": [
+    {"industry": "Banking", "clients": ["Top GCC Bank", "Leading US Retail Bank"]},
+    {"industry": "Telecom", "clients": ["Regional Telco in KSA"]},
+    {"industry": "Retail & Consumer", "clients": ["Major global retailer"]},
+    {"industry": "Healthcare", "clients": ["Boston Health AI (Hami)"]}
+  ],
+  "case_studies": [
+    {
+      "title": "Digital Transformation of GCC Bank",
+      "scope": "Core banking modernization, mobility app for 2M users",
+      "outcome": "25% operational efficiency gain, increased customer satisfaction"
+    }
+  ],
+  "strategic_partners": ["Microsoft", "Temenos", "SAP", "Boston Health AI"],
+  "awards_detailed": [
+    {"award": "Forbes Asia – Best Under a Billion", "years": [2020,2021,2022,2023,2024]},
+    {"award": "Microsoft Business Applications Inner Circle", "period": "2024–2025"},
+    {"award": "PSEB Export Awards – Top IT Exporter", "year": 2024}
+  ],
+  "esg": {
+    "net_zero_by": 2050,
+    "esg_initiatives": ["Carbon footprint reduction", "Inclusive growth programs"]
+  },
+  "governance": {
+    "registration_number": "C‑72 LR of 1977‑78",
+    "tax_number": "1531096‑5",
+    "auditor": "Big‑4 Auditor"
+  },
+  "financial_kpis": {
+    "roe_percent": 19,
+    "operating_profit_usd_mn": 29.6,
+    "net_profit_usd_mn": 27.1,
+    "eps_basic": 25.55,
+    "regional_revenue_breakdown_usd_mn": {
+      "Pakistan": 31.3,
+      "MiddleEast": 142.1,
+      "Europe": 10.9,
+      "APAC": 8.3
+    }
+  },
+  "talent_development": {
+    "employees_global": 7719,
+    "ownership_percent": 84,
+    "training_programs": ["IT Mustakbil Training Program"],
+    "internship_opportunities": true
+  },
+  "perception_notes": {
+    "recruitment_feedback": {
+      "positive": "Training and connection-building opportunities",
+      "concerns": "Mixed reviews on work–life and culture"
+    }
+  },
+  "contact": {
+    "website": "https://www.systemsltd.com",
+    "company_secretary": "Hasan Waleed Majal",
+    "investor_relations_email": "Investor_relations@systemsltd.com"
+  }
+}
