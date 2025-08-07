@@ -1,4 +1,4 @@
-from vectorstores.create_knowledge_bases import search_knowledge_base, search_json_keys_and_return_values
+from vectorstores.create_knowledge_bases import search_knowledge_base_rag, search_json_keys_and_return_values
 
 def search_knowledge_base(query: str) -> str:
     """
@@ -7,7 +7,7 @@ def search_knowledge_base(query: str) -> str:
     """
     print(f"---SEARCHING KNOWLEDGE BASE for: {query}---")
 
-    return search_knowledge_base(query)
+    return search_knowledge_base_rag(query)
 
 #search_company_case_studies,
     # search_technical_capabilities, 

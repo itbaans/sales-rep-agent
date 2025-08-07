@@ -205,7 +205,7 @@ def search_json_keys_and_return_values(query: str, top_k: int = 10, type: str = 
 
 
 # --- 7. Query Interface ---
-def search_knowledge_base(question: str) -> str:
+def search_knowledge_base_rag(question: str) -> str:
     # Set number of BM25 results
     bm25_retriever.k = 2
 

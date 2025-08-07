@@ -26,10 +26,10 @@ class ConversationHandler:
             
             # Run the graph to get opening statement
             # The graph should handle the opening statement generation
-            result = self.app.invoke(initial_state, config)
+            self.app.invoke(initial_state, config)
             
             # Extract the agent's opening message from the result
-            messages = result.get('messages', [])
+            messages = initial_state.get('messages', [])
             if messages:
                 # Find the last agent message
                 agent_messages = [msg for msg in messages if msg.get('role') == 'agent']

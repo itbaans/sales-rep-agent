@@ -6,7 +6,7 @@ load_dotenv()
 
 def get_llm():
     """Initializes and returns the Gemini LLM client."""
-    print(os.getenv("GOOGLE_API_KEY"))
+    #print(os.getenv("GOOGLE_API_KEY"))
     llm = ChatGoogleGenerativeAI(
         model="gemini-2.0-flash",  # You can also use "gemini-1.5-pro" if needed
         temperature=0,
