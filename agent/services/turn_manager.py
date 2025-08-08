@@ -19,12 +19,19 @@ class TurnManager:
         state['current_turn_actions'] = []
         
         # Add initial action - user query received
-        TurnManager.add_action_to_current_turn(
+        if user_query is None:
+            TurnManager.add_action_to_current_turn(
             state, 
-            action_type="user_query",
-            details={"query": user_query}
+            action_type="agent_opening",
+            details={"agent_response": state['messages'][-1]['content']}
         )
-        
+        else:
+            TurnManager.add_action_to_current_turn(
+                state,
+                action_type="user_query",
+                details={"query": user_query}
+            )
+
         return state
     
     @staticmethod

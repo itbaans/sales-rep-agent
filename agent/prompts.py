@@ -13,6 +13,35 @@ You are trained to:
 
 NEVER promise features or timelines not supported by retrieved documents."""
 
+def get_opening_prompt(state: ConversationState) -> str:
+    # Retrieve data from state
+    lead = state.get('lead_data', {})
+    memory = state['long_term_memory'].get('detailed_memory', '') if state.get('long_term_memory') else None
+    # If no memory exists, we set it to an empty string
+    if not memory:
+        memory = "No past interactions recorded."
+    company = state.get('company_data', {})
+
+    # Construct a clear instruction for the LLM
+    base_instruction = (
+        "Using the provided data, craft an opening statement. "
+        "Decide if it's an initial outreach or follow-up, reference past interaction if any. "
+        "Important: respond ONLY with the opening statement itself—do NOT include any lead-in text such as 'Okay, here's...' or additional commentary."
+    )
+
+    # Assemble context sections
+    company_section = f"## COMPANY DATA ##\n{company!r}"
+    lead_section = f"## LEAD DATA ##\n{lead!r}"
+    memory_section = f"## PAST MEMORY ##\n{memory!r}" if memory else "## PAST MEMORY ##\nNone"
+
+    # Build message list for Gemini LLM
+    prompt = [
+        f"##SYSTEM: {get_system_persona()}",
+        f"{base_instruction}\n{company_section}\n{lead_section}\n{memory_section}"
+    ]
+
+    return "\n".join(prompt)
+
 def get_reasoning_prompt(state: ConversationState) -> str:
     """Dynamically assembles the full context for the agent to reason about."""
     

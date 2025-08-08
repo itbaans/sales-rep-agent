@@ -1,7 +1,7 @@
 import streamlit as st
 from datetime import datetime
 from typing import List, Dict, Any
-from agent.graph import create_agent_graph
+from agent.AgentAPI import get_agent_api
 from ui.utils.session_state import get_session_state, set_session_state, get_conversation_config
 
 class ConversationHandler:
@@ -13,7 +13,7 @@ class ConversationHandler:
     def _get_or_create_app(self):
         """Get or create the agent graph app"""
         if not get_session_state('agent_graph'):
-            app = create_agent_graph()
+            app = get_agent_api(get_session_state('current_lead'))
             set_session_state('agent_graph', app)
             return app
         return get_session_state('agent_graph')
@@ -21,23 +21,10 @@ class ConversationHandler:
     def start_conversation(self, lead_id: str) -> str:
         """Start a new conversation with opening statement"""
         try:
-            config = get_conversation_config(lead_id)
-            initial_state = {"lead_id": lead_id}
-            
             # Run the graph to get opening statement
             # The graph should handle the opening statement generation
-            self.app.invoke(initial_state, config)
-            
-            # Extract the agent's opening message from the result
-            messages = initial_state.get('messages', [])
-            if messages:
-                # Find the last agent message
-                agent_messages = [msg for msg in messages if msg.get('role') == 'agent']
-                if agent_messages:
-                    return agent_messages[-1]['content']
-            
-            return "Hello! I'm Zain from Systems Limited. How can I help you today?"
-            
+            return self.app.get_opening_statement(lead_id)
+                    
         except Exception as e:
             st.error(f"Error starting conversation: {str(e)}")
             raise e
@@ -45,27 +32,7 @@ class ConversationHandler:
     def process_user_input(self, lead_id: str, user_input: str, conversation_history: List[Dict]) -> str:
         """Process user input and get agent response"""
         try:
-            config = get_conversation_config(lead_id)
-            
-            # Prepare the state with conversation context
-            current_state = {
-                "lead_id": lead_id,
-                "user_input": user_input,
-                "messages": self._convert_history_to_messages(conversation_history)
-            }
-            
-            # Process through the graph
-            result = self.app.invoke(current_state, config)
-            
-            # Extract agent response
-            messages = result.get('messages', [])
-            if messages:
-                # Get the last agent message
-                agent_messages = [msg for msg in messages if msg.get('role') == 'agent']
-                if agent_messages:
-                    return agent_messages[-1]['content']
-            
-            return "I'm having trouble processing that. Could you please try again?"
+            return self.app.process_message(lead_id, user_input)
             
         except Exception as e:
             st.error(f"Error processing user input: {str(e)}")

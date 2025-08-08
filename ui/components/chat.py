@@ -1,7 +1,10 @@
+from agent.AgentAPI import get_agent_api
 import streamlit as st
 from typing import List, Dict
 from ui.utils.session_state import get_session_state, set_session_state
 from ui.utils.conversation_handler import ConversationHandler
+
+handler = ConversationHandler()
 
 def render_chat_interface():
     """Render the main chat interface"""
@@ -19,7 +22,11 @@ def render_chat_interface():
     chat_container = st.container()
     
     with chat_container:
-        conversation_history = get_session_state('conversation_history', [])
+        app = get_session_state('agent_graph')
+        if app.state is None:
+            app = get_agent_api(get_session_state('current_lead'))
+            set_session_state('agent_graph', app)
+        conversation_history = app.state['messages']
         
         # Display conversation history
         if conversation_history:
@@ -29,16 +36,8 @@ def render_chat_interface():
             # If conversation is active but no history, start with agent's opening
             with st.spinner("Agent is preparing opening statement..."):
                 try:
-                    handler = ConversationHandler()
-                    opening_message = handler.start_conversation(current_lead)
-                    
-                    # Add to history
-                    conversation_history.append({
-                        'role': 'agent',
-                        'content': opening_message,
-                        'timestamp': handler.get_current_timestamp()
-                    })
-                    set_session_state('conversation_history', conversation_history)
+                    app.get_opening_statement(current_lead)
+                    set_session_state('conversation_history', app.state['messages'])
                     st.rerun()
                 except Exception as e:
                     st.error(f"Error starting conversation: {str(e)}")

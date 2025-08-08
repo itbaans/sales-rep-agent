@@ -1,20 +1,33 @@
 # agent/nodes/reasoning.py
 import json
 from agent.state import ConversationState
-from agent.prompts import get_reasoning_prompt
+from agent.prompts import get_reasoning_prompt, get_opening_prompt
 from agent.services.llm_service import get_llm
 from agent.services.knowledge_retriever import search_knowledge_base, search_company_case_studies, search_technical_capabilities, search_pricing_models, search_company_profile
 from agent.services.turn_manager import TurnManager
 
 def think(state: ConversationState) -> ConversationState:
     print("---NODE: THINK---")
-    prompt = get_reasoning_prompt(state)
-    #print(f"Reasoning Prompt:\n{prompt}\n")
+
     llm = get_llm()
-    
+
+    if not state['messages']:
+        prompt = get_opening_prompt(state)
+        response_str = llm.invoke(prompt).content
+        state['messages'].append({
+            "role": "agent",
+            "content": response_str
+        })
+        TurnManager.start_new_turn(state, user_query=None)
+        return state
+
+    if state['messages'][-1]['role'] == 'user' and state['current_turn_actions'] is None:
+        user_query = state['messages'][-1]['content']
+        TurnManager.start_new_turn(state, user_query=user_query)
+
+    prompt = get_reasoning_prompt(state)
     response_str = llm.invoke(prompt).content
     
-    # NEW: Add LLM reasoning to current turn actions instead of old scratchpad
     TurnManager.add_action_to_current_turn(
         state,
         action_type="llm_reasoning",

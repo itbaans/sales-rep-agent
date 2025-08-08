@@ -10,10 +10,11 @@ from agent.graph import create_agent_graph
 from vectorstores.create_knowledge_bases import initialize_vector_knowledge, initialize_json_knowledge
 from agent.services.memory_manager import load_memory
 from ui.components.sidebar import render_sidebar
+from ui.utils.conversation_handler import ConversationHandler
 from ui.components.chat import render_chat_interface
 from ui.components.lead_info import render_lead_info
 from ui.utils.session_state import initialize_session_state, get_session_state
-from ui.utils.conversation_handler import ConversationHandler
+
 
 # Page config
 st.set_page_config(

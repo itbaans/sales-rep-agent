@@ -138,4 +138,5 @@ def update_summary_and_insights(state: ConversationState) -> ConversationState:
         in_context_summary = "No detailed memory was generated."
 
     save_memory(state['lead_id'], detailed_memory, in_context_summary)
+    state['is_end'] = True  # Mark conversation as ended
     return state

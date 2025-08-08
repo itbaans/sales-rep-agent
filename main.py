@@ -3,6 +3,7 @@ import sys
 from agent.graph import create_agent_graph
 from IPython.display import Image, display
 from vectorstores.create_knowledge_bases import initialize_vector_knowledge, initialize_json_knowledge
+from agent.AgentAPI import get_agent_api
 
 def visualize_graph():
     """Generate graph visualization"""
@@ -12,20 +13,45 @@ def visualize_graph():
     print("Graph visualization saved as 'agent_graph.png'")
 
 def run_cli_conversation():
-    """Run the original CLI conversation mode"""
-    app = create_agent_graph()
+    """Run CLI conversation using the new API"""
     lead_id = "lead_2024_0156"
-    config = {"configurable": {"thread_id": lead_id}}
-
+    agent_api = get_agent_api(lead_id=lead_id)
     # Initialize knowledge bases
-    print("Initializing knowledge bases...")
-    initialize_vector_knowledge()
-    initialize_json_knowledge()
-    print("Knowledge bases initialized!")
+    if not agent_api.initialize_knowledge():
+        print("Failed to initialize knowledge bases!")
+        return
+    
+    # Get opening statement
+    print("\n" + "="*50)
+    opening = agent_api.get_opening_statement(lead_id)
+    print(f"Agent: {opening}")
+    print("="*50)
+    
+    # Conversation history for context
+    
+    # CLI loop
+    while True:
+        try:
+            user_input = input("\nYour response: ").strip()
+            
+            if not user_input:
+                continue
+                
+            print("\n[Agent is thinking...]")
+            response = agent_api.process_message(lead_id, user_input)
+            
+            print(f"\nAgent: {response}")
+            print("-" * 50)
 
-    # 1. Kick off the graph to get the agent's opening statement.
-    initial_state = {"lead_id": lead_id}
-    app.invoke(initial_state, config)
+            if agent_api.state.get('is_end', False):
+                break
+            
+        except KeyboardInterrupt:
+            print("\n\nConversation ended.")
+            break
+        except Exception as e:
+            print(f"\nError: {e}")
+            break
 
 def run_streamlit():
     """Run the Streamlit UI version"""

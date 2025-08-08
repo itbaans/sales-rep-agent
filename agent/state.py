@@ -15,13 +15,13 @@ class ConversationState(TypedDict):
     lead_id: str
     user_input: Optional[str]
     
-    # New: Conversation tracking
+    #Conversation tracking
     conversation_stage: Optional[str]  # Use string to avoid enum serialization issues
     lead_qualification_score: Optional[Dict[str, int]]  # budget_fit, authority, need_urgency, engagement
     detected_objections: Optional[List[str]]
     buying_signals_detected: Optional[List[str]]
 
-    # Enhanced turn tracking
+    #turn tracking
     current_turn_actions: Optional[List[Dict[str, Any]]]  # Track actions in current turn
     turn_counter: Optional[int]  # Track which turn we're on
 
@@ -34,3 +34,5 @@ class ConversationState(TypedDict):
     # Data loaded for the session
     lead_data: Dict
     company_data: Dict
+
+    is_end: bool
