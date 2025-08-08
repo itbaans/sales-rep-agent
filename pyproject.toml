@@ -14,7 +14,9 @@ dependencies = [
     "langchain-community>=0.3.27",
     "langchain-google-genai>=2.0.10",
     "langgraph>=0.6.0",
+    "pyaudio>=0.2.14",
     "pypdf2>=3.0.1",
     "rank-bm25>=0.2.2",
+    "speechrecognition>=3.14.3",
     "streamlit>=1.48.0",
 ]

@@ -10,3 +10,5 @@ wheels/
 .venv
 
 Kokoro-82M/
+
+whisper.cpp/
