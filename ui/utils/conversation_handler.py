@@ -29,14 +29,22 @@ class ConversationHandler:
             st.error(f"Error starting conversation: {str(e)}")
             raise e
     
-    def process_user_input(self, lead_id: str, user_input: str, conversation_history: List[Dict]) -> str:
-        """Process user input and get agent response"""
-        try:
-            return self.app.process_message(lead_id, user_input)
-            
-        except Exception as e:
-            st.error(f"Error processing user input: {str(e)}")
-            raise e
+    def process_user_input(self, lead_id: str, user_input: str) -> None:
+        """Save user message immediately, then process agent reply in next run"""
+        self.app = self._get_or_create_app()
+
+        # 1️⃣ Save the user message right away
+        self.app.set_user_response(user_input)
+        set_session_state('conversation_history', self.app.state['messages'])
+        
+        # Mark that we still need to process this input
+        set_session_state('pending_user_input', {
+            'lead_id': lead_id,
+            'text': user_input
+        })
+
+        # 2️⃣ Trigger rerun so UI shows user message now
+        st.rerun()
     
     def _convert_history_to_messages(self, conversation_history: List[Dict]) -> List[Dict]:
         """Convert UI conversation history to agent message format"""

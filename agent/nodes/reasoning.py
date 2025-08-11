@@ -13,6 +13,7 @@ def think(state: ConversationState) -> ConversationState:
 
     if not state['messages']:
         prompt = get_opening_prompt(state)
+        #print(prompt)
         response_str = llm.invoke(prompt).content
         state['messages'].append({
             "role": "agent",
@@ -26,6 +27,7 @@ def think(state: ConversationState) -> ConversationState:
         TurnManager.start_new_turn(state, user_query=user_query)
 
     prompt = get_reasoning_prompt(state)
+    #print(prompt)
     response_str = llm.invoke(prompt).content
     
     TurnManager.add_action_to_current_turn(

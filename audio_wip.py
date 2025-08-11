@@ -1,5 +1,5 @@
 from audio.voice_service import VoiceService
-#from audio.tts import TextToSpeech  # Assuming you're using pyttsx3
+from audio.tts import TextToSpeech  # Assuming you're using pyttsx3
 from agent.AgentAPI import get_agent_api 
 
 def main():
@@ -12,12 +12,12 @@ def main():
 
     # Init voice input/output
     voice = VoiceService()
-    #tts = TextToSpeech()
+    tts = TextToSpeech()
 
     print("\n" + "="*50)
     opening = agent_api.get_opening_statement(lead_id)
     print(f"🤖 Agent: {opening}")
-    #tts.speak(opening)
+    tts.speak(opening)
     print("="*50)
 
     while True:

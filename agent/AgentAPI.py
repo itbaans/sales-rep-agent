@@ -81,6 +81,14 @@ class AgentAPI:
             print(f"Error getting opening statement: {e}")
             return "Hello! I'm Zain from Systems Limited. How can I help you today?"
     
+
+    def set_user_response(self, user_input: str) -> str:
+        if(self.state is None): print("IM NONE!")
+        self.state['user_input'] = user_input
+        self.state['messages'].append({"role": "user", "content": user_input})
+        return
+
+
     def process_message(self, lead_id: str, user_input: str) -> str:
         """Process user message and get agent response"""
         try:
@@ -88,7 +96,8 @@ class AgentAPI:
             
             # Prepare the state with conversation context
             self.state['user_input'] = user_input
-            self.state['messages'].append({"role": "user", "content": user_input})
+            if self.state['messages'][-1]['role'] != 'user':
+                self.state['messages'].append({"role": "user", "content": user_input})
             
             self.state = self.app.invoke(self.state, config)
             # Extract agent response

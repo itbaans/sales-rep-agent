@@ -9,6 +9,9 @@ def should_continue_reasoning(state: ConversationState) -> str:
     current_actions = state.get('current_turn_actions', [])
 
     if current_actions[-1]['action_type'] == 'agent_opening':
+        final_answer = state['messages'][-1]['content']
+        TurnManager.finalize_turn(state, final_answer)
+        print(final_answer)
         return "end_turn"
 
     reasoning_actions = [action for action in current_actions if action['action_type'] == 'llm_reasoning']
@@ -34,6 +37,7 @@ def should_continue_reasoning(state: ConversationState) -> str:
         
         state['messages'].append({"role": "agent", "content": final_answer})
         #print(f"\nAgent: {state['messages'][-1]['content']}\n")
+        print(final_answer)
         return "end_turn"
         
     elif tool == "end_conversation":
@@ -44,6 +48,7 @@ def should_continue_reasoning(state: ConversationState) -> str:
         
         state['messages'].append({"role": "agent", "content": final_answer})
         #print(f"\nAgent: {state['messages'][-1]['content']}\n")
+        print(final_answer)
         return "end_conversation"
     else:
         return "execute_tool"

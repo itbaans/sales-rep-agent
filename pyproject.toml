@@ -17,6 +17,8 @@ dependencies = [
     "pyaudio>=0.2.14",
     "pypdf2>=3.0.1",
     "rank-bm25>=0.2.2",
+    "sounddevice>=0.5.2",
+    "soundfile>=0.13.1",
     "speechrecognition>=3.14.3",
     "streamlit>=1.48.0",
 ]
