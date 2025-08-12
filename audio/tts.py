@@ -1,3 +1,5 @@
+import os
+import time
 import torch
 from kokoro import KPipeline
 import soundfile as sf
@@ -6,25 +8,20 @@ from playsound import playsound
 class TextToSpeech:
     def __init__(self):
         self.engine = KPipeline(lang_code='a', device='cpu')
+        self.output_dir = "tts_outputs"
+        os.makedirs(self.output_dir, exist_ok=True)
+        self.counter = 0
 
     def speak(self, text: str):
         # Generate speech audio
         generator = self.engine(text, voice='Kokoro-82M/voices/af_heart.pt')
         
-        for i, (gs, ps, audio) in enumerate(generator):
-            filename = f'{i}.wav'
+        for _, (gs, ps, audio) in enumerate(generator):
+            filename = os.path.join(self.output_dir, f"{self.counter}_{int(time.time()*1000)}.wav")
             sf.write(filename, audio, 24000)
-            print(f"Saved: {filename} | GS: {gs}, PS: {ps}")
+            print(f"💾 Saved: {filename} | GS: {gs}, PS: {ps}")
             
             # Play audio immediately
             playsound(filename)
 
-
-def main():
-    tts = TextToSpeech()
-    sample_text = "Hello there! This is a test of Kokoro text to speech."
-    tts.speak(sample_text)
-
-
-if __name__ == "__main__":
-    main()
+            self.counter += 1

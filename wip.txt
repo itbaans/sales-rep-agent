@@ -1,26 +1,10 @@
-timport torch
-from kokoro import KPipeline
-import soundfile as sf
-from IPython.display import display, Audio
-
-def main():
-    # Set CPU device
-    device = torch.device('cpu')
-
-    # Initialize pipeline
-    pipeline = KPipeline(lang_code='a', device=device)
-
-    # Text input
-    text = "Good morning, Jennifer. I'm Zain from Systems Ltd. We're a global digital services provider, and I'm reaching out to explore how our expertise in digital transformation, particularly within the healthcare sector, might align with HealthTech Innovations' goals."
-
-    # Generate audio
-    generator = pipeline(text, voice='Kokoro-82M/voices/af_heart.pt')
-
-    # Save as WAV
-    for i, (gs, ps, audio) in enumerate(generator):
-        print(i, gs, ps)
-        display(Audio(data=audio, rate=24000, autoplay=i==0))
-        sf.write(f'{i}.wav', audio, 24000)
-
-if __name__ == "__main__":
-    main()
+- More PDF docs
+- Closing Conversation Logic
+- Multi-Lead Parralization
+- Speach Latency optimization
+- Agent Brain optimization (For now do the Prompt Optimization)
+- Human In the LOOp
+- Automatic Shedule uploading (Calendar TOol calling integration)
+- Try out few more TTS and STT models
+- New UI overhaul for Calling and Recieving POC
+- Stylization of Models, (Maybe persolized training ?)

@@ -73,7 +73,7 @@ class VoiceService:
         return output.decode("utf-8").replace("[BLANK_AUDIO]", "").strip()
 
 
-if __name__ == "__main__":
-    vs = VoiceService()
-    text = vs.listen()
-    print("\n📝 Transcription:", text)
+# if __name__ == "__main__":
+#     vs = VoiceService()
+#     text = vs.listen()
+#     print("\n📝 Transcription:", text)
