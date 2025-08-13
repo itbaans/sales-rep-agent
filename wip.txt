@@ -1,10 +1,12 @@
+- Speach Latency optimization
 - More PDF docs
 - Closing Conversation Logic
-- Multi-Lead Parralization
-- Speach Latency optimization
 - Agent Brain optimization (For now do the Prompt Optimization)
+
 - Human In the LOOp
 - Automatic Shedule uploading (Calendar TOol calling integration)
 - Try out few more TTS and STT models
+
+- Multi-Lead Parralization
 - New UI overhaul for Calling and Recieving POC
 - Stylization of Models, (Maybe persolized training ?)

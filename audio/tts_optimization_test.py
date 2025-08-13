@@ -5,6 +5,7 @@ import sounddevice as sd
 import textwrap
 import threading
 from kokoro import KPipeline
+import time
 
 # CPU tuning
 os.environ.setdefault("OMP_NUM_THREADS", "4")
@@ -63,7 +64,10 @@ def main():
             print("👋 Exiting...")
             break
         if text.strip():
+            start_time = time.time()
             tts.speak(text)
+            elapsed = time.time() - start_time
+            print(f"✅ Inference complete in {elapsed:.2f} seconds.")
 
 if __name__ == "__main__":
     main()
