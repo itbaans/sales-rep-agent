@@ -45,5 +45,60 @@
       "follow_up_timing": "1-3 days",
       "miscellaneous_notes": "Jennifer's interest seems to have waned significantly. The conversation was derailed by irrelevant questions, suggesting a lack of genuine interest or a possible bot interaction. Urgency and engagement levels have decreased. Re-evaluate lead qualification and consider alternative communication strategies or lead nurturing."
     }
+  },
+  "test_tech_lead_001": {
+    "summary": "This lead is in the closing stage and highly qualified, with a confirmed $500K budget and a 6-12 month timeline. They're experiencing pain points around AI-driven triage, physician intake assistance, and patient engagement, all of which our solutions address. They're particularly interested in AI integration into their patient management system. While their authority level is medium, their engagement is high, demonstrated by their technical questions about the Hami project's tech stack and implementation. We need to address their initial concern about the Hami project's implementation timeline. The next step is to schedule the demo they requested for next week, focusing on our experience in healthcare AI and highlighting the Hami project's benefits in patient engagement, AI-driven triage, and physician intake assistance.",
+    "detailed_memory": {
+      "projects_of_interest": [
+        "AI integration into patient management system"
+      ],
+      "key_pain_points_confirmed": [
+        "Need for AI-driven triage",
+        "Need for physician intake assistance",
+        "Need for patient engagement"
+      ],
+      "solutions_of_interest": [
+        "Hami AI-assistant Platform",
+        "AI-driven triage solutions",
+        "Patient engagement solutions",
+        "Physician intake assistance solutions"
+      ],
+      "budget_confirmed": "$500K",
+      "timeline_confirmed": "6-12 months (estimated)",
+      "decision_authority_level": "Medium",
+      "key_questions_asked_by_lead": [
+        "What experience do you have with healthcare AI?",
+        "Can you tell me more about the Hami project? What was the tech stack and how long did implementation take?"
+      ],
+      "relevant_docs_provided": [
+        "Hami AI\u2011assistant Platform->industry -> Healthcare Tech",
+        "Hami AI\u2011assistant Platform->tech_stack -> React Native (mobile), React web, Node.js backend, AI/ML (Python?), unclear cloud provider",
+        "Hami AI\u2011assistant Platform->client -> Boston Health AI / Hami",
+        "Hami AI\u2011assistant Platform->benefits -> ['patient engagement', 'AI-driven triage', 'physician intake assistance']",
+        "Aga Khan University Hospital OR Management->tech_stack -> Android tablets, web dashboards (possibly Angular), backend Java/.NET unclear"
+      ],
+      "buying_signals_detected": [
+        "Inquiry about tech stack and implementation timeline",
+        "Confirmation of budget",
+        "Request for a demo"
+      ],
+      "objections_raised": [
+        "Unclear implementation timeline for Hami project (initially)"
+      ],
+      "conversation_stage_reached": "closing",
+      "lead_qualification_score": {
+        "budget_fit": 9,
+        "authority_level": 6,
+        "need_urgency": 7,
+        "engagement_level": 8
+      },
+      "communication_style_preference": "technical",
+      "next_steps_agreed": [
+        "Schedule a demo next week"
+      ],
+      "overall_sentiment": "Positive",
+      "follow_up_timing": "immediate",
+      "miscellaneous_notes": "Lead is specifically interested in AI integration for their patient management system. They are asking technical questions about the Hami project, indicating a preference for technical details. The lead has a confirmed budget and is interested in a demo, indicating a strong buying signal. The agent needs to confirm the specific demo time."
+    }
   }
 }
