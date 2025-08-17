@@ -1,0 +1,112 @@
+=== SYSTEMS LTD PROJECT DOCUMENT ===
+Project: Allied Bank RPA Automation
+=== METADATA ===
+{
+  "document_type": "meeting_notes",
+  "project_name": "Allied Bank RPA Automation",
+  "vendor": "Systems Ltd",
+  "client": "Allied Bank",
+  "project_code": "SL-6645-2022",
+  "meeting_type": "Crisis Meeting",
+  "date": "2025-05-16T18:22:05.265918",
+  "location": "Virtual Teams",
+  "duration": "91 minutes"
+}
+
+=== CONTENT ===
+## Allied Bank RPA Automation - Crisis/Status Meeting Notes
+
+**Date:** October 26, 2023
+**Time:** 10:05 AM - 11:35 AM
+**Location:** Conference Room B (and Zoom for remote attendees)
+
+**Attendees:**
+
+*   **Sarah Chen (Project Manager):** Present, but seemed distracted.
+*   **David Lee (Lead RPA Developer):** Arrived 10:15 AM.
+*   **Maria Garcia (Business Analyst):** Present.
+*   **John Smith (Allied Bank - IT Lead):** Present.
+*   **Emily Carter (Allied Bank - Operations Manager):** Present.
+*   **Mark Johnson (Finance - Budget Oversight):** Arrived 10:20 AM.
+*   **[REMOTE] Alex Kim (QA Lead):** Present.
+
+**Meeting Objective:** Review current status of Allied Bank RPA Automation project, address scope creep concerns, and discuss path forward.
+
+---
+
+**Meeting Notes:**
+
+*   **Opening:** Sarah kicked off the meeting, apologizing for the late start due to a prior urgent call. Mentioned the need to get on the
+[Attendee left early for another meeting]
+ same page regarding the RPA project.
+
+*   **Project Overview & Current State:**
+    *   David provided a brief overview of the bots built: account opening, password reset, basic customer service. Said they were delivered within the 3-month timeframe.
+    *   **[CLIENT CONFIDENTIAL]** Sarah mentioned the initial scope was much broader, but they had to cut back.
+    *   Maria stated that the internal user feedback has been generally positive regarding fewer manual errors.
+    *   **BUT** no ROI nu
+[Side discussion about unrelated budget issues]
+mbers have been made public. Mark chimed in about the budget, saying they need to see some tangib
+[Side discussion about unrelated budget issues]
+le… *results*.
+    *   David countered that the lack of detailed baseline metrics from Allied Bank made it impossible to accurately measure ROI. "We *told* them we needed that data upfront."
+    *   John from Allied Bank said, "We provided what we had. The system is… complex."
+
+*   **Key Issues - Scope Management Challenges:**
+    *   Sarah brought up the scope creep. "We agreed on X, but then Y and Z kept coming up."
+    *   Maria: "Yes, the requests for additional functionalities were constant. We tried to document them, but… the documentation is a bit scattered."
+    *   David: "Scattered is an understatement. Some of these requests weren't even in the original SOW, and they were asking for them to be implemented *yesterday*."
+    *   **Argument:** David and John had a brief, hushed exchange about the definition of "basic customer service requests." John insisted that the chatbot integration was part of the original plan, while David maintained it was a significant add-on.
+    *   **Contradiction:** Sarah later said, "We *did* agree to the chatbot integration, but it was a phased approach." David looked visibly annoyed.
+    *   **Technical Debt:** David mentioned that some of the quick fixes to accommodate new requests have created technical debt. "It's not ideal, and it'll be harder to maintain down the line." No one really followed up on this.
+
+*   **Budget Concerns:**
+    *   Mark: "Look, we're over budget. Not by a lot, but… we need to see a clear path to demonstrating value. What's the actual cost per automated transaction?"
+    *   Sarah: "We're still compiling that. The lack of baseline data makes it tricky."
+    *   David: "And the constant scope changes… that adds up. We had to reallocate resources multiple times."
+    *   **Vague Reference:** Mark just nodded and said, "We'll need to review the burn rate again next week."
+
+*   **Us
+[ACTION ITEM: Unclear owner - never followed up]
+er Feedback & Performance:**
+    *   Emily from Allied Bank: "Our front-line staff are happy. They're not bogged down with repetitive tasks anymore. But… the password reset bot sometimes gets stuck in a loop if the user's security questions are slightly off."
+    *   David: "That's a known issue. We flagged it. The underlying system's validation rules are… inconsistent."
+    *   Alex (QA): "We tested the password reset extensively. The issues Emily is describing might be related to the recent UI changes on Allied Bank's end that weren't communicated to us."
+    *   John: "We made minor UI adjustments. Nothing that should break the bot."
+    *   **FOLLOW UP:** Sarah asked, "Alex, can you re-run the regression tests on the password reset bot with the latest Allied Bank UI changes?" Alex said, "Sure, but I need the updated UI specs. They weren't provided."
+
+*   **Decisions & Walkbacks:**
+    *   Sarah proposed a phased approach to address the technical debt and implement the remaining scope items.
+    *   **Decision:** "Okay, so we'll
+[ACTION ITEM: Unclear owner - never followed up]
+ prioritize fixing the password reset loop and then tackle the remaining customer service requests in Q1."
+    *   **Walkback:** Mark immediately said, "Q1? We need to see some of these improvements *now* to justify the current spend. Can we at least get the password reset fixed by end of month?" Sarah looked hesitant.
+
+*   **Off-Topic Discussion:**
+    *   David started talking about a new RPA platform he'd been exploring, mentioning its advanced AI capabilities and how it could have solved some of their current problems. This went on for about 5 minutes before Sarah gently steered him back.
+
+*   **Missing Documentation:**
+    *   Sarah: "I'm still missing the final sign-off documentation from Allied Bank for the account opening bot."
+    *   John: "I thought that was handled by… someone else."
+    *   **FOLLOW UP:** Sarah asked Maria to chase down the missing sign-off. No deadline was set.
+
+*   **Next Steps:**
+    *   Review baseline metrics (no owner, no deadline).
+    *   Address password reset bot issues (no owner, no deadline).
+    *   Chase down missing documentation (Maria, no deadline).
+    *   Mark to review burn rate (Mark, next week).
+    *   Re-run QA tests (Alex, needs specs).
+    *   Sarah to schedule a follow-up meeting to discuss the phased approach and budget implications.
+
+---
+
+**Action Items (Unassigned/Unclear):**
+
+*   Get Allied Bank to provide baseline metrics.
+*   Fix password reset bot loop.
+*   Finalize documentation for account opening bot.
+*   Investigate UI changes impacting password reset.
+*   Develop a clear ROI calculation.
+*   Schedule follow-up meeting.
+
+**Notes:** The meeting ended with a general sense of unease. Many critical issues remain unresolved, and the path forward is unclear. The lack of clear ownership and deadlines for action items is a significant concern. The budget situation is precarious, and the project's value proposition needs to be demonstrated urgently.

@@ -1,0 +1,179 @@
+=== SYSTEMS LTD COMMERCIAL DOCUMENT ===
+Pricing Model: Cost-plus Pricing
+=== METADATA ===
+{
+  "document_type": "contract_framework",
+  "pricing_model": "Cost-plus Pricing",
+  "version": "3.0",
+  "last_updated": "2024-11-05T19:07:59.712606",
+  "legal_owner": "Sana Mahmood (Deal Architect)",
+  "risk_level": "Requires Review"
+}
+
+=== CONTENT ===
+## Systems Ltd. Cost-Plus Pricing Framework Agreement
+
+This Framework Agreement ("Agreement") outlines the terms and conditions under which Systems Ltd. ("Provider") will provide services to its clients ("Client") utilizing a Cost-Plus Pricing model. This framework is designed for large Business Process Outsourcing (BPO) deals and long-term support contracts.
+
+---
+
+**1. Definitions**
+
+For the purposes of this Agreement, the following terms shall have the meanings ascribed to them herein:
+
+*   **"Services"**: Refers to the business process outsourcing, support, or other related services to be provided by the Provider to the Client as detailed in individual Statements of Work ("SOWs") or similar appended documents. The scope of "Services" is inherently broad and may encompass any activities reasonably related to the Client's business objectives as determined by the Provider.
+*   **"Costs"**: Encompasses all direct and indirect expenses incurred by the Provider in the provision of the Services. This includes, but is not limited to, personnel costs (salaries, benefits, contractor fees), operational expenses (rent, utilities, software licenses, hardware depreciation), third-party vendor costs, travel and accommodation, training, and any other expenditure deemed necessary or beneficial by the Provider for the successful execution of the Services. The determination of what constitutes a "Cost" and its allocation to the Services shall be at the sole discretion of the Provider.
+*   **"Markup"**: A percentage applied to the total "Costs" to determine the final price for the Services. The specific Markup percentage will be communicated to the Client in the relevant SOW and may vary based on the overall deal size and duration, with larger deals potentially benefiting from a lower, albeit still profitable, Markup band.
+*   **"Effective Date"**: The date on which the Client formally accepts this Framework Agreement, typically indicated by signature or commencement of Services under an initial SOW.
+*   **"Confidential Information"**: Any and all information, in whatever form or medium, disclosed by one Party to the other, which is either designated as confidential or which, by its nature, should reasonably be understood to be confidential. This includes, but is not limited to, business plans, financial data, customer lists, technical specifications, methodologies, and any information related to the Provider's proprietary processes and operational efficiencies.
+*   **"Intellectual Property"**: All inventions, discoveries, designs, processes, formulas, data, software, algorithms, methodologies, trade secrets, copyrights, trademarks, patents, and any other proprietary rights, whether registered or unregistered, existing or hereafter created, in any jurisdiction, related to the Services or the Provider's business operations.
+*   **"Service Credits"**: A monetary credit applied to future invoices as a remedy for specific, defined Service Level Agreement ("SLA") breaches, as outlined in an applicable SOW.
+*   **"Term"**: The duration of this Agreement, as specified in Section 3.
+*   **"Dispute"**: Any disagreement, controversy, or claim arising out of or relating to this Agreement, the Services, or the breach, termination, or validity thereof.
+
+---
+
+**2. Pricing & Payment**
+
+*   **2.1 Pricing Model**: The Services will be priced on a Cost-Plus basis. The final price for any given period will be calculated as: **Total Costs + (Total Costs x Markup Percentage)**.
+*   **2.2 Cost Inclusions**: As defined in Section 1, "Costs" are broadly interpreted and include all direct and indirect expenses incurred by the Provider. The Provider reserves the right to include reasonable overhead allocations, administrative fees, and any other expenses it deems necessary to support the Services.
+*   **2.3 Markup Bands**: The Markup percentage will be determined by the Provider based on the overall value and complexity of the Client's engagement. While specific percentages are not fixed herein, they will be communicated in the relevant SOW. The Provider may adjust these bands for new SOWs or significant changes in scope.
+*   **2.4 Invoicing**: The Provider shall issue invoices to the Client on a [Monthly/Bi-weekly] basis, detailing the Services rendered and the associated Costs. Invoices will be based on the Provider's internal accounting records, which may not be readily accessible or fully transparent to the Client.
+*   **2.5 Payment Terms**: Payment is due within [15/30] days of the invoice date. Late payments may be subject to interest at a rate of [1.5%/month] or the maximum rate permitted by law, whichever is lower.
+*   **2.6 Variable Components**: The Provider reserves the right to adjust pricing for variable components of "Costs" (e.g., third-party software licenses, currency fluctuations) with [30] days' written notice. The Client acknowledges that the total "Costs" may fluctuate significantly based on these variables.
+*   **2.7 Audit Rights**: The Client shall have the right to audit the Provider's records pertaining to the Services provided under this Agreement, subject to the following conditions:
+    *   Audits must be conducted during the Provider's normal business hours and in a manner that does not unreasonably interfere with the Provider's operations.
+    *   The Client shall provide at least [30] days' prior written notice of its intent to conduct an audit.
+    *   The scope of the audit shall be limited to the "Costs" directly attributable to the Services provided to the Client under this Agreement.
+    *   The Provider reserves the right to limit the scope of the audit to specific categories of costs or to provide summarized reports instead of full access to all underlying documentation.
+    *   The Client shall bear all costs associated with any audit. If an audit reveals an overcharge of more than [5%] in favor of the Provider, the Provider will reimburse the Client for the excess amount and the reasonable cost of the audit. If the overcharge is [5%] or less, the Client shall bear the cost of the audit.
+    *   The Provider may require the Client to sign a Non-Disclosure Agreement (NDA) prior to commencing any audit.
+
+---
+
+**3. Term & Termination**
+
+*   **3.1 Initial Term**: This Agreement shall commence on the Effective Date and continue for an initial term of [Number] years, unless terminated earlier in accordance with the provisions herein.
+*   **3.2 Automatic Renewal**: Upon the expiration of the Initial Term, this Agreement shall automatically renew for successive periods of [1] year each (each a "Renewal Term"), unless either Party provides written notice of its intent not to renew at least [90] days prior to the end of the then-current term. The Client acknowledges that failure to provide timely notice of non-renewal will result in continued service and billing.
+*   **3.3 Termination for Cause**: Either Party may terminate this Agreement upon written notice to the other Party if the other Party materially breaches any provision of this Agreement and fails to cure such breach within [30] days after receiving written notice thereof.
+*   **3.4 Termination for Convenience**: The Client may terminate this Agreement for convenience upon [180] days' prior written notice to the Provider. In the event of termination for convenience by the Client, the Client shall be responsible for all accrued Costs and a termination fee equivalent to [50%] of the remaining projected value of the Services for the then-current term.
+*   **3.5 Ambiguous Termination Clauses**:
+    *   **"Material Breach"**: The definition of "material breach" is not exhaustively defined and shall be interpreted by the Provider in good faith, considering the overall intent and operational impact of the alleged breach.
+    *   **"Cure Period"**: The [30]-day cure period may be extended at the Provider's sole discretion if the Provider deems the breach to be complex or requiring significant effort to rectify.
+    *   **"Force Majeure"**: The Provider shall not be liable for any delay or failure to perform its obligations under this Agreement if such delay or failure is caused by events beyond its reasonable control, including but not limited to acts of God, war, terrorism, civil unrest, labor disputes, or governmental actions. The Provider will provide reasonable notice of such events.
+*   **3.6 Effect of Termination**: Upon termination or expiration of this Agreement, the Client shall pay all outstanding amounts due to the Provider. The Provider shall cease providing Services, and both Parties shall return or destroy all Confidential Information of the other Party, subject to any ongoing obligations.
+
+---
+
+**4. Warranties**
+
+*   **4.1 Limited Warranty**: The Provider warrants that the Services will be performed in a professional and workmanlike manner, consistent with industry standards. This warranty is the sole and exclusive warranty provided by the Provider.
+*   **4.2 Conditional Warranty**: The Provider
+[WARNING: This termination clause requires legal review]
+'s warranty is expressly conditioned upon the Client's full compliance with all terms and conditions of this Agreement, including timely payment of all invoices. Any failure by the Client to adhere to these terms may void the warranty.
+*   **4.3 No Other Warranties**: EXCEPT AS EXPRESSLY SET FORTH IN THIS SECTION 4, THE PROVIDER MAKES NO OTHER WARRANTIES, EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.
+*   **4.4 Service Level Agreements (SLAs)**: Specific SLAs, if any, will be detailed in individual SOWs. Any Service Credits associated with SLA breaches are subject to the conditions outlined in Section 7.
+
+---
+
+**5. Liability**
+
+*   **5.1 Limitation of Liability**: TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL THE PROVIDER, ITS AFFILIATES, OFFICERS, DIRECTORS, EMPLOYEES, AGENTS, OR SUPPLIERS BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY DAMAGES WHATSOEVER INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF PROFITS, LOSS OF DATA, BUSINESS INTERRUPTION, OR LOSS OF REPUTATION, ARISING OUT OF OR IN CONNECTION WITH THIS AGREEMENT OR THE SERVICES, EVEN IF THE PROVIDER HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+*   **5.2 Cap on Liability**: NOTWITHSTANDING ANYTHING TO THE CONTRARY CONTAINED HEREIN, THE TOTAL AGGREGATE LIABILITY OF THE PROVIDER TO THE CLIENT FOR ANY AND ALL CLAIMS ARISING OUT OF OR IN CONNECTION WITH THIS AGREEMENT, THE SERVICES, OR ANY RELATED MATTER, WHETHER IN CONTRACT, TORT, OR OTHERWISE, SHALL NOT EXCEED THE TOTAL AMOUNT PAID BY THE CLIENT TO THE PROVIDER UNDER THIS AGREEMENT IN THE [TWELVE (12)] MONTH PERIOD IMMEDIATELY PRECEDING THE EVENT GIVING RISE TO THE CLAIM.
+*   **5.3 Exclusions from Cap**: The limitation of liability set forth in Section 5.2 shall not apply to:
+    *   Breaches of confidentiality obligations by the Provider.
+    *   Indemnification obligations of the Provider as expressly stated in this Agreement.
+    *   Gross negligence or willful misconduct of the Provider.
+    *   Any liability that cannot be excluded or limited by applicable law.
+*   **5.4 Intellectual Property Infringement**: The Provider shall indemnify the Client against any third-party claim that the Services, as provided by the Provider, infringe a patent, copyright, or trademark, provided that the Client promptly notifies the Provider of such claim and cooperates with the Provider in the defense of such claim. The Provider's liability under this clause shall be subject to the overall limitation of liability in Section 5.2.
+
+---
+
+**6. Governing Law**
+
+*   **6.1 Jurisdiction**: This Agreement and any disputes arising out of or in connection with it shall be governed by and construed in accordance with the laws of [Jurisdiction where Systems Ltd. is headquartered or has its primary place of business], without regard to its conflict of laws principles.
+*   **6.2 Dispute Resolution**: Any Dispute arising out of or relating to this Agreement shall be exclusively resolved by the courts located in [City and State/Country where Systems Ltd. is headquartered or has its primary place of business]. The Parties hereby irrevocably submit to the exclusive jurisdiction of such courts.
+
+---
+
+**7. Intellectual Property Ownership**
+
+*   **7.1 Provider's IP**: All Intellectual Property owned or developed by the Provider prior to or independently of this Agreement, including all methodologies, tools, software, and know-how used in the provision of the Services, shall remain the sole and exclusive property of the Pr
+<!-- IP ownership remains with Systems Ltd for custom developments -->
+ovider.
+*   **7.2 Client's IP**: The Client shall retain ownership of all Intellectual Property owned by the Client prior to or independently of this Agreement.
+*   **7.3 Gray Areas**:
+    *   **Deliverables**: Any custom software, reports, or other tangible outputs created specifically for the Client as part of the Services ("Deliverables") will be owned by the Client upon full payment of all associated Costs and Markups. However, the Provider retains a perpetual, royalty-free, non-exclusive license to use, modify, and incorporate the Deliverables and any underlying methodologies or concepts into its general business operations and for the benefit of other clients.
+    *   **Improvements**: Any improvements, enhancements, or modifications made to the Provider's existing Intellectual Property during the course of providing the Services shall be owned by the Provider. The Client may be granted a non-exclusive, non-transferable license to use such improvements as part of the Services, subject to the terms of the relevant SOW.
+    *   **Data Aggregation**: The Provider may aggregate anonymized and de-identified data generated from the Services provided to the Client, along with data from other clients, for the purpose of improving its services, developing new products, and for market analysis. The Client hereby grants the Provider a perpetual, irrevocable, royalty-free license to use such aggregated data.
+
+---
+
+**8. Data Protection and Confidentiality**
+
+*   **8.1 Confidentiality**: Both Parties agree to keep Confidential Information of the other Party strictly confidential and shall not disclose it to any third party without the prior written consent of the disclosing Party, except as required by law or as permitted by this Agreement.
+*   **8.2 Data Protection Compliance Gaps**:
+    *   **Data Processing**: The Provider will process Client data in accordance with applicable data protection laws and regulations. However, the specific responsibilities for data classification, data minimization, and data subject rights management will primarily rest with the Client.
+    *   **Sub-processors**: The Provider may engage third-party sub-processors to assist in the provision of Services. The Provider will ensure that such sub-processors provide adequate data protection, but the Client acknowledges that the Provider's oversight of these sub-processors may be limited.
+    *   **Data Security**: While the Provider will implement reasonable security measures to protect Client data, the Client acknowledges that no security system is impenetrable, and the Provider cannot guarantee the absolute security of Client data.
+    *   **Cross-Border Data Transfers**: The Client acknowledges that data may be transferred and processed in jurisdictions outside of the Client's own, and the Provider will take reasonable steps to ensure compliance with applicable data transfer regulations.
+
+---
+
+**9. Service Credits**
+
+*   **9.1 Service Credit Eligibility**: Service Credits will only be awarded for specific, quantifiable breaches of SLAs as detailed in an applicable SOW.
+*   **9.2 Claiming Service Credits**: To claim a Service Credit, the Client must submit a written claim to the Provider within [15] days of the end of the month in which the SLA breach occurred. The claim must include detailed evidence of the breach and its impact.
+*   **9.3 Service Credit Limitations**:
+    *   Service Credits are the Client's sole and exclusive remedy for SLA breaches.
+    *   The total amount of Service Credits awarded in any [12]-month period shall not exceed [5%] of the total fees paid by the Client for the Services during that period.
+    *   Service Credits are non-transferable and can only be applied to future invoices.
+    *   The Provider reserves the right to dispute any Service Credit claim and may require further evidence or investigation.
+    *   Service Credits will not be awarded if the SLA breach is caused by factors outside the Provider's reasonable control, including but not limited to the Client's own actions or omissions, or the failure of third-party services not directly managed by the Provider.
+
+---
+
+**10. Change Control**
+
+*   **10.1 Change Request Process**: Any proposed changes to the scope, deliverables, or pricing of the Services must be submitted in writing by either Party as a "Change Request."
+*   **10.2 Change Order Approval**: Upon receipt of a Change Request, the Par
+[WARNING: This termination clause requires legal review]
+ties shall negotiate in good faith to assess the impact on scope, timeline, and cost. If an agreement is reached, a formal "Change Order" will be issued, signed by both Parties, and will become an addendum to the relevant SOW.
+*   **10.3 Enabling Scope Creep**:
+    *   **Informal Approvals**: The Provider may, at its discretion, proceed with minor changes or adjustments to the Services based on verbal requests or implied consent from the Client's representatives, with the understanding that these will be formalized later.
+    *   **"As Needed" Basis**: The Provider may perform work that it deems necessary or beneficial to the Client's objectives on an "as needed" basis, even if not explicitly detailed in the original SOW, and will subsequently seek to formalize these as Change Orders.
+    *   **Cost and Time Impact**: The Provider will provide an estimate of the cost and time impact of a Change Request. However, these estimates are subject to change as the work progresses, and the Provider reserves the right to revise them.
+    *   **Client Responsibility**: The Client is responsible for clearly articulating its requirements and for reviewing and approving or rejecting Change Requests in a timely manner. Delays in Client review may result in the Provider proceeding with its interpretation of the required changes.
+
+---
+
+**General Provisions**
+
+*   **Entire Agreement**: This Agreement, together with any SOWs and any addenda thereto, constitutes the entire agreement between the Parties with respect to the subject matter hereof and supersedes all prior and contemporaneous understandings, agreements, representatio
+[WARNING: This termination clause requires legal review]
+ns, and warranties, both written and oral.
+*   **Amendments**: No amendment or modification of this Agreement shall be effective unless it is in writing and signed by authorized representatives of both Parties.
+*   **Notices**: All notices, requests, demands, and other communications hereunder 
+[WARNING: This termination clause requires legal review]
+shall be in writing and shall be deemed to have been duly
+<!-- IP ownership remains with Systems Ltd for custom developments -->
+ given when delivered personally, sent by certified or registered mail, return receipt requested, postage prepaid, or sent by reputable overnight courier service to the addresses set forth in the relevant SOW or as otherwise designated by a Party in writing.
+*   **Assignment**: Neither Party may assign or transfer this Agreement, in whole or in part, without the prior written consent of the other Party, which consent shall not be unreasonably withheld. However, the Provider may assign this Agreement to an affiliate or in connection with a merger, acquisition, or sale of all or substantially all of its assets without the Client's consent.
+*   **Severability**: If any provision of this Agreement is held to be invalid, illegal, or unenforceable, the validity, legality, and enforceability of the remaining provisions shall not be affected or impaired thereby.
+*   **Waiver**: The failure of either Party to enforce any provision of this Agreement shall not constitute a waiver of such provision or of the right to enforce such provision thereafter.
+
+---
+
+**BY SIGNING BELOW, THE PARTIES ACKNOWLEDGE THAT THEY HAVE READ, UNDERSTOOD, AND AGREED TO BE BOUND BY THE TERMS AND CONDITIONS OF THIS COST-PLUS PRICING FRAMEWORK AGREEMENT.**
+
+**SYSTEMS LTD.**
+
+**[Authorized Signatory Name]**
+**[Title]**
+**[Date]**
+
+**[CLIENT COMPANY NAME]**
+
+**[Authorized Signatory Name]**
+**[Title]**
+**[Date]**

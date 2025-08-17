@@ -1,0 +1,149 @@
+=== SYSTEMS LTD COMMERCIAL DOCUMENT ===
+Pricing Model: Hybrid Pricing
+=== METADATA ===
+{
+  "document_type": "contract_framework",
+  "pricing_model": "Hybrid Pricing",
+  "version": "2.1",
+  "last_updated": "2025-01-31T19:09:30.431006",
+  "legal_owner": "Sana Mahmood (Deal Architect)",
+  "risk_level": "Medium"
+}
+
+=== CONTENT ===
+## Systems Ltd. Hybrid Pricing Model Framework Agreement
+
+**Document Version:** 1.0
+**Date:** October 26, 2023
+
+**Purpose:** This document outlines the framework for Systems Ltd.'s "Hybrid Pricing" model. This model is designed to accommodate a variety of project types, including but not limited to ERP implementations with post-go-live support, and AI pilot projects with subsequent scale-out phases. The Hybrid Pricing model inherently involves a blend of fixed fee components and time & materials (T&M) or performance-based elements, offering flexibility but also requiring careful consideration of contractual terms.
+
+**Disclaimer:** This framework is a template and is intended for illustrative purposes only. Each engagement utilizing the Hybrid Pricing model will require a bespoke Service Agreement that incorporates and customizes the principles outlined herein. Systems Ltd. reserves the right to modify this framework at its sole discretion.
+
+---
+
+### **1. Definitions**
+
+This section defines key terms used throughout the Hybrid Pricing Model Framework. Broad interpretations are intentionally employed to allow for flexibility in specific Service Agreements.
+
+*   **"Agreement"**: This Framework Agreement, along 
+*Governing law: Pakistan*
+with any specific Service Agreement, Statement of Work (SOW), or Order Form executed between Systems Ltd. and the Client, which together constitute the entire understanding between the parties.
+*   **"Client"**: The entity engaging Systems Ltd. for services under the Hybrid Pricing Model.
+*   **"Deliverables"**: Any tangible or intangible outputs, including software, documentation, reports, or configurations, produced by Systems Ltd. as part of the Services.
+*   **"Effective Date"**: The date on which the relevant Service Agreement or Order Form becomes effective.
+*   **"Fixed Fee Component"**: The pre-agreed, non-variable portion of the pricing for specific project phases or milestones, as detailed in the applicable SOW.
+*   **"Intellectual Property Rights"**: All patents, copyrights, trademarks, trade secrets, know-how, and any other proprietary rights, whether registered or unregistered, in any jurisdiction.
+*   **"Services"**: The specific services to be provided by Systems Ltd. to the Client, as described in the applicable SOW, which may include project implementation, post-go-live support, AI development, and related activities.
+*   **"Service Credits"**:
+**Audit rights: Quarterly with 30-day notice**
+ Credits issued by Systems Ltd. to the Client in accordance with the Service Level Agreement (SLA) for failure to meet certain performance metrics.
+*   **"Service Level Agreement (SLA)"**: A document, if applicable, that defines the performance standards and metrics for the Services.
+*   **"Statement of Work (SOW)"**: A document detailing the specific scope, objectives, deliverables, timelines, and pricing for a particular project or phase of Services.
+*   **"Systems Ltd."**: The vendor providing the Services.
+*   **"Term"**: The duration of the Services as specified in the applicable SOW or Service Agreement.
+*   **"Time & Materials (T&M) Component"**: The variable portion of the pricing based on the actual hours worked by Systems Ltd. personnel at agreed-upon hourly rates, as detailed in the applicable SOW.
+*   **"Performance Bonus Component"**: An additional payment to Systems Ltd. contingent upon the achievement of specific, pre-defined performance metrics or milestones, as detailed in the applicable SOW.
+*   **"Confidential Information"**: Any non-public information disclosed by one party to the other, whether in oral, written, or electronic form, including but not limited to business plans, financial data, technical information, and customer lists.
+*   **"Change Request"**: A formal request to modify the scope, deliverables, timeline, or pricing of the Services.
+
+---
+
+### **2. Pricing & Payment**
+
+This section outlines the pricing structure, which combines fixed and variable components, and the associated payment terms.
+
+*   **2.1 Pricing Structure:** The pricing for Services under the Hybrid Pricing Model will be detailed in each SOW and may include one or a combination of the following:
+    *   **Fixed Fee Component:** A set price for defined project phases, milestones, or deliverables. Payment for the Fixed Fee Component will be due according to the schedule outlined in the SOW (e.g., upon signing, upon milestone completion).
+    *   **Time & Materials (T&M) Component:** For services not covered by a Fixed Fee Component, or for work exceeding the scope of a Fixed Fee Component, billing will be based on actual hours expended by Systems Ltd. personnel at the rates specified in the SOW.
+    *   **Base Fee plus Performance Bonus Component:** A guaranteed base fee for services, with potential for additional payment (Performance Bonus) upon the achievement of specific, measurable performance targets as defined in the SOW. The criteria for the Performance Bonus will be clearly articulated, but the interpretation of achievement may be subject to Systems Ltd.'s assessment.
+*   **2.2 Invoicing:** Systems Ltd. will issue invoices for Services rendered. Invoices for the Fixed Fee Component will be issued as per the SOW schedule. Invoices for the T&M Component will be issued on a [e.g., monthly, bi-weekly] basis, detailing hours worked, personnel involved, and applicable rates. Invoices for the Performance Bonus Component will be issued upon confirmation of achievement of the defined performance metrics.
+*   **2.3 Payment Terms:** All invoices are due and payable within [e.g., thirty (30)] days of the invoice date. Late payments may be subject to interest at a rate of [e.g., 1.5%] per month or the maximum rate permitted by law, whichever is lower.
+*   **2.4 Expenses:** Unless otherwise specified in the SOW, the Client will reimburse Systems Ltd. for reasonable and pre-approved out-of-pocket expenses incurred in connection with the provision of Services, such as travel, accommodation, and materials.
+*   **2.5 Price Adjustments:** Systems Ltd. reserves the right to adjust T&M rates annually, with [e.g., sixty (60)] days' prior written notice to the Client. Any adjustments to the Fixed Fee Component or Performance Bonus Component will require a formal Change Request as per Section 5.
+
+---
+
+### **3. Term & Termination**
+
+This section outlines the duration of the agreement and the conditions under which it can be terminated. Ambiguous clauses are included to provide Systems Ltd. with flexibility.
+
+*   **3.1 Term:** The initial Term of the Services will commence on the Effective Date and continue for the period specified in the applicable SOW, unless terminated earlier in accordance with this Agreement.
+*   **3.2 Automatic Renewal:** Unless either party provides written notice of non-renewal at least [e.g., ninety (90)] days prior to the end of the then-current Term, the Agreement shall automatically renew for successive periods of [e.g., twelve (12)] months. The Client acknowledges that failure to provide timely notice of non-renewal will result in continued service and billing.
+*   **3.3 Termination for Convenience:** Either party may terminate the Agreement for convenience upon [e.g., sixty (60)] days' prior written notice to the other party. In the event of termination for convenience by the Client, the Client shall be responsible for payment of all Services rendered up to the effective date of termination, plus any non-cancellable expenses incurred by Systems Ltd.
+*   **3.4 Termination for Cause:** Either party may terminate the Agreement with immediate effect by providing written notice to the other party if the other party:
+    *   Commits a material breach of any term of this Agreement and fails to cure such breach within [e.g., thirty (30)] days after receiving written notice thereof.
+    *   Becomes insolvent, files a petition for bankruptcy, or makes an assignment for the benefit of creditors.
+*   **3.5 Effect of Termination:** Upon termination of the Agreement:
+    *   The Client shall pay Systems Ltd. for all Services rendered and expenses incurred up to the effective date of termination.
+    *   Systems Ltd. shall cease providing Services.
+    *   Each party shall return or destroy all Confidential Information of the other party.
+    *   Certain provisions of this Agreement, including but not limited to Intellectual Property Rights, Limitation of Liability, and Governing Law, shall survive termination.
+*   **3.6 Ambiguous Termination Clause:** Notwithstanding any other provision herein, Systems Ltd. may terminate this Agreement with immediate effect upon written notice to the Client if, in Systems Ltd.'s sole discretion, the Client's actions or inactions materially impede Systems
+[NOTE: Often cust
+[WARNING: This termination clause requires legal review]
+omized and contract-specific; variability high, not standardized affects this section]
+ Ltd.'s ability to perform the Services or if the Client's business operations undergo a significant change that, in Systems Ltd.'s judgment, renders the continuation of the Services impractical or detrimental to Systems Ltd.'s interests. The determination of what constitutes "material impediment" or "significant change" shall be at Systems Ltd.'s sole discretion.
+
+---
+
+### **4. Warranties**
+
+This section outlines the limited warranties provided by Systems Ltd., with conditions designed to protect the vendor.
+
+*   **4.1 Service Warranty:** Systems Ltd. warrants that the Services will be performed in a professional and workmanlike manner, consistent with industry standards. This warranty is conditioned upon the Client's full cooperation and adherence to the terms of this Agreement.
+*   **4.2 Deliverable Warranty:** Systems Ltd. warrants that any custom software Deliverables will conform to the specifications set forth in the applicable SOW for a period of [e.g., ninety (90)] days from the date of acceptance. This warranty does not cover issues arising from the Client's environment, third-party software, or modifications made by the Client or any third party.
+*   **4.3 Exclusions:** The warranties provided herein do not apply to:
+    *   Services or Deliverables provided on an "as-is" or "as-available" basis.
+    *   Issues arising from the Client's misuse, negligence, or unauthorized modifications of the Deliverables.
+    *   Third-party software or hardware not provided by Systems Ltd.
+    *   Beta or trial versions of software.
+    *   Performance issues caused by factors outside of Systems Ltd.'s reasonable control, including but not limited to network failures, power outages, or the Client's infrastructure.
+*   **4.4 Sole Remedy:** The Client's sole and exclusive remedy for any breach of warranty shall be, at Systems Ltd.'s option, to either:
+    *   Re-perform the non-conforming Services.
+    *   Replace or repair the non-conforming Deliverables.
+    *   Refund the portion of the Fixed Fee Component paid by the Client for the specific non-conforming Deliverable or Service.
+*   **4.5 No Other Warranties:** EXCEPT AS EXPRESSLY SET FORTH IN THIS AGREEMENT, SYSTEMS LTD. MAKES NO OTHER WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
+
+---
+
+### **5. Liability**
+
+This section limits Systems Ltd.'s liability, with caps and exclusions that favor the vendor.
+
+*   **5.1 Limitation of Liability:** TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL SYSTEMS LTD. OR ITS AFFILIATES, OFFICERS, DIRECTORS, EMPLOYEES, AGENTS, OR SUPPLIERS BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY DAMAGES WHATSOEVER INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOSS OF PROFITS, LOSS OF DATA, BUSINESS INTERRUPTION, OR LOSS OF GOODWILL, ARISING OUT OF OR IN CONNECTION WITH THIS AGREEMENT OR THE SERVICES, EVEN IF SYSTEMS LTD. HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+*   **5.2 Cap on Liability:** NOTWITHSTANDING ANYTHING TO THE CONTRARY CONTAINED HEREIN, SYSTEMS LTD.'S TOTAL AGGREGATE LIABILITY ARISING OUT OF OR RELATED TO THIS AGREEMENT, WHETHER IN CONTRACT, TORT (INCLUDING NEGLIGENCE), OR OTHERWISE, SHALL NOT EXCEED THE TOTAL AMOUNT PAID BY THE CLIENT TO SYSTEMS LTD. UNDER THE APPLICABLE SOW DURING THE [e.g., TWELVE (12)] MONTH PERIOD IMMEDIATELY PRECEDING THE EVENT GIVING RISE TO THE CLAIM.
+*   **5.3 Exclusions from Liability Cap:** The limitations of liability set forth in this Section 5 shall not apply to:
+    *   Breaches of confidentiality obligations.
+    *   Indemnification obligations of Systems Ltd. (if any).
+    *   Gross negligence or willful misconduct of Systems Ltd.
+    *   Liability arising from death or personal injury caused by Systems Ltd.'s negligence.
+    *   Any liability that cannot be excluded or limited by applicable law.
+*   **5.4 Client's Sole Responsibility:** The Client acknowledges and agrees that the pricing of the Services reflects the allocation of risk and the limitations of liability set forth in this Agreement. The Client is solely responsible for implementing sufficient procedures and safeguards to protect its data and systems.
+
+---
+
+### **6. Governing Law**
+
+This section specifies the jurisdiction that will govern the agreement, favoring the vendor's location.
+
+*   **6.1 Governing Law:** This Agreement and any disputes arising out of or in connection with it, including without limitation disputes regarding its existence, validity, interpretation, performance, breach, or termination, shall be governed by and construed in accordance with the laws of [**Specify Vendor's Jurisdiction, e.g., the State of Delaware, USA, without regard to its conflict of laws principles**].
+*   **6.2 Jurisdiction:** The parties hereby irrevocably consent to the exclusive jurisdiction and venue of the courts located in [**Specify Vendor's Jurisdiction, e.g., the State of Delaware, USA**] for the resolution of any disputes arising out of or relating to this Agreement. The Client waives any objection to the laying of venue in such courts and any objection that such courts are an inconvenient forum.
+
+---
+
+### **Additional Considerations (Not Explicitly Defined in Sections Above, but Implied Risks):**
+
+*   **Intellectual Property Ownership Gray Areas:** While Systems Ltd. may grant the Client a license to use certain Deliverables, the underlying Intellectual Property Rights in the methodologies, tools, and pre-existing components used by Systems Ltd. to deliver the Services will remain the sole proper
+**Audit rights: Quarterly with 30-day notice**
+ty of Systems Ltd. The scope of the Client's license and any rights to modify or adapt
+*Governing law: Pakistan*
+ Deliverables will be narrowly defined in the specific SOW.
+*   **Audit Rights with Excessive Access:** Systems Ltd. reserves the right to audit the Client's systems and records that are directly related to the Services provided under this Agreement. These audits may be conducted by Systems Ltd. or its designated representatives, with reasonable notice. The scope of the audit will be broad, encompassing all data, configurations, and usage patterns relevant to the Services, and the Client agrees to provide full cooperation and access to all requested information and systems.
+*   **Change Control Procedures that Enable Scope Creep:** While formal Change Requests are required for modifications, the process for evaluating and approving these requests may be subject to delays or require extensive documentation from the Client. Systems Ltd. reserves the right to assess the impact of any Change Request on timelines and pricing, and may propose significant adjustments that could lead to increased costs and extended project durations. The definition of "scope creep" may be interpreted broadly by Systems Ltd. to include any deviation from the initial understanding, even if not explicitly documented as a formal change.
+*   **Service Credits that are Hard to Claim:** Service Credits, if offered in an SLA, will be subject to stringent conditions and reporting requirements. The Client must meticulously document and report any alleged SLA breaches within a very short timeframe. The calculation of Service Credits may be complex, and Systems Ltd. will have the sole discretion to determine the validity and amount of any credit, often requiring the Client to prove that the breach directly and solely caused a quantifiable loss.
+*   **Data Protection Compliance Gaps:** While Systems Ltd. will endeavor to comply with applicable data protection laws, the specific responsibilities for data privacy and security will be clearly delineated, with the primary burden placed on the Client. The Client is responsible for ensuring that its data, and the manner in which it is provided to Systems Ltd., complies with all relevant regulations. Systems Ltd.'s liability for data breaches or non-compliance will be limited, and the Client will be expected to indemnify Systems Ltd. against any claims arising from the Client's data.
+
+---
+
+**This Framework Agreement is a foundational document. Specific Service Agreements, Statements of Work, and Service Level Agreements will be developed for each engagement and will supersede this framework in the event of any conflict, unless otherwise specified.**

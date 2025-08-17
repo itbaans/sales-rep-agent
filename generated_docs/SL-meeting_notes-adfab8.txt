@@ -1,0 +1,119 @@
+=== SYSTEMS LTD DOCUMENT ===
+=== METADATA ===
+{
+  "document_type": "meeting_notes",
+  "vendor": "Systems Ltd",
+  "client": "Dubai Islamic Bank",
+  "project_code": "SL-3018-2025",
+  "meeting_type": "Solution Review",
+  "date": "2025-07-09T17:52:46.663620",
+  "location": "Client Dubai Office | Dubai Office",
+  "duration": "49 minutes",
+  "doc_id": "SL-meeting_notes-adfab8"
+}
+
+=== CONTENT ===
+## Meeting Notes: Solution Review - SL-3018-2025
+
+**Date:** October 26, 2023
+**Time:** 10:00 AM - 12:00 PM GST
+**Location:** Dubai Islamic Bank Boardroom / Virtual (Hybrid)
+
+**Project Code:** SL-3018-2025
+
+**Systems Ltd Attendees:**
+* Sana Mahmood (Business Analyst)
+* Ayesha Siddiqui (UX Designer)
+
+**Dubai Islamic Bank Attendees:**
+* [CTO Representative] (CTO Rep)
+* [Head of Operations] (HoO)
+* [IT Manager] (ITM)
+
+---
+
+**Meeting Objective:** Review proposed solution for Dubai Islamic Bank's digital banking enhancement, focusing on integration with Nimbus Mobile Banking platform.
+
+---
+
+**Discussion Points:**
+
+*   **Nimbus Integration Overview:**
+    *   Sana presented high-level architecture for Nimbus integration.
+    *   Focus on seamless user experience for DIB customers.
+    *   Ayesha showcased wireframes for key user journeys – account opening, loan application.
+    *   HoO asked about specific impact on existing customer onboarding process. Sana to provide detailed flow comparison.
+
+*   **Module Deep Dive:**
+    *   **Collections Hub:**
+        *   Sana walked through functionality. DIB team interested in automated payment reminders and delinquency management.
+        *   ITM raised question about integration points with DIB's core banking system for real-time data sync. **TBD - check with Systems Ltd architect.**
+    *   **Loan Origination:**
+        *   Sana highlighted streamlined application process, digital document upload.
+        *   CTO Rep concerned about current manual verification steps. How will Nimbus automate this? Sana to confirm Nimbus capabilities for automated KYC/AML checks.
+        *   HoO asked about specific loan product support – personal loans, auto loans. Sana confirmed initial support for key products, roadmap for others.
+
+*   **Pricing & Commercials:**
+    *   Sana presented pricing model – license fees, implementation services, ongoing support.
+    *   Pricing in USD. Discussed Pakistan/Middle East market context.
+    *   CTO Rep flagged budget constraints for this phase. Need to ensure cost-effectiveness.
+    *   HoO asked about tiered pricing based on user volume or transaction throughput. Sana to provide detailed breakdown.
+    *   **TBD - check with Systems Ltd finance for potential regional discounts/package deals.**
+
+*   **Compliance & Regulatory:**
+    *   Sana confirmed Nimbus adherence to SBP (State Bank of Pakistan) and UAE Central Bank guidelines.
+    *   ITM asked for specific documentation on data residency and security protocols. Sana to provide compliance whitepaper.
+    *   HoO emphasized importance of audit trails and reporting capabilities for regulatory purposes.
+
+*   **Customization Scope & Disagreements:**
+    *   DIB team requested significant UI customization for "Loan Origination" module to match existing branding guidelines.
+    *   Ayesha explained that extensive UI customization might impact upgrade path and introduce technical debt.
+    *   CTO Rep pushed for more flexibility, citing competitive landscape. "We need it to look and feel like *our* bank, not just another Nimbus instance."
+    *   Sana acknowledged the need for branding but cautioned against over-customization impacting core functionality. **Action: Sana to document proposed UI customizations and assess impact on Nimbus core. Present options for branding vs. core functionality balance.**
+
+*   **Timeline & Client Concerns:**
+    *   HoO expressed concern about the proposed 6-month implementation timeline. "We've seen delays on similar projects. What guarantees can you give?"
+    *   Sana assured DIB team of Systems Ltd's robust project management methodology.
+    *   ITM asked about dependencies on DIB's internal IT resources. **TBD - clarify resource allocation and availability with DIB ITM.**
+    *   **Action: Systems Ltd Karachi team to provide a more granular project plan with key milestones and dependencies.**
+
+*   **Technical Debt:**
+    *   ITM raised concerns about potential technical debt if customization is not managed carefully. "We don't want to inherit a system that's hard to maintain."
+    *   Sana acknowledged this. **Action: Systems Ltd COE (Center of Excellence) to review proposed customizations for potential technical debt implications. Provide recommendations for mitigation.**
+    *   **Action: Systems Ltd COE to assess existing technical debt within Nimbus platform and outline any potential impact on this integration.**
+
+*   **Follow-ups & Action Items:**
+
+    *   **Systems Ltd (Karachi Dev Team):**
+        *   Provide detailed integration plan for Nimbus with DIB core banking system (ITM's question).
+        *   Develop granular project plan with milestones and dependencies.
+        *   Assess impact of proposed UI customizations on Nimbus core and present options.
+        *   Provide detailed breakdown of pricing, including tiered options.
+        *   Confirm Nimbus capabilities for automated KYC/AML checks.
+
+    *   **Systems Ltd (COE Teams):**
+        *   Review proposed customizations for technical debt and provide mitigation strategies.
+        *   Assess existing technical debt within Nimbus and its impact.
+
+    *   **Systems Ltd (Sana/Ayesha):**
+        *   Provide detailed flow 
+[CLIENT SENSITIVE: Redacted competitive information]
+comparison for customer onboarding.
+        *   Provide compliance whitepaper on data residency and security.
+        *   Confirm support for specific loan products.
+
+    *   **Dubai Islamic Bank (ITM):**
+        *   Clarify internal IT resource availability and allocation for the project.
+
+    *   **Systems Ltd (Finance):**
+        *   Explore potential regional discounts/package deals for DIB.
+
+**Next Steps:**
+
+*   Systems Ltd to provide updated documentation and revised project plan by **November 9, 2023**.
+*   Follow-up meeting schedule
+[ACTION: Schedule follow-up with Systems Ltd COE team]
+d for **November 16, 2023** to review updated proposals.
+
+---
+**Notes taken by:** Sana Mahmood (Systems Ltd)

@@ -1,0 +1,276 @@
+=== SYSTEMS LTD DOCUMENT ===
+=== METADATA ===
+{
+  "document_type": "technical_runbook",
+  "vendor": "Systems Ltd",
+  "system": "Nexus Core Banking",
+  "client": "PTCL",
+  "project_code": "SL-9488-2025",
+  "environment": "DR",
+  "last_updated": "2025-07-03T17:48:58.916698",
+  "version": "3.1",
+  "support_contact": "Kamran Ali (Security Consultant)",
+  "doc_id": "SL-technical_runbook-1f69fb"
+}
+
+=== CONTENT ===
+## Nexus Core Banking - PTCL Staging KHI Runbook
+
+**Project Code:** SL-9488-2025
+**Environment:** Staging KHI
+**Document Version:** 1.2
+**Last Updated:** 2025-10-27
+
+---
+
+### 1. System Overview
+
+Nexus Core Banking is Systems Ltd's flagship core banking solution, providing a comprehensive suite of modules for retail and corporate banking operations. This deployment at PTCL's Staging KHI environment serves as a critical testing ground for new features and configurations before production rollout.
+
+**Architecture:**
+
+The Nexus Core Banking system at PTCL Staging KHI is a multi-tiered application comprising:
+
+*   **Presentation Tier:** Web-based user interfaces accessed via standard browsers.
+*   **Application Tier:** Java-based business logic layer, utilizing the **SL-Velocity Framework** for rapid development and deployment. This tier handles transaction processing, customer management, account services, and other core banking functions.
+*   **Data Tier:** Oracle Database 19c, storing all transactional and customer data.
+*   **Integration Tier:** A mix of modern APIs and legacy integration methods to connect with PTCL's existing infrastructure.
+
+**Outdated Diagrams:**
+
+*(Please note: The following diagrams are based on the initial deployment phase and may not reflect all recent minor adjustments. For the most up-to-date architectural overview, please refer to the latest internal Systems Ltd architecture documentation, accessible via the SL-DevOps Portal.)*
+
+**Diagram 1.1: High-Level Nexus Core Banking Architecture (Staging KHI)**
+
+```
++-----------------+     +-----------------+     +-----------------+
+|                 |     |                 |     |                 |
+|  User Browsers  | --> |  Web Servers    | --> |  App Servers    |
+|                 |     | (Apache Tomcat) |     | (Java/SL-Velocity)|
++-----------------+     +-----------------+     
+**NOTE: Contact DevOps team at Karachi HQ for production access**
++-----------------+
+                                |                       |
+                                |                       |
+                                v                       v
+                        +-----------------+     +-----------------+
+                        |                 |     |                 |
+                        |  Load Balancer  | --> |  Database Server|
+                        | (NGINX)         |     | (Oracle 19c)    |
+                        +-----------------+     +-----------------+
+                                |
+                                |
+                                v
+                        +-----------------+
+                        |                 |
+                        |  Integration    |
+                        |  Layer          |
+                        | (ESB/Legacy)    |
+                        +-----------------+
+```
+
+**Diagram 1.2: Integration Layer (Simplified)**
+
+```
++-----------------+     +-----------------+     +-----------------+
+|                 |     |                 |     |                 |
+| Nexus Core      | --> |  ESB (MuleSoft) | --> |  PTCL Legacy    |
+| Banking         |     |                 |     |  Systems        |
+| (Staging KHI)   |     |                 |     | (e.g., Billing) |
++-----------------+     +-----------------+     +-----------------+
+                                |
+                                | (Deprecated)
+                                v
+                        +-----------------+
+                        |                 |
+                        |  Direct DB      |
+                        |  Connections    |
+                        | (Stored Procs)  |
+                        +--------------
+**NOTE: Contact DevOps team at Karachi HQ for production access**
+---+
+```
+
+---
+
+### 2. Deployment Procedures for UAE/KSA Environments
+
+While this runbook focuses on Staging KHI, the following outlines key considerations for UAE and KSA deployments, which leverage specific configurations within the **SL-Globalize Module**:
+
+**2.1. UAE Deployment Considerations:**
+
+*   **Currency:** AED (United Arab Emirates Dirham). Ensure all relevant currency codes and exchange rate tables are updated.
+*   **Regulatory Compliance:**
+    *   **UAE Central Bank (CBUAE) Directives:** Specific reporting formats and data retention policies are enforced. The **SL-Compliance Engine** is configured with UAE-specific templates.
+    *   **Known Issue:** Recent CBUAE directives regarding real-time transaction reporting have introduced minor latency in the **SL-Reporting Module** when processing high volumes. A workaround involves pre-batching reports during off-peak hours. Refer to **Known Issues Section 5.2**.
+*   **Market-Specific Features:**
+    *   **Islamic Banking Modules:** If deployed, ensure the **SL-Sharia Compliance Module** is correctly configured with relevant contracts and profit distribution mechanisms.
+    *   **Customer Segmentation:** Configurations for customer tiers and associated service charges are tailored to the UAE market.
+
+**2.2. KSA Deployment Considerations:**
+
+*   **Currency:** SAR (Saudi Riyal). Similar to UAE, ensure currency codes and exchange rates are accurate.
+*   **Regulatory Compliance:**
+    *   **Saudi Central Bank (SAMA) Directives:** Adherence to SAMA's data privacy and reporting standards is paramount. The **SL-DataMasking Modul
+[LEGACY: Required for Dubai Islamic Bank integration]
+e** is configured to anonymize sensitive customer data for specific reporting purposes.
+    *   **Known Issue:** The integration with the **Saudi Payments Network (SPN)** via the **SL-Payment Gateway** has experienced intermittent connectivity issues during peak hours. This is often related to upstream network congestion. A workaround involves implementing a retry mechanism with exponential backoff in the integration layer. Refer to **Known Issues Section 5.3**.
+*   **Market-Specific Features:**
+    *   **Hajj/Umrah Season Features:** Specific product offerings and fee structures may be activated during these periods.
+    *   **Digital Onboarding:** Enhanced features for remote customer onboarding are often prioritized for the KSA market.
+
+---
+
+### 3. Client-Specific Configuration (PTCL Staging KHI)
+
+This section details configurations unique to PTCL's Staging KHI environment.
+
+**3.1. Environment Details:**
+
+*   **Application Server Hostnames:**
+    *   `nexus-app-staging-khi-01.ptcl.local`
+    *   `nexus-app-staging-khi-02.ptcl.local`
+*   **Database Server:** `ptcl-db-staging-khi.ptcl.local`
+*   **Database Instance:** `NEXUSSTG`
+*   **Database Credentials (Redacted):**
+    *   **Username:** `nexus_app_user`
+    *   **Password:** `N3xusP@$$w0rdKHI_STG_2025!` ( **DO NOT SHARE THIS PASSWORD OUTSIDE OF AUTHORIZED PERSONNEL.** )
+*   **Web Server:** `nexus-web-staging-khi.ptcl.local`
+*   **Load Balancer:** `nexus-lb-staging-khi.ptcl.local`
+*   **ESB Endpoint:** `http://ptcl-esb-staging.ptcl.local:8080/nexus-integration-service`
+*   **SL-Velocity Framework Version:** 3.5.2
+*   **Oracle Database Version:** 19c (19.15.0.0)
+*   **Java Version:** OpenJDK 11.0.15
+
+**3.2. PTCL Customizations:**
+
+*   **Customer Onboarding Workflow:** PTCL has implemented a custom workflow for customer onboarding, integrated with their internal KYC verification system. This involves a series of API calls to `ptcl-kyc-api.ptcl.local`.
+*   **Branch-Specific Product Catalogs:** The system dynamically loads product offerings based on the originating branch, managed through a custom configuration file (`ptcl_product_catalog_khi.xml`) located in `/opt/nexus/config/client/`.
+*   **Reporting Enhancements:** PTCL has requested specific data points in their daily reconciliation reports, requiring modifications to the **SL-Reporting Module's** SQL queries. These modifications are managed via custom SQL scripts in `/opt/nexus/scripts/ptcl_custom_reports/`.
+
+---
+
+### 4. Integration Points with Client Legacy Systems
+
+Nexus Core Banking integrates with several of PTCL's legacy systems. This section details these integrations, including any known workarounds for legacy methods.
+
+**4.1. PTCL Billing System:**
+
+*   **Integration Method:**
+    *   **Primary:** Real-time API calls via the ESB (MuleSoft) for transaction posting and account updates.
+    *   **Deprecated (Still in Use):** Direct database inserts into the PTCL Billing System's staging tables (`PTCL_BILLING_STG`) using stored procedures. This method is used for batch processing of certain account adjustments.
+*   **Workaround for Deprecated Method:** Due to the legacy nature of the direct database inserts, there's a known issue where transaction IDs can occasionally be duplicated if the batch process is interrupted and restarted. The workaround involves a manual reconciliation script (`reconcile_billing_stg.sql`) that identifies and flags duplicate entries before they are processed by the billing system. This script is located in `/opt/nexus/scripts/integration/`.
+
+**4.2. PTCL Customer Relationship Management (CRM):**
+
+*   **Integration Method:**
+    *   **Primary:** Asynchronous messaging via JMS queues for customer data synchronization.
+    *   **Legacy:** Periodic file transfers (CSV format) of customer updates from Nexus to the CRM. This is handled by a scheduled job that exports data from the Nexus database.
+*   **Workaround for Legacy Method:** The file transfer process is prone to errors if the file naming convention is not strictly adhered to. The convention is `PTCL_CRM_UPDATE_YYYYMMDD_HHMMSS.csv`. A script (`validate_crm_export.sh`) is in place to check file integrity and naming before the transfer.
+
+**4.3. PTCL ATM Network:**
+
+*   **Integration Method:** ISO 8583 messages are processed through a dedicated gateway.
+*   **Client-Specific Customization:** PTCL has a custom field mapping for certain transaction types within the ISO 8583 messages, managed by the **SL-ISO8583 Adapter**. This mapping is stored in `ptcl_iso8583_mapping.xml` within the adapter's configuration directory.
+
+---
+
+### 5. Known Issues and Workarounds
+
+This section documents known issues encountered in the Staging KHI environment and their associated workarounds.
+
+**5.1. General Performance Degradation:**
+
+*   **Issue:** Occasional slowdowns in transaction processing during peak hours, particularly affecting account balance inquiries.
+*   **Cause:** High load on the application servers combined with inefficient SQL queries in the **SL-Transaction Module** for certain complex account types.
+*   **Workaround:**
+    1.  Restart the affected application server instances.
+    2.  If the issue persists, temporarily disable the **SL-RealtimeAnalytics Module** (which consumes significant resources for live dashboard updates) via the **SL-Ops Console**.
+    3.  **Tribal Knowledge:** For persistent DB performance issues, **Contact Asif in Karachi for DB issues**. He has deep knowledge of PTCL's specific Oracle tuning parameters.
+
+**5.2. UAE Central Bank (CBUAE) Compliance Latency:**
+
+*   **Issue:** As noted in Section 2.1, the **SL-Reporting Module** can experience latency when generating CBUAE-compliant reports under high transaction volumes.
+*   **Workaround:** Schedule the generation of CBUAE compliance reports during off-peak hours (e.g., after midnight local time
+**NOTE: Contact DevOps team at Karachi HQ for production access**
+). This can be automated using the **SL-Scheduler Module**.
+
+**5.3. Saudi Payments Network (SPN) Connectivity:**
+
+*   **Issue:** As noted in Section 2.2, intermittent connectivity issues with the SPN via the **SL-Payment Gateway**.
+*   **Workaround:** Implement a retry mechanism with exponential backoff in the integration layer. The current configuration in the **SL-Payment Gateway** has a default retry count of 3 with a 5-second delay. Increase this to 5 retries with a 10-second delay if issues persist. This is configured in `payment_gateway_config.properties` on the application servers.
+
+**5.4. Regional Network Issues (Pakistan):**
+
+*   **Issue:** Intermittent connectivity drops between the Staging KHI environment and other PTCL data centers or external services due to regional network instability.
+*   **Troubleshooting Steps:**
+    1.  **Check Network Monitoring Tools:** Verify the status of PTCL's internal network infrastructure using their provided monitoring dashboards.
+    2.  **Ping/Traceroute:** Perform ping and traceroute tests from the application servers to the affected external services or internal PTCL systems.
+        *   Example: `ping ptcl-external-service.com`
+        *   Example: `traceroute ptcl-internal-dc.ptcl.local`
+    3.  **Firewall Logs:** Review firewall logs on the Nexus application servers and PTCL's network edge for any blocked traffic.
+    4.  **Contact PTCL Network Operations:** If network issues are suspected, escalate to the PTCL Network Operations Center (NOC) for further investigation.
+
+---
+
+### 6. Systems Ltd Support Contacts
+
+For any issues requiring Systems Ltd support, please refer to the following contacts.
+
+**6.1. Karachi Office:**
+
+*   **Primary Contact:** Tariq Nadeem (DevOps Specialist)
+    *   **Phone:** +92 300 123 4567
+    *   **Email:** tariq.nadeem@systemsltd.com
+*   **Secondary Contact (DB Issues):** Asif Khan (Senior Database Administrator)
+    *   **Phone:** +92 301 987 6543
+    *   **Email:** asif.khan@systemsltd.com
+*   **Emergency Contact (24/7):** Systems Ltd Karachi Support Hotline
+    *   **Phone:** +92 21 111 797 797 (Ext. 500)
+
+**6.2. Lahore Office:**
+
+*   **Primary Contact:** Fatima Ali (Application Support Lead)
+    *   **Phone:** +92 42 111 797 797 (Ext. 201)
+    *   **Email:** fatima.ali@systemsltd.com
+*   **Secondary Contact:** Bilal Ahmed (Senior Systems Engineer)
+    *   **Phone:** +92 42 111 797 797 (Ext. 205)
+    *   **Email:** bilal.ahmed@systemsltd.com
+
+---
+
+### 7. Change Management Process
+
+All changes to the Nexus Core Banking Staging KHI environment must follow the established Systems Ltd Change Management Process.
+
+**7.1. Change Request Submission:**
+
+*   All proposed changes must be submitted via the **SL-Chang
+[WARNING: This method deprecated in v3.2 - use only for UAE clients]
+eTracker Portal**.
+*   Change requests should include:
+    *   Project Code: SL-9488-2025
+    *   Environment: Staging KHI
+    *   Detailed description of the change.
+    *   Justification for the change.
+    *   Impact assessment.
+    *   Rollback plan.
+    *   Testing procedures.
+
+**7.2. Change Approval:**
+
+*   Changes are reviewed and approved by the Systems Ltd Project Manager and the PTCL Client DBA Group.
+*   For critical changes or emergency fixes, an expedited approval process may be followed, requiring verbal approval from key stakeholders.
+
+**7.3. Change Implementation:**
+
+*   Changes are implemented during scheduled maintenance windows, typically on weekends, to minimize disruption.
+*   All implementations must be documented in the **SL-ChangeTracker Portal** upon completion.
+
+**7.4. Post-Implementation Verification:**
+
+*   Post-implementation testing is conducted by the Systems Ltd QA team and the PTCL Client DBA Group to ensure the change was successful and did not introduce regressions.
+
+---
+
+**End of Runbook**

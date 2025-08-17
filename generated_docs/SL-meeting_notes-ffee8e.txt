@@ -1,0 +1,107 @@
+=== SYSTEMS LTD DOCUMENT ===
+=== METADATA ===
+{
+  "document_type": "meeting_notes",
+  "vendor": "Systems Ltd",
+  "client": "Jazz Telecom",
+  "project_code": "SL-9514-2025",
+  "meeting_type": "Project Crisis Meeting",
+  "date": "2025-07-07T17:56:08.716035",
+  "location": "Client Dubai Office | Karachi HQ",
+  "duration": "46 minutes",
+  "doc_id": "SL-meeting_notes-ffee8e"
+}
+
+=== CONTENT ===
+## Project Crisis Meeting Notes - SL-9514-2025
+
+**Date:** October 26, 2023
+**Time:** 10:00 AM - 11:30 AM PKT
+**Project:** SL-9514-2025 - Jazz Telecom Core Banking Integration
+**Location:** Virtual Meeting
+
+**Attendees:**
+
+*   **Systems Ltd:**
+    *   Hina Sheikh (Delivery Head)
+    *   Ayesha Siddiqui (UX Designer)
+*   **Jazz Telecom:**
+    *   [CTO Representative] (CTO Rep)
+    *   [Head of Operations] (HoOps)
+    *   [IT Manager] (ITM)
+
+---
+
+**Meet
+[Discussing off-topic: Ramadan working hours]
+ing Objective:** Address critical issues impacting SL-9514-2025 project timeline and scope.
+
+---
+
+**Discussion Points:**
+
+1.  **Nexus Core Banking Integration Status:**
+    *   Hina: Update on integration progre
+[ACTION: Schedule follow-up with Systems Ltd COE team]
+ss. Seems slower than expected.
+    *   CTO Rep: Yes, significant delays. Client team flagging issues with Nexus Core. Specifically, the **Collections Hub** module integration is problematic.
+    *   HoOps: Also concerned about **Loan Origination** module. Data mappi
+[CLIENT SENSITIVE: Redacted competitive information]
+ng issues.
+    *   Ayesha: UX flows for Loan Origination need client sign-off. Delays in feedback.
+    *   ITM: Technical debt on our side impacting integration speed. Need clarity on Systems Ltd's approach to handling this.
+
+2.  **Scope Disagreements & Customization:**
+    *   CTO Rep: We requested specific customizations for Collections Hub to align with SBP regulations. Systems Ltd's understanding of "customization" seems different from ours.
+    *   Hina: We understood it as configuration within Nexus. Extensive code changes weren't budgeted.
+    *   HoOps: But the UAE Central Bank compliance also requires certain workflows. This isn't just SBP.
+    *   ITM: The current implementation is too generic. We need it tailored.
+    *   Hina: TBD - check with Systems Ltd architect on the exact nature of requested changes vs. standard configuration.
+    *   CTO Rep: This is impacting our go-live date. We're already behind.
+
+3.  **Pricing & Budget:**
+    *   CTO Rep: The initial USD 1.5M quote was for standard integration. These customizations are adding significant cost.
+    *   Hina: We need to re-evaluate the scope and provide a revised quote. The Pakistan/Middle East market context means budget constraints are real for clients.
+    *   HoOps: We can't absorb unlimited cost increases. Need a clear breakdown of additional costs for each customization.
+    *   ITM: Are these customizations impacting the core platform's stability?
+
+4.  **Timeline Delays & Client Concerns:**
+    *   HoOps: Our internal teams are ready. The delay is entirely on the integration side. This impacts our Q1 2025 launch targets.
+    *   CTO Rep: We need a concrete recovery plan. What are Systems Ltd's Karachi development team doing to expedite?
+    *   Hina: We are prioritizing the critical path items. The Karachi team is working on the data mapping fixes.
+
+5.  **Technical Debt:**
+    *   ITM: We've identified technical debt in the Nexus Core platform that's hindering our ability to integrate smoothly. Specifically, legacy code in the Collections Hub.
+    *   Hina: We need to understand the extent of this debt. This requires involvement from our COE teams.
+    *   CTO Rep: This is a Systems Ltd issue. We expect you to manage it.
+
+---
+
+**Action Items:**
+
+*   **Systems Ltd Karachi Dev Team:**
+    *   Prioritize data mapping fixes for Loan Origination module. (Owner: TBD - Karachi Lead)
+    *   Investigate and resolve integration issues with Collections Hub. (Owner: TBD - Karachi Lead)
+    *   Provide detailed breakdown of effort for requested customizations in Collections Hub and Loan Origination. (Owner: TBD - Karachi Lead)
+*   **Systems Ltd Delivery Head (Hina):**
+    *   Schedule follow-up with Systems Ltd COE teams (Architecture, Nexus Core) regarding technical debt and customization scope. (Owner: Hina)
+    *   Develop a revised project plan with clear milestones and resource allocation for the remaining integration work. (Owner: Hina)
+    *   Prepare a revised cost estimate for the agreed-upon customizations. (Owner: Hina)
+*   **Jazz Telecom IT Manager (ITM):**
+    *   Provide detailed documentation on specific SBP and UAE Central Bank compliance requirements impacting the modules. (Owner: ITM)
+    *   Share current technical debt assessment for Nexus Core platform. (Owner: ITM)
+
+---
+
+**Follow-ups:**
+
+*   Systems Ltd COE (Architecture) to confirm feasibility and effort for requested customizations.
+*   Systems Ltd COE (Nexus Core) to provide insights on technical debt impact and mitigation strategies.
+*   Systems Ltd Delivery Head to present revised plan and cost estimate by EOD November 2nd, 2023.
+
+---
+
+**Next Meeting:** November 5th, 2023, 10:00 AM PKT. Focus on revised plan and costings.
+
+---
+**Notes Taker:** Ayesha Siddiqui (UX Designer)
