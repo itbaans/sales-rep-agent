@@ -159,25 +159,25 @@ def get_stage_guidance_prompt(state: ConversationState) -> str:
     """
     
     history_str = "\n".join(
-        [f"User: {msg['user']}\nAgent: {msg['agent']}" for msg in state.messages]
+        f"{msg['role'].capitalize()}: {msg['content']}" for msg in state.get('messages', [])
     )
 
-    past_guidance_str = state.stage_guidance or "None provided yet."
-    
+    past_guidance_str = state.get('stage_guidance', "None provided yet.")
+
     lead_score_str = (
-        f"Budget Fit: {state.lead_qualification_score.get('budget_fit', 'N/A')}, "
-        f"Authority: {state.lead_qualification_score.get('authority', 'N/A')}, "
-        f"Need Urgency: {state.lead_qualification_score.get('need_urgency', 'N/A')}, "
-        f"Engagement: {state.lead_qualification_score.get('engagement', 'N/A')}"
-        if state.lead_qualification_score else "Not yet evaluated."
+        f"Budget Fit: {state.get('lead_qualification_score', {}).get('budget_fit', 'N/A')}, "
+        f"Authority: {state.get('lead_qualification_score', {}).get('authority', 'N/A')}, "
+        f"Need Urgency: {state.get('lead_qualification_score', {}).get('need_urgency', 'N/A')}, "
+        f"Engagement: {state.get('lead_qualification_score', {}).get('engagement', 'N/A')}"
+        if state.get('lead_qualification_score') else "Not yet evaluated."
     )
     
     objections_str = (
-        ", ".join(state.detected_objections) if state.detected_objections else "None detected yet."
+        ", ".join(state.get('detected_objections', [])) if state.get('detected_objections', []) else "None detected yet."
     )
     
     buying_signals_str = (
-        ", ".join(state.buying_signals_detected) if state.buying_signals_detected else "None detected yet."
+        ", ".join(state.get('buying_signals_detected', [])) if state.get('buying_signals_detected', []) else "None detected yet."
     )
     
     prompt = f"""

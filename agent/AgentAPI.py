@@ -1,10 +1,7 @@
-"""
-Simple API interface for the agent that can be used by both CLI and UI
-"""
 from agent.graph import create_agent_graph
 from agent.services.memory_manager import load_memory
 import json
-
+import uuid
 from agent.services.memory_manager import load_memory
 from agent.state import ConversationState
 
@@ -26,11 +23,10 @@ def load_initial_data(state: ConversationState) -> ConversationState:
         
     # Initialize turn tracking and other state fields
     state['messages'] = []
-    state['scratchpad'] = []  # Now stores structured turn data
+    state['scratchpad'] = []
     state['retrieved_docs'] = []
     state['turn_counter'] = 0
     state['current_turn_actions'] = []
-
     state['is_end'] = False
     
     return state
@@ -57,13 +53,20 @@ class AgentAPI:
             return False
     
     def get_opening_statement(self, lead_id: str) -> str:
-
         if self.state is None:
             self.state = load_initial_data({"lead_id": lead_id})
 
         """Get opening statement for a lead"""
         try:
-            config = {"configurable": {"thread_id": f"{lead_id}"}}
+            # Enhanced config with metadata for LangSmith
+            config = {
+                "configurable": {"thread_id": f"{lead_id}"},
+                "metadata": {
+                    "lead_id": lead_id,
+                    "interaction_type": "opening_statement",
+                    "session_id": str(uuid.uuid4())
+                }
+            }
             
             # Run graph to generate opening statement
             self.state = self.app.invoke(self.state, config)
@@ -80,19 +83,27 @@ class AgentAPI:
         except Exception as e:
             print(f"Error getting opening statement: {e}")
             return "Hello! I'm Zain from Systems Limited. How can I help you today?"
-    
 
     def set_user_response(self, user_input: str) -> str:
-        if(self.state is None): print("IM NONE!")
+        if(self.state is None): 
+            print("IM NONE!")
         self.state['user_input'] = user_input
         self.state['messages'].append({"role": "user", "content": user_input})
         return
 
-
     def process_message(self, lead_id: str, user_input: str) -> str:
         """Process user message and get agent response"""
         try:
-            config = {"configurable": {"thread_id": f"{lead_id}"}}
+            # Enhanced config with metadata for LangSmith
+            config = {
+                "configurable": {"thread_id": f"{lead_id}"},
+                "metadata": {
+                    "lead_id": lead_id,
+                    "interaction_type": "message_processing",
+                    "user_input_length": len(user_input),
+                    "turn_number": self.state.get('turn_counter', 0) + 1
+                }
+            }
             
             # Prepare the state with conversation context
             self.state['user_input'] = user_input
@@ -100,12 +111,12 @@ class AgentAPI:
                 self.state['messages'].append({"role": "user", "content": user_input})
             
             self.state = self.app.invoke(self.state, config)
+            
             # Extract agent response
             result_messages = self.state.get('messages', [])
             agent_messages = [msg for msg in result_messages if msg.get('role') == 'agent']
             
             if agent_messages:
-                # Get the last agent message (most recent response)
                 return agent_messages[-1]['content']
             else:
                 return "I'm having trouble processing that. Could you please try again?"

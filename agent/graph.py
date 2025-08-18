@@ -1,5 +1,5 @@
 import json
-from langgraph.graph import StateGraph, END
+from langgraph.graph import StateGraph, END, START
 from agent.state import ConversationState
 from agent.nodes import reasoning, finalization
 from agent.services.turn_manager import TurnManager
@@ -66,12 +66,21 @@ def create_agent_graph() -> StateGraph:
     # Add ALL nodes
     workflow.add_node("think", reasoning.think)
     workflow.add_node("execute_tool", reasoning.execute_tool)
-    workflow.add_node("stage_guidance", stage_guidance.stage_guidance)  # NEW
+    workflow.add_node("stage_guidance", stage_guidance.stage_guidance_node)  # NEW
     workflow.add_node("finalize", finalization.update_summary_and_insights)
 
-    # Set Entry Point
-    workflow.set_entry_point("think")
+    workflow.add_conditional_edges(
+        START,
+        should_invoke_stage_guidance,
+        {
+            True: "stage_guidance",
+            False: "think"
+        }
+    )
 
+    workflow.add_edge("stage_guidance", "think")
+
+    # Main reasoning loop
     workflow.add_conditional_edges(
         "think",
         should_continue_reasoning,
@@ -82,18 +91,8 @@ def create_agent_graph() -> StateGraph:
         },
     )
 
-    # If we decide to invoke guidance
-    workflow.add_conditional_edges(
-        "execute_tool",
-        lambda state: "stage_guidance" if should_invoke_stage_guidance(state) else "think",
-        {
-            "stage_guidance": "stage_guidance",
-            "think": "think"
-        }
-    )
-
-    # After guidance → continue thinking
-    workflow.add_edge("stage_guidance", "think")
+    # After tool execution → go back to guidance check
+    workflow.add_edge("execute_tool", "think")
 
     workflow.add_edge("finalize", END)
 

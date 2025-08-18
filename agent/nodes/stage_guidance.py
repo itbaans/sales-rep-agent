@@ -1,9 +1,11 @@
 import json
 from agent.services.llm_service import get_llm
 from agent.state import ConversationState
-from prompts import get_stage_guidance_prompt
+from agent.prompts import get_stage_guidance_prompt
 
 def stage_guidance_node(state: ConversationState) -> ConversationState:
+    print("---NODE: STAGE_GUIDANCE---")
+
     llm = get_llm()
 
     prompt = get_stage_guidance_prompt(state)

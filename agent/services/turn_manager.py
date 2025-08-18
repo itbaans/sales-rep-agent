@@ -75,7 +75,10 @@ class TurnManager:
         state['scratchpad'].append(turn_entry)
         
         # Clear current turn actions
-        state['current_turn_actions'] = []
+        if 'current_turn_actions' in state:
+            state['current_turn_actions'].clear()  # Use .clear() method
+        else:
+            state['current_turn_actions'] = []
         
         return state
     

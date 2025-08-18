@@ -22,7 +22,7 @@ def think(state: ConversationState) -> ConversationState:
         TurnManager.start_new_turn(state, user_query=None)
         return state
 
-    if state['messages'][-1]['role'] == 'user' and state['current_turn_actions'] is None:
+    if state['messages'][-1]['role'] == 'user' and not state.get('current_turn_actions'):
         user_query = state['messages'][-1]['content']
         TurnManager.start_new_turn(state, user_query=user_query)
 
@@ -113,7 +113,7 @@ def execute_tool(state: ConversationState) -> ConversationState:
     if tool == "search_company_case_studies":
         keywords = action.get("keywords", "")
         result = search_company_case_studies(keywords)
-        print(f"Case Studies Result: {result}")
+        #print(f"Case Studies Result: {result}")
         
         TurnManager.add_action_to_current_turn(
             state,
@@ -130,7 +130,7 @@ def execute_tool(state: ConversationState) -> ConversationState:
     elif tool == "search_technical_capabilities":
         keywords = action.get("keywords", "")
         result = search_technical_capabilities(keywords)
-        print(f"Technical Capabilities Result: {result}")
+        #print(f"Technical Capabilities Result: {result}")
         
         TurnManager.add_action_to_current_turn(
             state,
@@ -147,7 +147,7 @@ def execute_tool(state: ConversationState) -> ConversationState:
     elif tool == "search_pricing_models":
         keywords = action.get("keywords", "")
         result = search_pricing_models(keywords)
-        print(f"Pricing Models Result: {result}")
+        #print(f"Pricing Models Result: {result}")
         
         TurnManager.add_action_to_current_turn(
             state,
@@ -164,7 +164,7 @@ def execute_tool(state: ConversationState) -> ConversationState:
     elif tool == "search_company_profile":
         keywords = action.get("keywords", "")
         result = search_company_profile(keywords)
-        print(f"Company Profile Result: {result}")
+        #print(f"Company Profile Result: {result}")
         
         TurnManager.add_action_to_current_turn(
             state,
@@ -181,7 +181,7 @@ def execute_tool(state: ConversationState) -> ConversationState:
     elif tool == "search_knowledge_base":
         query = action.get("query", "")
         result = search_knowledge_base(query)
-        print(f"Knowledge Base Result: {result}")
+        #print(f"Knowledge Base Result: {result}")
         
         TurnManager.add_action_to_current_turn(
             state,
