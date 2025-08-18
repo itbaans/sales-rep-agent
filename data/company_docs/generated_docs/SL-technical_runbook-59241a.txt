@@ -1,0 +1,286 @@
+=== SYSTEMS LTD DOCUMENT ===
+=== METADATA ===
+{
+  "document_type": "technical_runbook",
+  "vendor": "Systems Ltd",
+  "system": "Quantum Data Analytics",
+  "client": "Saudi Telecom Company",
+  "project_code": "SL-6945-2025",
+  "environment": "Production",
+  "last_updated": "2025-07-18T18:03:18.591687",
+  "version": "3.3",
+  "support_contact": "Sana Mahmood (Business Analyst)",
+  "doc_id": "SL-technical_runbook-59241a"
+}
+
+=== CONTENT ===
+## Runbook: Quantum Data Analytics (QDA) - Saudi Telecom Company (STC)
+
+**Project Code:** SL-6945-2025
+**Environment:** Staging KHI (Saudi Arabia)
+**Document Version:** 1.2
+**Last Updated:** 2025-10-27
+
+---
+
+### 1. System Overview
+
+**1.1 Introduction**
+
+This runbook provides technical operational guidance for the Quantum Data Analytics (QDA) platform deployed at Saudi Telecom Company (STC). QDA is a proprietary Systems Ltd. solution designed to ingest, process, and analyze large volumes of customer and network data, enabling advanced insights for business intelligence and operational efficiency. This document is intended for Systems Ltd. support personnel and the STC Client Infrastructure Team.
+
+**1.2 Architecture (Conceptual - Outdated Diagram Reference)**
+
+*   **Note:** The following diagram is a conceptual representation and may not reflect the latest minor revisions. For the most up-to-date architectural diagrams, please refer to the Systems Ltd. internal documentation repository (Project SL-6945-2025/Architecture/v1.1_final.drawio).
+
+    ```
+    +-----------------+      +-
+[WARNING: This method deprecated in v3.2 - use only for UAE clients]
+----------------+      +-----------------+
+    | STC Data Sources|----->| QDA Ingestion   |----->| QDA Processing  |
+    | (CDR, Billing,  |      | Layer (SL-Ingest)|      | Layer (SL-Process)|
+    | Network Logs)   |      +-----------------+      +-----------------+
+    +-----------------+                                       |
+                                                                |
+                                                                v
+                                                        +-----------------+
+                                                        | QDA Analytics   |
+                                                        | Engine (SL-QAE) |
+                                                        +-----------------+
+                                                                |
+                                                                v
+                                                        +-----------------+
+                                                        | QDA Reporting & |
+                                                        | Visualization   |
+                                                        | (SL-Viz)        |
+                                                        +-----------------+
+                                                                |
+                                                                v
+                                                        +-----------------+
+                                                        | STC Business    |
+                                                        | Users           |
+                                                        +-----------------+
+    ```
+
+**1.3 Key Components**
+
+*   **SL-Ingest:** Systems Ltd.'s proprietary data ingestion framework, responsible for collecting data from various STC sources. Utilizes a combination of Kafka and custom connectors.
+*   **SL-Process:** The core data processing engine. Leverages Apache Spark and custom Scala/Python scripts for ETL and data transformation.
+*   **SL-QAE (Quantum Analytics Engine):** The proprietary analytics engine that performs advanced statistical analysis and machine learning model inference.
+*   **SL-Viz:** The reporting and visualization layer, built on a customized Tableau Server instance.
+*   **Data Lake/Warehouse:** STC's on-premise Hadoop cluster (HDFS) and Oracle Exadata for structured data storage.
+
+---
+
+### 2. Deployment Procedures for UAE/KSA Environments
+
+**2.1 Pre-Deployment Checklist**
+
+*   Confirm availability of STC Client Infrastructure Team for access and firewall rule updates.
+*   Verify network connectivity between Systems Ltd. staging environment and STC's KSA production environment.
+*   Ensure all required STC security and compliance approvals are obtained.
+*   Download the latest QDA deployment package (SL-6945-2025-QDA-v1.2.tar.gz) from the Systems Ltd. secure repository.
+
+**2.2 Deployment Steps (KSA Staging - KHI)**
+
+1.  **Server Provisioning:**
+    *   **QDA Master Node:** `qda-master-khi.stc.local` (IP: `192.168.1.100`)
+    *   **QDA Worker Nodes (x3):** `qda-worker-khi-01` to `qda-worker-khi-03` (IPs: `192.168.1.101` - `192.168.1.103`)
+    *   **Database Server:** STC provided Oracle Exadata instance.
+    *   **Kafka Cluster:** STC managed Kafka cluster.
+
+2.  **Software Installation:**
+    *   Install Java 11 (OpenJDK) on all QDA nodes.
+    *   Install Python 3.8 on all QDA nodes.
+    *   Install necessary libraries for SL-Ingest, SL-Process, and SL-QAE.
+
+3.  **Configuration:**
+    *   **SL-Ingest:**
+        *   Configure Kafka consumer groups for STC's data streams.
+        *   Update `ingest.conf` with STC-specific topic names and data formats.
+    *   **SL-Process:**
+        *   Configure Spark cluster settings in `spark-defaults.conf`.
+        *   Update `process.conf` with data source connection details.
+    *   **SL-QAE:**
+        *   Configure model paths and parameters in `qae.conf`.
+    *   **SL-Viz:**
+        *   Ensure Tableau Server is configured to connect to the QDA data sources.
+
+4.  **Data Source Connectivity:**
+    *   Establish SSH connectivity to STC's SFTP servers for batch data ingestion.
+    *   Configure JDBC drivers for Oracle Exadata.
+
+5.  **Service Startup:**
+    *   Start SL-Ingest services.
+    *   Start SL-Process jobs.
+    *   Start SL-QAE services.
+
+6.  **Verification:**
+    *   Monitor SL-Ingest logs for successful data reception.
+    *   Check SL-Process job status in Spark UI.
+    *   Run sample queries against SL-QAE to verify data processing.
+    *   Verify reports in SL-Viz are populating correctly.
+
+**2.3 Deployment Steps (UAE - Dubai/Abu Dhabi - Future Reference)**
+
+*   **Note:** Deployment in UAE environments will follow similar procedures but will require specific adherence to UAE Central Bank compliance features and potential network configurations for regional data residency. Detailed UAE deployment runbooks will be provided separately.
+
+---
+
+### 3. Client-Specific Configuration
+
+**3.1 STC Data Source Mapping**
+
+*   **CDR Data:** Ingested from STC's billing system via SFTP. Files are typically compressed (`.gz`) and comma-delimited.
+    *   **Legacy Integration:** STC uses a custom SFTP client (`stc_sftp_client_v2.1`) which requires specific authentication headers. This is a deprecated method, but still in use.
+    *   **Configuration:** `ingest.conf` parameter `stc_sftp_auth_header_enabled=true`.
+*   **Network Logs:** Collected from Cisco routers and Huawei switches. Data format varies, requiring specific parsing logic within SL-Ingest.
+    *   **Client Customization:** STC has implemented custom log parsing rules for specific network devices, documented in `STC_NetworkLog_Parsing_Rules_v3.0.xlsx`. These rules are loaded into SL-Ingest's parser module.
+*   **Customer Profile Data:** Pulled from STC's CRM system via Oracle Exadata.
+
+**3.2 Middle East Market Specifics**
+
+*   **Date/Time Formats:** QDA is configured to handle Hijri calendar dates and Gregorian dates as per STC's requirements. Default locale set to `ar_SA.UTF-8`.
+*   **Currency:** All financial data is processed in Saudi Riyal (SAR).
+*   **Language Support:** While the core QDA interface is English, SL-Viz reports are localized to Arabic for specific user groups.
+
+**3.3 Credentials (Staging KHI)**
+
+*   **STC SFTP Server:**
+    *   Hostname: `sftp.stc.com.sa`
+    *   Username: `stc_qda_user`
+    *   Password: `********` (Redacted - Refer to Systems Ltd. secure vault for actual credential)
+*   **Oracle Exadata:**
+    *   Service Name: `STCPRODDB`
+    *   Username: `STC_QDA_RO`
+    *   Password: `********` (Redacted - Refer to Systems Ltd. secure vault for actual credential)
+*   **Kafka Cluster:**
+    *   Bootstrap Servers: `kafka-broker-1.stc.local:9092,kafka-broker-2.stc.local:9092`
+    *   Security Protocol: `SASL_PLAINTEXT`
+    *   SASL Mechanism: `PLAIN`
+    *   SASL Username: `stc_qda_kafka_user`
+    *   SASL Password: `********` (Redacted - Refer to Systems Ltd. secure vault for actual credential)
+
+---
+
+### 4. Integration Points with Client Legacy Systems
+
+**4.1 SFTP Data Ingestion**
+
+*   **System:** STC Billing System (Legacy AS/400 based)
+*   **Integration Method:** SFTP
+*   **Data Format:** CSV, GZipped
+*   **STC Legacy Integration:** As mentioned in 3.1, STC uses a custom SFTP client (`stc_sftp_client_v2.1`) that requires specific authentication headers. This client is invoked by SL-Ingest.
+    *   **Workaround:** If `stc_sftp_client_v2.1` fails, a fallback mechanism using standard `sftp` command with key-based authentication can be attempted, but this requires STC's explicit approval and key distribution.
+
+**4.2 Network Device Logs**
+
+*   **System:** Cisco Routers, Huawei Switches
+*   **Integration Method:** Syslog forwarding to a dedicated STC Syslog server, which is then accessed by SL-Ingest.
+*   **Data Format:** Syslog (RFC 3164/5424)
+*   **Client Customization:** STC has implemented custom syslog message formats for certain devices, which are handled by the custom parsing rules in SL-Ingest.
+
+**4.3 CRM Data Extraction**
+
+*   **System:** STC CRM (Oracle Database)
+*   **Integration Method:** JDBC
+*   **Data Format:** Relational tables
+*   **Deprecated Method:** STC previously used a custom ETL tool (`STC_ETL_Tool_v1.5`) for data extraction. While QDA uses direct JDBC, understanding this legacy tool is important for historical data context.
+
+---
+
+### 5. Known Issues and Workarounds
+
+**5.1 SBP/UAE Central Bank Compliance Features**
+
+*   **Issue:** The current implementation of SBP/UAE Central Bank compliance features (e.g., specific data masking for sensitive customer information, transaction reporting formats) has known issues with handling edge cases related to prepaid services.
+*   **Impact:** Incorrect data masking or reporting for a small subset of prepaid subscribers.
+*   **Workaround:**
+    1.  Manually review and correct data masking for affected prepaid subscribers in the QDA staging environment.
+    2.  Escalate to Systems Ltd. Development team for a patch. The current workaround involves a manual script (`compliance_patch_prepaid_v0.5.py`) that needs to be run against the affected data.
+   
+[WARNING: This method deprecated in v3.2 - use only for UAE clients]
+ 3.  **Tribal Knowledge:** "If you see compliance errors on prepaid, it's likely the edge case in the `process_compliance_data` module. Ask Asif in Karachi to check the `prepaid_edge_case_handler` function."
+
+**5.2 Regional Network Latency**
+
+*   **Issue:** Intermittent high latency between STC's data centers and the Systems Ltd. cloud infrastructure (if applicable for certain components) can cause data ingestion delays.
+*   **Impact:** Delayed availability of real-time analytics.
+*   **Workaround:**
+    1.  Monitor network performance using `ping` and `traceroute` to STC's data center IPs.
+    2.  If latency is observed, contact the STC Network Operations Center (NOC) to investigate potential network congestion or routing issues.
+    3.  **Tribal Knowledge:** "If data is slow to arrive, check the Saudi-Bahrain fiber link. It's usually the culprit."
+
+**5.3 Legacy SFTP Client Compatibility**
+
+*   **Issue:** The `stc_sftp_client_v2.1` occasionally throws authentication errors due to subtle differences in TLS/SSL cipher suites compared to modern SFTP clients.
+*   **Impact:** Failure to ingest data from STC's billing system.
+*   **Workaround:**
+    1.  Restart the SL-Ingest service.
+    2.  If the issue persists, manually trigger the SFTP transfer using a standard `sftp` client with verbose logging to diagnose the exact TLS/SSL negotiation failure.
+    3.  Contact STC's IT security team to confirm if any recent changes were made to their SFTP server's cipher suite configurations.
+
+---
+
+### 6. Systems Ltd. Support Contacts
+
+**6.1 Emergency Contacts (Karachi Office)**
+
+*   **On-Call Support Lead:**
+    *   Name: Ahmed Khan
+    *   Phone: +92 300 1234567
+    *   Email: ahmed.khan@systemsltd.com
+*   **Database Specialist:**
+    *   Name: Asif Ali
+    *   Phone: +92 300 7654321
+    *   Email: asif.ali@systemsltd.com
+    *   **Tribal Knowledge:** "For any database-related issues, especially performance tuning or schema problems, Asif is your go-to person. He knows the STC Oracle instance like the back of his hand."
+*   **Network & Infrastructure:**
+    *   Name: Fatima Zahra
+    *   Phone: +92 300 9876543
+    *   Email: fatima.zahra@systemsltd.com
+
+**6.2 General Support (Lahore Office)**
+
+*   **Support Desk:**
+    *   Phone: +92 42 111 123 456 (Ext. 789)
+    *   Email: support@systemsltd.com
+    *   Ticketing System: [Link to Systems Ltd. Internal Ticketing System]
+
+**6.3 Client Contact**
+
+*   **Business Analyst (STC):**
+    *   Name: Sana Mahmood
+    *   Email: sana.mahmood@stc.com.sa
+    *   Phone: +966 50 1234567
+
+---
+
+### 7. Change Management Process
+
+**7.1 Change Request Submission**
+
+*   All changes to the QDA environment (configuration updates, code deployments, infrastructure modifications) must be submitted through the Systems Ltd. internal change management portal.
+*   **Change Request Form:** [Link to Systems Ltd. Change Request Form]
+
+**7.2 Approval Workflow**
+
+1.  **Systems Ltd. Technical Review:** The proposed change is reviewed by the Systems Ltd. technical lead for feasibility and impact assessment.
+2.  **STC Client Infrastructure Team Approval:** The change request is sent to the STC Client Infrastructure Team for their review and approval.
+3.  **Business Impact Assessment:** Sana Mahmood (STC Business Analyst) will assess the business impact of the change.
+4.  **Final Approval:** Once all approvals are obtained, the change is scheduled.
+
+**7.3 Deployment Window**
+
+*   Changes will be deployed during pre-defined maintenance windows, typically during off-peak hours (e.g., Friday early morning).
+*   Specific deployment windows will be communicated and agreed upon with the STC Client Infrastructure Team.
+
+**7.4 Rollback Plan**
+
+*   Every change request must include a detailed rollback plan.
+*   In case of critical failure during or after deployment, the rollback plan will be executed immediately.
+*   **Tribal Knowledge:** "Always have a snapshot of the QDA configuration files before any major deployment. It's saved us more than once."
+
+---
+
+**End of Runbook**

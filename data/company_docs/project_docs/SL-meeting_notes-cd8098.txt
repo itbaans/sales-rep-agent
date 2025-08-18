@@ -1,0 +1,123 @@
+=== SYSTEMS LTD PROJECT DOCUMENT ===
+Project: Data Warehouse for GCC Bank
+=== METADATA ===
+{
+  "document_type": "meeting_notes",
+  "project_name": "Data Warehouse for GCC Bank",
+  "vendor": "Systems Ltd",
+  "client": "Unnamed GCC Bank",
+  "project_code": "SL-9162-2022",
+  "meeting_type": "Recovery Planning",
+  "date": "2025-06-08T18:36:58.664812",
+  "location": "Virtual Teams",
+  "duration": "95 minutes"
+}
+
+=== CONTENT ===
+## Meeting Notes: GCC Bank Data Warehouse - Crisis/Status Meeting
+
+**Project Code:** SL-9162-2022
+**Date:** 2023-10-27
+**Time:** 10:00 AM - 11:30 AM (Started 10:15 AM)
+**Location:** Virtual (Teams)
+
+**Attendees:**
+
+*   **Sarah Chen (Project Manager):** (Late arrival, joined 10:20 AM)
+*   **David Lee (Lead Data Engineer):**
+*   **Maria Garcia (Business Analyst):**
+*   **Raj Patel (Senior Developer):**
+*   **Aisha Khan (QA Lead):**
+*   **[CLIENT CONFIDENTIAL] - Mr. Hassan Al-Mansoo
+[Attendee left early for another meeting]
+ri (GCC Bank - Head of Risk Analytics):** (Joined 10:05 AM, left 11:15 AM)
+*   **[CLIENT CONFIDENTIAL] - Ms. Fatima Al-Sabah (GCC Bank - Senior Risk Analyst):** (Joined 10:10 AM)
+
+**Meeting Objective:** Discuss current status, address scope management challenges, and identify path forward for GCC Bank Data Warehouse project, specifically regarding user adoption of credit risk reporting dashboards.
+
+---
+
+**Meeting Minutes:**
+
+**1. Opening & Introductions (10:00 AM - 10:15 AM)**
+
+*   Sarah arrived late, apologized for technical difficulties.
+*   Mr. Al-Mansoori expressed concern about the project's trajectory and the lack of tangible benefits realization.
+*   Ms. Al-Sabah echoed these concerns, highlighting the ongoing reliance on legacy systems for critical reporting.
+
+**2. Project Status & Key Issues (10:15 AM - 10:45 AM)**
+
+*   **Data Warehouse & Analytics Engine:**
+    *   David confirmed the core data warehouse build is complete.
+    *   Data latency reduction from overnight to near-real-time achieved. This was a major win, but...
+    *   Raj mentioned some ETL jobs are still running longer than expected, especially the ones pulling from the new core banking system. We need to re-evaluate the partitioning strategy on the fact tables, but the documentation for that is... well, it's not exactly up-to-date.
+    *   Aisha reported that the automated test suite for the credit risk reporting module is only at 70% coverage. Some edge cases are still being manually tested, which is slowing down the release cycle.
+*   **Dashboard Adoption Challenges:**
+    *   Maria presented findings from user interviews. Users find the dashboards "
+[Important decision made without key stakeholder]
+too complex" and "not intuitive."
+    *   Ms. Al-Sabah stated that the current dashboards don't directly map to the existing regulatory reporting templates, forcing them to still do manual manipulation. This was a key requirement, wasn't it?
+    *   Sarah: "We delivered the functionality as per the SOW, but I agree, the adoption is the real issue now."
+    *   David: "The underlying data model is sound. The issue is how it's being presented. We built a Ferrari, but they're expecting 
+[ACTION ITEM: Unclear owner - never followed up]
+a bicycle."
+    *   Raj: "The front-end framework we used, React Native, might be contributing to the performance issues on the dashboard side. We should have gone with Angular, but that was a scope change we couldn't get approved."
+    *   Mr. Al-Mansoori: "This is precisely the problem. We are not seeing the return on investment. The cost of this project is significant, and we need to see the benefits." (Vague budget concerns raised again).
+
+**3. Scope Management Challenges Discussion (10:45 AM - 11:15 AM)**
+
+*   Sarah: "Looking back, the initial scope definition was... ambitious. We had a lot of 'nice-to-haves' that were treated as 'must-haves' by the business stakeholders at the time."
+*   Maria: "There were several instances where new data sources were requested mid-development, and the impact on the timeline and budget wasn't fully assessed. For example, the request for the historical loan origination data from the legacy system..."
+*   Raj: "That was a critical data source for the risk models! We couldn't just ignore it. And the integration was a nightmare, the APIs were poorly documented."
+*   David: "The data quality from that legacy system is also a major concern. We've had to build significant data cleansing routines, which adds to the technical debt."
+*   Aisha: "We flagged the data quality issues early on, but the decision was to proceed with the data ingestion anyway."
+*   Mr. Al-Mansoori: "We need to understand what was delivered versus what was agreed. The original SOW needs to be reviewed. Were there any formal change requests for these additions?"
+*   Sarah: "We have some change requests, but others were handled through informal discussions and then documented later. It's a bit of a mess."
+*   Ms. Al-Sabah: "The user training was also insufficient. We were given a few sessions, but they were very technical and didn't focus on how to interpret the results for our daily tasks."
+*   David: "The training materials were supposed to be developed by the BA team, but they were never finalized."
+*   Maria: "We were overloaded with the data mapping and validation tasks. We didn't have the bandwidth for comprehensive training material development."
+
+**4. Decisions & Walkbacks (11:15 AM - 11:30 AM)**
+
+*   **Decision:** The team agreed to prioritize a "user experience enhancement" phase for the dashboards.
+*   **Walkback:** Sarah then questioned if this was within the original project scope and if 
+[Attendee left early for another meeting]
+additional budget would be required. "We need to be careful about scope creep *again*."
+*   **Decision:** Mr. Al-Mansoori requested a detailed breakdown of the remaining work and a revised timeline for achieving user adoption.
+*   **Walkback:** Sarah stated that a detailed breakdown would require further analysis and might not be available until next week.
+
+**5. Off-Topic Discussion (11:00 AM - 11:10 AM)**
+
+*   Raj went on a tangent about the merits of microservices architecture versus a monolithic data warehouse, citing a recent conference he attended. This discussion lasted for about 5 minutes before Sarah redirected the conversation.
+
+**6. Next Steps & Action Items:**
+
+*   Review the original SOW and all change requests.
+    *   *Owner:* Sarah
+    *   *Deadline:* N/A
+*   Analyze user feedback and identify specific UI/UX improvements for dashboards.
+    *   *Owner:* Maria
+    *   *Deadline:* N/A
+*   Investigate performance bottlenecks in ETL jobs.
+    *   *Owner:* David
+    *   *Deadline:* N/A
+*   Develop a plan for enhanced user training and documentation.
+    *   *Owner:* Maria, Aisha
+    *   *Deadline:* N/A
+*   [CLIENT CONFIDENTIAL] - Mr. Al-Mansoori to provide feedback on the current reporting templates and desired mapping.
+    *   *Owner:* Mr. Al-Mansoori
+    *   *Deadline:* N/A
+*   **FOLLOW UP:** Schedule a follow-up meeting to discuss the revised plan and budget implications.
+    *   *Owner:* Sarah
+    *   *Deadline:* N/A
+
+**7. Other Notes:**
+
+*   The meeting ran over by 30 minutes.
+*   Several action items were discussed without clear owners or firm deadlines.
+*   The technical debt related to data quality and outdated documentation was acknowledged but no concrete steps were taken to address it.
+*   The overall sentiment was one of frustration and a lack of clear direction.
+
+---
+
+**End of Meeting**

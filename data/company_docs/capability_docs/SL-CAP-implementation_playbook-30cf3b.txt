@@ -1,0 +1,319 @@
+=== SYSTEMS LTD CAPABILITY DOCUMENT ===
+Capability: DevOps, Agile Engineering Practices
+=== METADATA ===
+{
+  "document_type": "implementation_playbook",
+  "capability": "DevOps, Agile Engineering Practices",
+  "version": "1.0",
+  "last_updated": "2023-11-01T18:54:19.480636",
+  "author": "Fatima Khan (Practice Lead)",
+  "review_status": "Needs Update"
+}
+
+=== CONTENT ===
+## Systems Ltd. - DevOps, Agile Engineering Practices Capability: Technical Implementation Playbook
+
+**Version:** 1.3 (Last Updated: 2023-10-27)
+
+**Purpose:** This playbook outlines the technical implementation of Systems Ltd.'s "DevOps, Agile Engineering Practices" capability. It is intended for engineering teams operating within the Studio 77 environment, leveraging modern DevOps tools, CI/CD pipelines, agile frameworks, and automated testing.
+
+---
+
+### 1. Architecture Overview
+
+This section provides a high-level view of the core components supporting our DevOps and Agile Engineering Practices.
+
+*   **Core Platform:** Studio 77 (Proprietary Internal Environment)
+    *   **Compute:** Virtual Machines (VMs) running Ubuntu 20.04 LTS. Specific VM sizes vary based on project needs.
+    *   **Storage:** NFS mounts for shared code repositories and artifact storage.
+    *   **Networking:** Internal Studio 77 network. External access is restricted.
+*   **Version Control:** Git (hosted on internal GitLab instance, `gitlab.systems.local`)
+    *   **Branching Strategy:** Gitflow (with some teams deviating to Trunk-Based Development for faster releases).
+*   **CI/CD Orchestration:** Jenkins (version 2.361.3)
+    *   **Build Agents:** Docker containers running on Studio 77 VMs.
+    *   **Pipeline Definition:** Jenkinsfile (Groovy syntax).
+*   **Containerization:** Docker (version 20.10.17)
+    *   **Registry:** Internal Docker Registry (`docker-registry.systems.local`).
+*   **Automated Testing:**
+    *   **Unit Testing:** JUnit (Java), Pytest (Python), Jest (JavaScript).
+    *   **Integration Testing:** Postman (for API testing), custom scripts.
+    *   **End-to-End Testing:** Selenium WebDriver (Java bindings).
+*   **Configuration Management:** Ansible (version 2.10.7)
+    *   **Playbooks:** Stored in Git.
+*   **Artifact Repository:** Nexus Repository Manager (version 3.37.0)
+    *   **Supported Formats:** Maven, npm, Docker.
+*   **Monitoring & Logging:**
+    *   **Metrics:** Prometheus (version 2.37.0)
+    *   **Alerting:** Alertmanager (version 0.24.0)
+    *   **Logging:** ELK Stack (Elasticsearch 7.17.5, Logstash 7.17.5, Kibana 7.17.5)
+
+**Missing Components:**
+*   Detailed diagram of Studio 77 network topology.
+*   Diagram illustrating the flow of a typical CI/CD pipeline.
+*   Information on how secrets are managed across the pipeline.
+*   Details on the specific Kubernetes cluster configuration (if applicable).
+
+---
+
+### 2. Setup Guide
+
+This guide outlines the initial setup for new projects adopting our DevOps and Agile Engineering Practices.
+
+**Prerequisites:**
+*   Access to Studio 77 environment.
+*   Git credentials.
+*   Docker Hub credentials (for external dependencies, if any).
+
+**Step 1: Project Initialization**
+
+1.  **Create a new Git repository:**
+    *   Navigate to `gitlab.systems.local`.
+    *   Click "New Project".
+    *   Project Name: `[YourProjectName]`
+    *   Visibility Level: Private
+    *   Initialize repository with a README.md.
+    *   **Important:** Ensure the project name follows the `[TeamAbbreviation]-[ApplicationName]` convention (e.g., `ENG-AuthService`).
+
+2.  **Clone the repository:**
+    ```bash
+    git clone git@gitlab.systems.local:[YourNamespace]/[YourProjectName].git
+    cd [YourProjectName]
+    ```
+
+**Step 2: Jenkins Pipeline Setup**
+
+1.  **Create a `Jenkinsfile`:**
+    *   Create a file named `Jenkinsfile` in the root of your repository.
+    *   **Initial Template (Java Project):**
+        ```groovy
+        pipeline {
+            agent any // This will use any available agent. Consider specific labels for better control.
+
+            stages {
+                stage('Checkout') {
+                    steps {
+                        checkout scm
+                    }
+                }
+                stage('Build') {
+                    steps {
+                        // Example for Maven:
+                        sh 'mvn clean package'
+                    }
+                }
+                stage('Test') {
+                    steps {
+                        // Example for Maven:
+                        sh 'mvn test'
+                    }
+                }
+                stage('Build Docker Image') {
+                    steps {
+                        script {
+                            // Hardcoded image name for demonstration.
+                            def imageName = "docker-registry.systems.local/systems-ltd/${env.JOB_NAME}:${env.BUILD_NUMBER}"
+                            sh "docker build -t ${imageName} ."
+                            sh "docker push ${imageName}"
+                        }
+                    }
+                }
+                stage('Deploy to Staging') {
+                    steps {
+                        // Placeholder for deployment script.
+                        echo "Deploying to staging..."
+                        // Ask John Doe about the specific deployment scripts for Staging.
+                    }
+                }
+            }
+            post {
+                always {
+                    // Clean up workspace
+                    cleanWs()
+                }
+   
+[CONFIGURATION: Environment-specific values not parameterized]
+             success {
+                    echo 'Pipeline finished successfully!'
+                }
+                failure {
+                    echo 'Pipeline failed!'
+                    // Consider adding notifications here.
+                }
+            }
+        }
+        ```
+
+2.  **Configure Jenkins Job:**
+    *   Navigate to your Jenkins instance (`jenkins.systems.local`).
+    *   Click "New Item".
+    *   Enter Item Name: `[YourProjectName]`
+    *   Select "Pipeline" and click "OK".
+    *   In the "Pipeline" section:
+        *   Definition: "Pipeline script from SCM"
+        *   SCM: "Git"
+        *   Repository URL: `git@gitlab.systems.local:[YourNamespace]/[YourProjectName].git`
+        *   Credentials: Select your GitLab credentials.
+        *   Branch S
+[CONFIGURATION: Environment-specific values not parameterized]
+pecifier: `*/main` (or your primary branch).
+        *   Script Path: `Jenkinsfile`
+    *   Save the job.
+
+**Environment-Specific Gotchas:**
+*   **Studio 77 VM Agent Configuration:** Ensure your Jenkins build agents are properly configured with the necessary SDKs and tools. If you encounter issues with `mvn` or `docker` commands, check the agent's PATH environment variable. Ask Sarah Lee for the standard build agent image.
+*   **NFS Mount Permissions:** If your build process requires writing to shared directories, ensure correct NFS mount permissions are set. Incorrect permissions are a common cause of build failures.
+*   **Docker Daemon Access:** Jenkins build agents need access to the Docker daemon. This is typically handled by adding the `jenkins` user to the `docker` group on the build agent VM.
+
+---
+
+### 3. Configuration Reference
+
+This section provides examples of common configurations.
+
+**Jenkinsfile Snippets:**
+
+*   **Conditional Stages:**
+    ```groovy
+    stage('Deploy to Production') {
+        when {
+            branch 'main' // Only run on the main branch
+        }
+        steps {
+            echo "Deploying to Production..."
+            // Ask David Chen for production deployment credentials and procedures.
+        }
+    }
+    ```
+
+*   **Environment Variables:**
+    ```groovy
+    environment {
+        // Hardcoded database credentials for a sample project.
+        // NEVER hardcode sensitive information in production Jenkinsfiles.
+        DB_HOST = 'db.staging.systems.local'
+        DB_PORT = '5432'
+        DB_USER = 'staging_user'
+        DB_PASSWORD = 'supersecretpassword123' // Example only! Use Jenkins Credentials.
+    }
+    ```
+
+**Ansible Playbook Snippets:**
+
+*   **Deploying a Dockerized Application:**
+    ```
+**TODO: Add architecture here**
+yaml
+    ---
+    - name: Deploy Dockerized Application
+      hosts: webservers
+      become: yes
+      tasks:
+        - name: Pull latest Docker image
+          docker_image:
+            name: docker-registry.systems.local/systems-ltd/{{ app_name }}:latest
+            source: pull
+
+        - name: Stop existing container (if any)
+          docker_container:
+            name: "{{ app_name }}"
+            state: stopped
+          ignore_errors: yes
+
+        - name: Remove existing container (if any)
+          docker_container:
+            name: "{
+[PERFORMANCE: Known bottlenecks in scaling]
+{ app_name }}"
+            state: absent
+
+        - name: Start new container
+          docker_container:
+            name: "{{ app_name }}"
+            image: docker-registry.systems.local/systems-ltd/{{ app_name }}:latest
+            state: started
+            ports:
+              - "8080:80"
+            restart_policy: always
+            # Add environment variables here if needed
+            # env:
+            #   MY_VAR: "my_value"
+    ```
+
+**Hardcoded Values from Sample Implementations:**
+*   **Nexus Repository URL:** `http://nexus.systems.local:8081`
+*   **Docker Registry URL:** `docker-registry.systems.local`
+*   **Default Staging Environment URL:** `http://staging.systems.local`
+
+---
+
+### 4. Troubleshooting
+
+This section covers common issues encountered during implementation.
+
+1.  **Pipeline Failures:**
+    *   **Check Jenkins Console Output:** This is the first place to look for error messages.
+    *   **Verify Build Agent Environment:** Ensure all necessary tools (Maven, Docker, Node.js, etc.) are installed and configured correctly on the build agent.
+    *   **Permissions Issues:** Check file permissions on the build agent, especially for writing to directories or executing scripts.
+    *   **Network Connectivity:** Ensure the build agent can reach external services (GitLab, Nexus, Docker Registry).
+    *   **Contact Support:** If you cannot resolve the issue after checking the above, please contact the DevOps Support Team at `devops-support@systems.local`.
+
+2.  **Docker Build Failures:**
+    *   **Dockerfile Syntax Errors:** Review your `Dockerfile` for any syntax mistakes.
+    *   **Missing Dependencies in Dockerfile:** Ensure all required packages and libraries are installed within the Docker image build process.
+    *   **Insufficient Disk Space on Build Agent:** Docker images can consume significant disk space. Check available space on the build agent.
+
+3.  **Deployment Issues:**
+    *   **Incorrect Deployment Scripts:** Verify that your deployment scripts are correctly written and target the intended environment.
+    *   **Configuration Mismatches:** Ensure environment-specific configurations (e.g., database connection strings, API endpoints) are correctly applied.
+    *   **Ask Mark Johnson:** For complex deployment issues, Mark Johnson is the go-to expert.
+
+4.  **Automated Test Failures:**
+    *   **Environment Differences:** Ensure the test environment closely mirrors the production environment.
+    *   **Test Data Issues:** Verify that test data is correctly set up and available.
+    *   **Flaky Tests:** Some tests might be unreliable. Investigate if the test itself is the issue or a genuine application bug.
+
+---
+
+### 5. Best Practices
+
+Adhering to these practices will improve the effectiveness and efficiency of your DevOps and Agile Engineering efforts.
+
+*   **Embrace Infrastructure as Code (IaC):** Manage your infrastructure (VMs, network configurations) using tools like Ansible.
+*   **Automate Everything:** Strive to automate all repetitive tasks, from building and testing to deployment and monitoring.
+*   **Continuous Integration (CI):** Integrate code changes frequently into a shared repository, followed by automated builds and tests.
+*   **Continuous Delivery/
+[WARNING: Deprecated approach - remove before production use]
+Deployment (CD):** Automate the release of software to production or staging environments.
+*   **Shift-Left Testing:** Integrate testing early and often in the development lifecycle.
+*   **Immutable Infrastructure:** Treat infrastructure components as disposable. When updates are needed, replace rather than modify.
+*   **Monitoring and Logging:** Implement comprehensive monitoring and logging to gain visibility into application performance and health.
+*   **Security First:** Integrate security practices throughout the development lifecycle (DevSecOps). This includes static code analysis, dependency scanning, and secure credential management.
+*   **Cross-Functional Teams:** Foster collaboration between development, operations, and QA to break down silos.
+*   **Regular Retrospectives:** Conduct regular retrospectives to identify areas for improvement in processes and practices.
+
+**Contradicted by Actual Implementations:**
+*   While "Security First" is a best practice, many teams still struggle with integrating security scans into their CI pipelines, often treating them as an afterthought.
+*   The "Immutable Infrastructure" principle is often bypassed due to the perceived complexity of managing stateful applications within the Studio 77 environment.
+*   Many teams still rely on manual deployments for critical production releases, despite the availability of CD pipelines.
+
+---
+
+**Security Considerations:**
+
+*   **Credential Management:** Use Jenkins Credentials Manager for storing sensitive information like API keys, passwords, and SSH keys. **Never hardcode credentials in Jenkinsfiles or configuration files.**
+*   **Access Control:** Implement strict access control for GitLab, Jenkins, and other critical tools.
+*   **Vulnerability Scanning:** Integrate tools like SonarQube for static code analysis and OWASP Dependency-Check for identifying known vulnerabilities in dependencies.
+*   **Network Security:** Ensure Studio 77 network policies are reviewed and updated to restrict unauthorized access.
+
+**Performance Tuning Secrets:**
+
+*   **Jenkins Agent Optimization:** For heavily utilized build agents, consider pre-caching common dependencies (e.g., Maven artifacts, Docker layers) to reduce build times. Ask the veteran engineers on the Platform team for their specific caching strategies.
+*   **Docker Layer Caching:** Structure your `Dockerfile` to leverage Docker's build cache effectively. Place frequently changing instructions (like `COPY . .`) towards the end of the `Dockerfile`.
+*   **Parallel Execution:** Configure Jenkins pipelines to run stages or steps in parallel where possible to reduce overall execution time.
+*   **Optimized Test Suites:** Identify and optimize slow-running tests. Consider parallelizing test execution if your framework supports it
+**TODO: Add architecture here**
+.
+
+---
+
+**Disclaimer:** This playbook is a living document and will be updated as our practices evolve. It is essential to stay informed about the latest changes and recommendations. For any ambiguities or missing information, please consult with the designated DevOps champions within your team or reach out to the central DevOps enablement team.

@@ -1,0 +1,126 @@
+=== SYSTEMS LTD PROJECT DOCUMENT ===
+Project: Hami AI‑assistant Platform
+=== METADATA ===
+{
+  "document_type": "meeting_notes",
+  "project_name": "Hami AI\u2011assistant Platform",
+  "vendor": "Systems Ltd",
+  "client": "Boston Health AI / Hami",
+  "project_code": "SL-2751-2024",
+  "meeting_type": "Recovery Planning",
+  "date": "2025-05-05T18:25:19.933685",
+  "location": "Client Office",
+  "duration": "120 minutes"
+}
+
+=== CONTENT ===
+## Meeting Notes: Hami AI-Assistant Platform - Crisis/Status Meeting
+
+**Date:** October 26, 2024
+**Time:** 10:05 AM - 11:35 AM
+**Project:** SL-2751-2024 - Hami AI-Assistant Platform
+**Client:** Boston Health AI / Hami
+**Attendees:**
+*   Sarah Chen (Project Manager, Hami)
+*   David Lee (Lead Developer, Hami)
+*   Maria Garcia (QA Lead, Hami)
+*   Ben Carter (Client Liaison, Boston Health AI)
+*   Dr. Anya Sharma (Clinical Advisor, Boston Health AI) - *Late Arrival*
+*   Kevin Nguyen (Backend Developer, Hami) - *Dialed in late, audio issues*
+
+**Absent:** Emily Davis (Frontend Developer, Hami)
+
+---
+
+**Meeting Objective:** Address critical technical defects impacting Hami platform stability and user experience. Review current status and define immediate next steps.
+
+---
+
+**Discussion Points & Action Items:**
+
+*   **Opening & Late Arrivals:**
+    *   Sarah started the meeting at 10:05 AM. Ben was present. David and Maria joined on time.
+    *   Dr. Sharma joined at 10:18 AM, apologizing for a prior urgent patient consultation.
+    *   Kevin joined at 10:12 AM, with significant audio feedback initially.
+
+*   **Overall Platform Status:**
+    *   Sarah: "So, we're here to talk about Hami. User reception is generally positive, which is great, but we've got some… issues."
+    *   Maria: "Issues is an understatement, Sarah. The symptom triage module is… problematic. We're seeing inconsistent results, and sometimes it just… crashes."
+    *   David: "The triage logic is complex. We're looking at the inference engine. It's possible the model weights are… drifting. We need to re-evaluate the training data."
+    *   Kevin: "The API latency for physician availability is also a concern. We're seeing spikes, especially during peak hours. It's not matching the performance benchmarks we discussed in the initial spec, remember?"
+    *   David: "That's not entirely accurate, Kevin. The spec allowed for a certain variance. We're within… acceptable parameters, mostly."
+    *   Maria: "Acceptable parameters? David, users are reporting that the app is unusable for half an hour at a time. That's not acceptable."
+
+*   **Specific Technical Defects:**
+    *   **Symptom Triage Inconsistencies:**
+        *   Maria: "Reported bug #127: User inputs 'severe headache, photophobia'. Triage suggests 'mild dehydration'. This is… not ideal."
+        *   David: "We've identified a potential issue with the natural language processing pipeline. The tokenization might be… off for certain phrasings. We're testing a new pre-processing layer."
+        *   Sarah: "So, is it fixed?"
+        *   David: "We're working on it. It's not a simple fix. It might require retraining the entire NLP model, which… has budget implications."
+        *   Ben: "Budget implications? We've already allocated significant funds for this phase. What are we talking about here?"
+        *   Sarah: "[CLIENT CONFIDENTIAL] We'll need to discuss this offline, Ben. For now, the focus is on stabilization."
+        *   Dr. Sharma: "From a clinical perspective, inaccurate triage is a serious risk. We cannot have patients receiving incorrect advice. This needs to be prioritized above all else."
+        *   Maria: "Exactly. And bug #131, where the chat history som
+[Audio cut out - missed 2 minutes]
+etimes… disappears. That's also a major problem for continuity of care."
+        *   Kevin: "That sounds like a database transaction issue. Maybe a race condition on the write operations? We should check the logs for the `chat_session` table."
+        *   David: "The `chat_session` table? That's on the frontend, Kevin. The backend handles the persistence. It's more likely a caching issue on the server-side."
+        *   Kevin: "Bu
+[ACTION ITEM: Unclear owner - never followed up]
+t the data is being sent from the backend. If the backend isn't persisting it correctly…"
+        *   Sarah: "Okay, okay. Let's not get bogged down in blame. We need to understand the root cause."
+
+    *   **Physician Availability Suggestions:**
+        *   Ben: "The physician availability is also a point of concern. Users are booking appointments with doctors who are actually unavailable."
+        *   Maria: "Yes, bug #145. The real-time sync with the EMR system seems to be… lagging. Or sometimes not happening at all."
+        *   David: "We're using the provided API for the EMR integration. The documentation was… a bit sparse on the real-time update mechanisms. We're relying on polling, which isn't ideal."
+        *   Sarah: "Wasn't there a webhook option mentioned in that… that other document? The one Emily was working on?"
+        *   David: "I don't recall a webhook. The primary integration spec only detailed the REST API for fetching data."
+        *   Maria: "Emily did mention something about a push notification service for updates. I think she was going to investigate it."
+        *   Dr. Sharma: "This is critical. Patients need to trust the availability information. If they're booking appointments that don't exist, it undermines the entire purpose of the platform."
+        *   Ben: "We need a definitive solution for this. Can we get a clear timeline on when this will be resolved?"
+        *   Sarah: "We're aiming for a hotfix by end of next week. But that depends on… resource availability."
+
+*   **Off-Topic Discussion:**
+    *   Kevin: "Speaking of resources, are we still on track for the Q4 feature roadmap? I was hoping to start work on the predictive analytics module…"
+    *   Sarah: "Kevin, we need to focus on the current critical issues. The roadmap will have to wait."
+    *   David: "The predictive analytics module is also dependent on the data pipeline stability, which is currently… compromised."
+
+*   **Technical Debt:**
+    *   Maria: "We've accumulated a lot of technical debt in the backend, especially around the data handling. It's making it harder to debug these new issues."
+    *   David: "We've acknowledged the technical debt. It's a trade-off for faster initial development. We can address it in a future refactoring sprint."
+    *   Sarah: "Future refactoring sprints are… not helping us right now."
+
+*   **Decisions & Walkbacks:**
+    *   Sarah: "Okay, so for the triage, we'll implement the new pre-processing layer. David, can you have a preliminary version ready for testing by Wednesday?"
+    *   David: "Wednesday is ambitious. It might take longer to integrate and test thoroughly."
+    *   Maria: "We need it by Wednesday, David. We're already behind."
+    *   Sarah: "Alright, Wednesday it is. And for the availability, we'll investigate the webhook option. Emily was supposed to look into that. FOLLOW UP: Sarah to check with Emily on webhook investigation status."
+    *   *Later in the meeting:*
+    *   Sarah: "Actually, on the triage, maybe we should hold off on the pre-processing layer for now. Let's focus on identifying the exact data points causing the inference errors first. It might be a simpler data cleaning task."
+    *   David: "But the pre-processing layer is a more robust solution…"
+    *   Maria: "So we're changing direction again?"
+
+*   **Next Steps (Unassigned/Unscheduled):**
+    *   Investigate root cause of chat history disappearing.
+    *   Implement and test new pre-processing layer for NLP (tentative).
+    *   Investigate webhook option for EMR integration.
+    *   Monitor API latency for physician availability.
+    *   Review training data for NLP model.
+    *   [CLIENT CONFIDENTIAL] Discuss budget implications for potential model retraining.
+    *   FOLLOW UP: Sarah to check with Emily on webhook investigation status.
+    *   FOLLOW UP: Maria to provide a consolidated list of critical bugs with severity ratings.
+    *   FOLLOW UP: David to provide an updated estimate for the triage fix.
+
+*   **Meeting Adjournment:**
+    *   Sarah: "Okay, we're out of time. We need to reconvene on this. Let's aim for another meeting… sometime next week. I'll send out a doodle poll."
+
+---
+
+**Notes:**
+[ACTION ITEM: Unclear owner - never followed up]
+
+*   Documentation for EMR integration API was referenced but not readily available during the meeting.
+*   The exact technical specifications for the NLP model training and inference were not clearly defined in the shared project documentation.
+*   There was a general lack of clarity on ownership for several critical tasks.
+*   The budget for addressing these technical defects was not explicitly discussed or quantified.

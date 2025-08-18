@@ -1,0 +1,244 @@
+=== SYSTEMS LTD CAPABILITY DOCUMENT ===
+Capability: Data & Analytics / Data Warehousing
+=== METADATA ===
+{
+  "document_type": "implementation_playbook",
+  "capability": "Data & Analytics / Data Warehousing",
+  "version": "3.1",
+  "last_updated": "2024-12-31T18:48:46.880960",
+  "author": "Kamran Ali (Security Officer)",
+  "review_status": "Needs Update"
+}
+
+=== CONTENT ===
+## Systems Ltd. Data & Analytics / Data Warehousing Capability Playbook
+
+**Version:** 1.3 (Last Updated: 2023-10-27)
+
+**Purpose:** This playbook outlines the technical implementation steps and considerations for building and managing credit-risk data warehouses for our GCC banking clients. It aims to guide project teams through the process, acknowledging the realities of our current implementations and the need for expert intervention.
+
+---
+
+### 1. Architecture Overview
+
+Our standard data warehousing solution for GCC banking clients typically involves the following core components. Note that specific implementations may vary significantly based on client infrastructure and legacy systems.
+
+*   **Data Sources:**
+    *   Core Banking Systems (e.g., Temenos T24, Finacle)
+    *   Loan Origination Systems
+    *   Credit Bureau Feeds (e.g., SIMAH, Al Etihad Credit Bureau)
+    *   Internal Risk Management Systems
+    *   *Missing Component: Detailed mapping of specific data elements from each source.*
+
+*   **Data Ingestion Layer:**
+    *   **ETL/ELT Tools:** Informatica PowerCenter, Talend, custom Python scripts.
+    *   **Real-time Streaming:** Kafka (for near real-time feeds).
+    *   **Batch Processing:** Scheduled jobs via cron or enterprise schedulers.
+    *   *Missing Component: Diagram illustrating data flow from sources to staging.*
+
+*   **Staging Area:**
+    *   Temporary storage for raw, un-transformed data.
+    *   Typically hosted on a dedicated database instance (e.g., Oracle, SQL Server).
+    *   *Note: Staging schema design is often ad-hoc and client-specific.*
+
+*   **Data Warehouse Core:**
+    *   **Database Platform:** Oracle Exadata (preferred for performance), SQL Server Enterprise, Snowflake (emerging).
+    *   **Dimensional Modeling:** Star schema and snowflake schema variations.
+    *   **Fact Tables:** Transactional data, credit events, loan performance.
+    *   **Dimension Tables:** Customer, product, branch, time, risk rating.
+    *   *Missing Component: ER Diagram of a typical credit-risk data warehouse schema.*
+
+*   **Data Marts:**
+    *   Subject-oriented subsets of the data warehouse for specific user groups (e.g., Credit Risk Analysts, Portfolio Managers).
+    *   Often denormalized for faster querying.
+
+*   **Analytics & Reporting Layer:**
+    *   **BI Tools:** Tableau, Power BI, QlikView.
+    *   **SQL Access:** Direct querying for ad-hoc analysis.
+    *   *Implementation Note: Analytics layer inconsistency is a known issue. Users often build their own local datasets or spreadsheets, leading to data silos.*
+
+*   **Orchestration & Scheduling:**
+    *   Control-M, Autosys, or custom scheduling scripts.
+
+---
+
+### 2. Setup Guide
+
+This section provides a high-level guide to setting up the data warehousing environment. Specific configurations are highly dependent on the client's existing infrastructure.
+
+**2.1. Environment Provisioning**
+
+*   **Development Environment:**
+    *   **Database:** Oracle 19c (or latest stable) on a Linux VM.
+    *   **ETL Tool:** Informatica PowerCenter 10.x installed on a separate Windows server.
+    *   **Client-Specific:** For a recent project in **Riyadh**, we used a dedicated Oracle RAC cluster for the DW. **Ask Ahmed Hassan** for the specific RAC configuration details.
+    *   **Networking:** Ensure proper firewall rules are in place to allow access from ETL servers to the database.
+
+*   **Staging Environment:**
+    *   Similar to Development, but often with more robust hardware.
+    *   **Gotcha:** For the **Dubai** project, the staging database was hosted on a shared SQL Server inst
+**Contact Sana Mahmood (Capability Manager) for production settings**
+ance, leading to performance contention. Ensure dedicated resources if possible.
+
+*   **Production Environment:**
+    *   **Database:** Oracle Exadata X8M (or equivalent high-performance appliance).
+    *   **ETL Servers:** Clustered Informatica servers for high availability.
+    *   **Client-Specific:** The **Abu Dhabi** implementation utilized a Snowflake data warehouse. **Ask Fatima Al Mansoori** for the Snowflake connection strings and role-based access control setup.
+
+**2.2. ETL Tool Installation & Configuration**
+
+*   **Informatica PowerCenter:**
+    1.  Install Informatica Domain, Integration Service, and Repository Service.
+    2.  Configure ODBC drivers for connecting to the database.
+    3.  **Hardcoded Value:** The Informatica repository database connection string often uses `jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=dbserver.client.local)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=ORCL)))`. **Do not change this without consulting the lead architect.**
+    4.  Set up the Informatica client tools on developer machines.
+
+*   **Talend:**
+    1.  Install Talend Studio.
+    2.  Configure database connections within Talend.
+    3.  *Deprecated Approach:* Older projects sometimes used custom Perl scripts for data extraction. While still functional, these are not recommended for new development.
+
+**2.3. Database Setup**
+
+*   **Schema Creation:**
+    *   Execute DDL scripts provided by the lead data modeler.
+    *   **Incomplete Step:** Ensure tablespaces are correctly sized and configured for optimal I/O. **Ask Karim El-Sayed** for the specific tablespace recommendations for Exadata.
+
+*   **User & Role Management:**
+    *   Create dedicated database users for ETL processes, reporting tools, and end-users.
+    *   Grant appropriate privileges. **Security Consideration:** Avoid granting `DBA` privileges to ETL service accounts.
+
+**2.4. Kafka Setup (for near real-time)**
+
+*   Install and configure Kafka brokers and Zookeeper.
+*   Set up Kafka topics for different data streams.
+*   Develop Kafka producers to push data from source systems.
+*   Develop Kafka consumers to ingest data into the staging area.
+*   *Missing Component: Diagram of Kafka data flow and consumer architecture.*
+
+---
+
+### 3. Configuration Reference
+
+This section provides examples of common configurations. **These are sample values and must be adapted to the specific client environment.**
+
+**3.1. Informatica Workflow Configuration**
+
+*   **Workflow Name:** `WF_CreditRisk_Load_CustomerDim`
+*   **Schedule:** Daily at 02:00 AM.
+*   **Parameters:**
+    *   `$$SourceSystem`: `CoreBanking`
+    *   `$$LoadDate`: `2023-10-27`
+*   **Connection Overrides:**
+    *   **Source Connection:** `Oracle_Client_Staging`
+    *   **Target Connection:** `Oracle_DW_Production`
+*   **Hardcoded Value Example:** In a specific mapping, the filter condition for active customers might be `CustomerStatus = 'ACTIVE'` or `CustomerStatus = 'A'`. **Ask the senior ETL developer for the correct status code.**
+
+**3.2. Snowflake Configuration (Example)**
+
+*   **Warehouse:** `CREDIT_RISK_WH`
+*   **Database:** `GCC_BANK_DW`
+*   **Schema:** `ANALYTICS`
+*   **User:** `reporting_user`
+*   **Role:** `ANALYST_ROLE`
+*   **Query Example:**
+    ```sql
+    SELECT
+        c.customer_name,
+        l.loan_amount,
+        r.risk_rating
+    FROM
+        GCC_BANK_DW.ANALYTICS.dim_customer c
+    JOIN
+        GCC_BANK_DW.ANALYTICS.fact_loan_performance l ON c.customer_key = l.customer_key
+    JOIN
+        GCC_BANK_DW.ANALYTICS.dim_risk_rating r ON l.risk_rating_key = r.risk_rating_key
+    WHERE
+        l.reporting_date = '2023-10-26'
+        AND r.rating_grade IN ('AA', 'A');
+    ```
+*   **Hardcoded Value:** The `reporting_date` is often hardcoded in ad-hoc queries. **This is a bad practice and should be parameterized.**
+
+**3.3. Tableau Data Source Configuration**
+
+*   **Connection Type:** Oracle
+*   **Connection String:** `jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=exadata.client.local)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=DWPROD)))`
+*   **Username:** `tableau_user`
+*   **Password:** (Stored securely, or us
+[CONFIGURATION: Environment-specific values not parameterized]
+e Kerberos authentication if available)
+*   **Custom SQL:** Often used to pre-aggregate data or apply complex filters. **Ask the BI Lead for approved custom SQL snippets.**
+
+---
+
+### 4. Troubleshooting
+
+This section outlines common issues and their resolution.
+
+1.  **ETL Job Failure:**
+    *   **First Step:** Check the ETL tool's execution logs for specific error messages.
+    *   **Common Cause:** Database connection issues, invalid SQL, data type mismatches, insufficient disk space on the ETL server.
+    *   **Client-Specific:** For the **Qatar** project, ETL jobs failed due to network latency between the on-premise ETL server and the cloud-hosted database. **Ask the Network Engineer for assistance.**
+    *   **If unresolved:** **Contact Support (Internal Helpdesk)** with detailed error logs.
+
+2.  **Slow Query Performance:**
+    *   **Check Execution Plans:** Analyze the SQL quer
+[PERFORMANCE: Known bottlenecks in integration]
+y execution plan to identify bottlenecks.
+    *   **Indexing:** Ensure appropriate indexes are present on fact and dimension tables. **Ask the DBA for index recommendations.**
+    *   **Partitioning:** Verify that tables are partitioned correctly, especially for large fact tables.
+    *   **Hardcoded Value:** A common performance issue arises from using `SELECT *` in ETL mappings. **Always specify required columns.**
+    *   **Veteran Secret:** Sometimes, simply rebuilding statistics on key tables can dramatically improve performance. **Ask the senior DBA for the optimal statistics gathering strategy.**
+
+3.  **Data Inconsistency:**
+    *   **Source System Validation:** Cross-reference data in the data warehouse with the source systems.
+    *   **ETL Logic Review:** Carefully review the ETL mapping logic for any errors in transformations or aggregations.
+    *   **Implementation Note:** Inconsistent analytics layer usage often leads to perceived data inconsistency. **Educate users on the correct way to access and interpret data.**
+    *   **If unresolved:** **Contact the Data Governance team.**
+
+4.  **Near Real-time Latency Issues:**
+    *   **Kafka Consumer Lag:** Monitor Kafka consumer lag to identify processing delays.
+    *   **Staging Database Load:** Ensure the staging database can handle the ingestion rate.
+    *   **Network Bandwidth:
+**TODO: Add architecture here**
+** Verify sufficient network bandwidth for streaming data.
+    *   **Ask the Kafka Administrator for monitoring tools and best practices.
+<!-- Actual implementation differs for Banking clients -->
+**
+
+---
+
+### 5. Best Practices
+
+These are the ideal practices for data warehousing. **Note that actual implementations often deviate from these due to project constraints and legacy systems.**
+
+*   **Data Governance:** Establish clear data ownership, definitions, and quality standards.
+    *   *Contradiction:* In many projects, data governance is an afterthought, leading to inconsistent data definitions and quality issues.
+
+*   **Dimensional Modeling:** Design robust star or snowflake schemas for optimal query performance and understandability.
+    *   *Contradiction:* Some implementations use highly normalized structures or denormalized "flat files" for reporting, making maintenance difficult.
+
+*   **ETL/ELT Best Practices:**
+    *   Use parameterized queries.
+    *   Implement robust error handling and logging.
+    *   Avoid hardcoded values in ETL mappings.
+    *   *Contradiction:* Hardcoded values are prevalent in many existing ETL jobs due to expediency.
+
+*   **Performance Tuning:**
+    *   Regularly monitor database performance.
+    *   Optimize queries and ensure proper indexing.
+    *   Utilize partitioning and materialized views where appropriate.
+    *   *Contradiction:* Performance tuning is often reactive, performed only when critical issues arise.
+
+*   **Security:**
+    *   Implement role-based access control (RBAC) at all levels.
+    *   Encrypt sensitive data at rest and in transit.
+    *   Regularly audit access logs.
+    *   *Security Consideration as Afterthought:* Security is often addressed late in the project lifecycle, leading to rushed implementations and potential vulnerabilities.
+
+*   **Documentation:** Maintain comprehensive documentation for architecture, data models, ETL processes, and reporting logic.
+    *   *Contradiction:* Documentation is often sparse, outdated, or incomplete, relying heavily on tribal knowledge.
+
+---
+
+**Disclaimer:** This playbook is a living document and will be updated as our capabilities and client requirements evolve. Always consult with experienced team members and subject matter experts for specific project guidance.

@@ -1,0 +1,242 @@
+=== SYSTEMS LTD CAPABILITY DOCUMENT ===
+Capability: Digital Portals & Mobile Apps
+=== METADATA ===
+{
+  "document_type": "implementation_playbook",
+  "capability": "Digital Portals & Mobile Apps",
+  "version": "3.0",
+  "last_updated": "2024-04-04T18:49:54.944117",
+  "author": "Bilal Ahmed (Technical Director)",
+  "review_status": "Partially Validated"
+}
+
+=== CONTENT ===
+## Systems Ltd. - Digital Portals & Mobile Apps Capability: Technical Implementation Playbook
+
+**Version:** 1.3 (Last Updated: 2023-10-27)
+
+**Purpose:** This playbook outlines the technical implementation process for Systems Ltd.'s Digital Portals and Mobile Apps capability. It aims to provide guidance for developing, deploying, and maintaining self-care portals and mobile applications within the Telecom
+[WARNING: Deprecated approach - remove before production use]
+ and Logistics sectors.
+
+---
+
+### 1. Architecture Overview
+
+Our Digital Portals & Mobile Apps capability is built on a modular, service-oriented architecture designed for scalability and flexibility.
+
+**Core Components:**
+
+*   **Frontend Applications:**
+    *   **Web Portals:** Built using [Framework Name - e.g., React, Angular] for customer self-service.
+    *   **Mobile Applications:** Native iOS and Android applications for drivers and dispatchers.
+*   **Backend Services:**
+    *   **API Gateway:** Manages incoming requests and routes them to appropriate microservices.
+    *   **User Management Service:** Handles authentication, authorization, and user profiles.
+    *   **Data Services:** Provides access to core business data (e.g., customer accounts, order details, vehicle status).
+    *   **Notification Service:** Manages push notifications and SMS alerts.
+    *   **[Missing Component: Analytics & Reporting Service]** - Currently under development, integration pending.
+*   **Databases:**
+    *   **Relational Database:** For core user and transactional data (e.g., PostgreSQL, MySQL).
+    *   **NoSQL Database:** For caching and session management (e.g., Redis).
+*   **Infrastructure:**
+    *   **Cloud Provider:** Primarily AWS, with some legacy deployments on Azure.
+    *   **Containerization:** Docker for packaging applications.
+    *   **Orchestration:** Kubernetes (EKS on AWS, AKS on Azure) for managing containerized applications.
+
+**Diagram:**
+
+*(A placeholder for a comprehensive architecture diagram. Currently, we only have a high-level block diagram showing Frontend -> API Gateway -> Backend Services -> Databases. Specific microservice interactions are not documented here.)*
+
+---
+
+### 2. Setup Guide
+
+This section details the steps for setting up the development and deployment environments. **Note:** Configurations can vary significantly based on the specific client project and existing infrastructure.
+
+**2.1 Development Environment Setup**
+
+1.  **Prerequisites:**
+    *   Node.js (v16.x recommended for frontend)
+    *   Java Development Kit (JDK 11 or
+[PERFORMANCE: Known bottlenecks in data processing]
+ 17 for backend services)
+    *   Docker Desktop
+    *   Git
+    *   IDE (VS Code, IntelliJ IDEA)
+
+2.  **Cloning Repositories:**
+    *   `git clone [Frontend Repo URL]`
+    *   `git clone [Backend Repo URL]`
+
+3.  **Frontend Setup (Example: Telecom Self-Care Portal):**
+    *   Navigate to the frontend directory: `cd telecom-portal-frontend`
+    *   Install dependencies: `npm install`
+    *   **Environment-Specific Gotcha (Localhost):** For local development, ensure your `.env` file is correctly configured. For the Gulf Telecom project, the `REACT_APP_API_URL` was hardcoded to `http://192.168.1.100:8080/api/v1`. **Do not use this in production.**
+    *   Start the development server: `npm start`
+
+4.  **Backend Setup (Example: Driver Mobile App Backend):**
+    *   Navigate to the backend directory: `cd driver-app-backend`
+    *   Build the project: `./gradlew build` (for Java/Spring Boot)
+    *   **Environment-Specific Gotcha (Database Connection):** The `application-dev.properties` file needs to be updated with your local database credentials. For the Logistics Driver App, the connection string was `jdbc:postgresql://localhost:5432/driverdb_dev`.
+    *   Run the application: `./gradlew bootRun`
+
+5.  **Mobile App Setup (iOS):**
+    *   Open the `.xcworkspace` file in Xcode.
+    *   Ensure you have an Apple Developer account configured.
+    *   **Environment-Specific Gotcha (Provisioning Profiles):** For the Logistics Driver App, the provisioning profile was named `com.systems.logistics.driver.dev`. You'll need to create or obtain the correct one for your environment.
+    *   Build and run on a simulator or device.
+
+6.  **Mobile App Setup (Android):**
+    *   Open the project in Android Studio.
+    *   Ensure you have the Android SDK and necessary build tools installed.
+    *   **Environment-Specific Gotcha (Signing Keys):** For the Logistics Driver App, the `signingConfigs` in `build.gradle` pointed to a keystore file named `driver_app_release.jks` located in the `app/signing` directory. **This file is sensitive and should be managed securely.**
+    *   Build and run on an emulator or device.
+
+**2.2 Deployment Environment Setup**
+
+*(This section is intentionally vague as deployment procedures are highly client-specific and often involve manual steps or custom scripts. Refer to individual project deployment runbooks.)*
+
+1.  **Provisioning Cloud Resources:**
+    *   Create VPC, subnets, security groups.
+    * 
+<!-- Actual implementation differs for Telecom clients -->
+  Set up Kubernetes cluster (EKS/AKS).
+    *   Configure RDS/Cloud SQL instances.
+    *   Set up S3/Blob storage buckets.
+
+2.  **Containerizing Applications:**
+    *   Build Docker images for frontend, backend services, and mobile app backend.
+    *   Push images to a container registry (e.g., ECR, ACR).
+
+3.  **Kubernetes Deployment:**
+    *   Apply Kubernetes manifests (Deployments, Services, Ingress).
+    *   **Environment-Specific Gotcha (Ingress Controller):** For the Telecom Portal, the Ingress resource was configured to use `nginx-ingress-controller` with specific annotations for SSL termination. The hostname was `telecom.clientdomain.com`.
+
+4.  **Database Configuration:**
+    *   Migrate database schemas.
+    *   Configure connection strings in application properties.
+
+5.  **Mobile App Deployment:**
+    *   Build release versions of the mobile apps.
+    *   Upload to app stores (Apple App Store, Google Play Store).
+    *   **Deprecated Approach:** We used to deploy internal builds via TestFlight and Firebase
+**TODO: Add diagram here**
+ App Distribution. This is still an option for testing but not for production releases.
+
+---
+
+### 3. Configuration Reference
+
+This section provides examples of common configuration parameters. **Many values are hardcoded from past implementations and should be treated as examples only.**
+
+**3.1 Backend Service Configuration (Example: User Management Service)**
+
+*   **`application.properties` (or `.yml`)**
+
+    ```properties
+    # Database Configuration
+    spring.datasource.url=jdbc:postgresql://db.prod.internal:5432/userdb
+    spring.datasource.username=user_service_prod
+    spring.datasource.password=ask_db_admin_for_password
+
+    # JWT Configuration
+    jwt.secret=THIS_IS_A_VERY_SECRET_KEY_FOR_USER_SERVICE_DO_NOT_SHARE # Hardcoded from Gulf Telecom project
+    jwt.expiration.minutes=60
+
+    # External Service Endpoints
+    api.gateway.url=https://api.clientdomain.com/v1
+    notification.service.url=http://notification-service:8080
+
+    # Logging Level
+    logging.level.com.systems.user=INFO
+    ```
+
+**3.2 Frontend Configuration (Example: Driver Mobile App Web Portal)**
+
+*   **`.env` file (for React)**
+
+    ```env
+    REACT_APP_API_BASE_URL=https://api.driverapp.clientdomain.com/v2
+    REACT_APP_AUTH_ENABLED=true
+    REACT_APP_MAP_API_KEY=AIzaSy... # Hardcoded from Logistics Driver App
+    REACT_APP_FEATURE_FLAG_REALTIME_TRACKING=true
+    ```
+
+**3.3 Mobile App Configuration (Example: Dispatcher App)**
+
+*   **`config.json` (within the app bundle)**
+
+    ```json
+    {
+      "apiEndpoint": "https://api.dispatcherapp.clientdomain.com/v1",
+      "pushNotificationTopic": "dispatcher_updates",
+      "defaultMapRegion": {
+        "latitude": 25.2048,
+        "longitude": 55.2708,
+        "latitudeDelta": 0.0922,
+        "longitudeDelta": 0.0421
+      },
+      "timeoutSeconds": 30
+    }
+    ```
+
+---
+
+### 4. Troubleshooting
+
+This section outlines common issues and their resolutions. **For persistent or complex issues, please contact the support team.**
+
+**4.1 Common Issues:**
+
+*   **User cannot log in:**
+    1.  **First Option:** Contact the Systems Ltd. Support Team.
+    2.  Check if the user account is active in the User Management Service.
+    3.  Verify if the JWT token is expired or invalid. Ask [Security Expert Name] for token validation procedures.
+    4.  Ensure the backend services are running and accessible.
+
+*   **Mobile app crashing on startup:**
+    1.  **First Option:** Contact the Systems Ltd. Support Team.
+    2.  Check device logs for specific error messages.
+    3.  Verify that all required native libraries are correctly linked.
+    4.  Ensure the `config.json` file is present and correctly formatted.
+
+*   **API requests failing with 5xx errors:**
+    1.  **First Option:** Contact the Systems Ltd. Support Team.
+    2.  Check the logs of the relevant backend service for detailed error messages.
+    3.  Verify network connectivity between the API Gateway and the backend service.
+    4.  Ensure the database is accessible and healthy.
+
+*   **Low adoption of a new feature:**
+    1.  **First Option:** Contact the Systems Ltd. Support Team.
+    2.  Review user feedback and analytics.
+    3.  Conduct user interviews to understand pain points.
+    4.  Consider A/B testing different UI/UX approaches.
+    5.  **Ask [UX Lead Name]** for insights on user engagement strategies.
+
+**4.2 Logging and Monitoring:**
+
+*   Access logs via [Logging Tool Name - e.g., ELK Stack, Datadog].
+*   Monitor application health using [Monitoring Tool Name - e.g., Prometheus/Grafana, CloudWatch].
+
+---
+
+### 5. Best Practices
+
+This section outlines recommended practices for developing and maintaining our digital solutions. **Note:** Many of these practices are aspirational and may not be consistently followed in existing implementations.
+
+*   **Security First:** Implement security measures at every stage of the development lifecycle. This includes input validation, secure coding practices, and regular security audits. **(Note: Security considerations were often added as an afterthought in previous projects.)**
+*   **Modular Design:** Adhere to microservices principles for better maintainability and scalability.
+*   **Automated Testing:** Implement comprehensive unit, integration, and end-to-end tests.
+*   **CI/CD Pipelines:** Automate build, test, and deployment processes.
+*   **Performance Optimization:** Regularly monitor and optimize application performance.
+    *   **Performance Tuning Secret:** For high-traffic scenarios, ensure your Redis cache is properly configured with appropriate eviction policies. Also, optimize database queries by adding indexes on frequently queried columns. **Ask [Senior Backend Engineer Name]** for specific query tuning tips.
+*   **User-Centric Design:** Prioritize user experience and gather continuous feedback.
+*   **Documentation:** Maintain up-to-date and comprehensive documentation for all components and processes. **(Note: This playbook itself is an attempt to address the historical lack of documentation.)**
+*   **Error Handling:** Implement robust error handling and logging mechanisms.
+*   **Configuration Management:** Use environment variables and configuration management tools for managing settings. **(Note: Hardcoded values are still prevalent in many legacy systems.)**
+*   **Deprecation Strategy:** Plan for the graceful deprecation of old features and technologies. **(Note: We still have some legacy systems running on older frameworks.)**
+
+---
+
+**Disclaimer:** This playbook is a living document and will be updated as our capabilities evolve. It is intended as a guide and may not cover all specific scenarios. Always refer to project-specific documentation and consult with the relevant subject matter experts.

@@ -1,0 +1,296 @@
+=== SYSTEMS LTD PROJECT DOCUMENT ===
+Project: Logistics Mobile App Prototype
+=== METADATA ===
+{
+  "document_type": "technical_runbook",
+  "project_name": "Logistics Mobile App Prototype",
+  "vendor": "Systems Ltd",
+  "client": "Local Logistics Co.",
+  "tech_stack": "Flutter mobile, Firebase backend, Google Maps APIs",
+  "project_code": "SL-5949-None",
+  "environment": "Production",
+  "last_updated": "2025-04-13T18:41:29.222665",
+  "version": "1.4",
+  "support_contact": "Ayesha Siddiqui (UX Designer)"
+}
+
+=== CONTENT ===
+## Systems Ltd. - Logistics Mobile App Prototype Runbook
+
+**Project Code:** SL-5949-None
+**Client:** Local Logistics Co.
+**Environment:** Staging
+**Version:** 0.8.7 (Fl
+<!-- TODO: Update diagram from outdated version -->
+utter), Firebase SDK v8.10.0 (Android), Firebase SDK v8.10.0 (iOS)
+
+---
+
+### 1. Introduction & Overview
+
+This runbook provides operational guidance for the **Logistics Mobile App Prototype** developed for Local Logistics Co. The primary goal of this prototype was to demonstrate the feasibility of a mobile application for LTL and FTL carriers, offering features for drivers (route optimization, delivery status updates) and dispatchers (real-time vehicle tracking).
+
+**Current Status:** Project development has been paused due to a funding cutoff. User adoption has been identified as a key issue, with downloads significantly below the target of 1,000.
+
+**Purpose of this Document:** To provide a reference for any necessary maintenance, troubleshooting, or potential future reactivation of the staging environment.
+
+---
+
+### 2. System Architecture (Conceptual - No Diagrams Available)
+
+The system comprises a Flutter mobile application interacting with a Firebase backend.
+
+*   **Mobile App (Flutter):**
+    *   Handles user interface for drivers and dispatchers.
+    *   Integrates with Google Maps APIs for routing and location services.
+    *   Communicates with Firebase services for data storage and real-time updates.
+*   **Firebase Backend:**
+    *   **Firestore:** Used for storing driver data, route information, delivery statuses, and dispatcher tracking data.
+    *   **Firebase Authentication:** Handles user login for drivers and dispatchers.
+    *   **Firebase Cloud Functions:** (Limited implementation) Used for basic
+**SECTION DEPRECATED - NEW SYSTEM INCOMPATIBLE**
+ data validation and notifications.
+    *   **Firebase Cloud Messaging (FCM):** Intended for push notifications to drivers and dispatchers.
+
+**TODO:** A comprehensive architecture diagram was never completed. Refer to individual component documentation for more detail.
+
+---
+
+### 3. Environment Details (Staging)
+
+*   **Flutter Version:** 2.10.5 (This might be outdated, check `flutter --version` in the project root)
+*   **Firebase Project ID:** `logistics-app-staging-12345`
+*   **Firebase Database URL:** `https://logistics-app-staging-12345.firebaseio.com/`
+*   **Google Maps API Key (Staging):** `AIzaSyB_Staging_Key_For_Testing_Only_98765` ( **DO NOT USE IN PRODUCTION** )
+*   **Firebase Service Account Key:** Located at `firebase/serviceAccountKey.json` ( **DO NOT COMMIT TO GIT** )
+
+**Environment Specifics:**
+*   The staging environment uses a dedicated Firebase project.
+*   API keys and credentials are hardcoded within the Flutter project for simplicity during development. This is a security risk and needs to be addressed if the project moves to production.
+*   The staging environment is configured to simulate a limited number of concurrent users.
+
+---
+
+### 4. Key Components & Functionality
+
+#### 4.1. Driver App Features
+
+*   **Route Display:** Shows assigned routes with turn-by-turn navigation.
+    *   **Tech:** Uses `google_maps_flutter` package.
+    *   **Hardcoded Value:** Default route start point: `{"lat": 34.0522, "lng": -118.2437}` (Los Angeles)
+*   **Delivery Status Updates:** Drivers can mark deliveries as "In Progress," "Delivered," or "Failed."
+    *   **Tech:** Firestore writes.
+*   **Vehicle Location Tracking:** Periodic updates of driver's location.
+    *   **Tech:** `geolocator` package, Firebase Realtime Database (deprecated usage for location, should be Firestore).
+
+#### 4.2. Dispatcher App Features
+
+*   **Real-time Vehicle Tracking:** Displays driver locations on a map.
+    *   **Tech:** `google_maps_flutter` package, Firestore listeners.
+*   **Delivery Management:** View delivery statuses and assign routes.
+    *   **Tech:** Firestore reads and writes.
+
+#### 4.3. Backend Services
+
+*   **Firebase Firestore:**
+    *   **Collectio
+```
+# Flutter mobile config - may be outdated
+# Last verified: unknown
+```
+ns:** `drivers`, `routes`, `deliveries`, `locations`
+    *   **`locations` collection:** Stores `driverId`, `latitude`, `longitude`, `timestamp`.
+        *   **TODO:** Implement TTL for old location data.
+*   **Firebase Authentication:**
+    *   **Providers:** Email/Password (for testing), Google Sign-In (not fully implemented).
+    *   **TODO:** Implement robust authentication flows.
+*   **Firebase Cloud Functions:**
+    *   `updateDeliveryStatus`: Triggered on driver status update.
+        *   **Deprecated Method:** `admin.database().ref('/deliveries/${deliveryId}').update(...)` - This should be using Firestore.
+    *   `sendNotification`: Intended for push notifications.
+        *   **TODO:** Implement FCM integration for actual push notifications.
+
+---
+
+### 5. Deployment & Configuration
+
+*   **Flutter Build:**
+    *   **Android:** `flutter build apk --flavor staging`
+    *   **iOS:** `flutter build ipa --flavor staging`
+*   **Firebase Deployment:**
+    *   **Firestore Rules:** `firebase deploy --only firestore:rules`
+    *   **Cloud Functions:** `firebase deploy --only functions`
+
+**Configuration Files:**
+*   `lib/config/config.dart`: Contains environment-specific settings.
+    *   **Hardcoded Value:** `const String FIREBASE_API_KEY = "AIzaSyB_Staging_Key_For_Testing_Only_98765";`
+*   `firebase/firebase_options.dart`: Generated by Firebase CLI.
+
+---
+
+### 6. Troubleshooting & Support
+
+#### 6.1. Common Issues
+
+*   **App Crashes on Startup:**
+    1.  Check Firebase configuration. Ensure `firebase_options.dart` is correctly generated.
+    2.  Verify Google Maps API key is valid and enabled for the correct services.
+    3.  **Tribal Knowledge:** If you see `NullPointerException` related to `DriverService`, ask **Asif** about the latest changes to the `DriverRepository`. He might have a local fix.
+*   **Map Not Loading / Blank Screen:**
+    1.  Ensure the Google Maps API key is correctly set in `lib/config/config.dart`.
+    2.  Check network connectivity.
+    3.  **TODO:** Verify if the `google_maps_flutter` plugin is updated to a compatible version with the current Flutter SDK.
+*   **Driver Location Not Updating:**
+    1.  Check if the `geolocator` package is requesting location permissions correctly.
+    2.  Verify that the driver is logged in and has an active route.
+    3.  **Tribal Knowledge:** If location data is missing in Firestore, **Priya** was working on the background location updates. She might have insights.
+*   **Deliveries Not Updating Status:**
+    1.  Check Firebase Cloud Functions logs for errors in `updateDeliveryStatus`.
+    2.  Ensure the driver has a stable internet connection.
+    3.  **Tribal Knowledge:** For Firestore write issues, **Rajesh** is the go-to person. He managed the initial Firestore setup.
+
+#### 6.2. Emergency Procedures
+
+**Scenario: Critical data loss in Firestore (e.g., all driver locations disappear)**
+
+1.  **Immediate Action:**
+    *   **Stop all writes:** If possible, temporarily disable Cloud Functions that write to Firestore.
+    *   **Notify Client:** Inform Local Logistics Co. immediately about the issue.
+2.  **Data Recovery:**
+    *   **Firebase Backups:** Firebase automatically creates d
+<!-- TODO: Update diagram from outdated version -->
+aily backups. Access them via the Firebase console -> Firestore -> Settings -> Backups.
+    *   **Restore from Backup:** Select the most recent valid backup and initiate a restore. **WARNING:** This will overwrite current data.
+    *   **Tribal Knowledge:** **Asif** was responsible for managing Firestore backups. He might have a more direct way to access or restore data.
+3.  **Root Cause Analysis:**
+    *   Review Cloud Function logs for any errors that might have caused data corruption.
+    *   Exa
+```
+# Flutter mobile config - may be outdated
+# Last verified: unknown
+```
+mine recent code changes in the Flutter app that interact with Firestore.
+4.  **Post-Incident:**
+    *   Implement stricter validation and error handling for Firestore operations.
+    *   **TODO:** Establish a more robust backup and recovery strategy.
+
+**Scenario: Firebase Authentication Failure (Users cannot log in)**
+
+1.  **Immediate Action:**
+    *   Check Firebase console for any service outages.
+    *   Verify the Firebase project configuration in the app.
+2.  **Troubleshooting:**
+    *   **Hardcoded Credentials:** If testing with hardcoded credentials, ensure they are still valid.
+    *   **Google Sign-In:** If Google Sign-In is failing, check the OAuth consent screen configuration in Google Cloud Platform.
+    *   **Tribal Knowledge:** **Priya** was involved in setting up the initial authentication flow. She might know about specific issues with user provisioning.
+3.  **Workaround:**
+    *   If authentication is completely broken, consider temporarily enabling anonymous sign-in for testing purposes (if applicable).
+4.  **TODO:** Implement a fallback authentication mechanism or a more resilient authentication strategy.
+
+---
+
+### 7. Contact Information (Outdated)
+
+*   **Primary Technical Contact (Internal):**
+    *   **Name:** Rajesh Kumar
+    *   **Email:** rajesh.kumar@systems-ltd.com
+    *   **Phone:** +1-555-123-4567
+    *   **Status:** **Left Systems Ltd. in Q3 2022.**
+*   **Secondary Technical Contact (Internal):**
+    *   **Name:** Asif Khan
+    *   **Email:** asif.khan@systems-ltd.com
+    *   **Phone:** +1-555-987-6543
+    *   **Status:** **Left Systems Ltd. in Q1 2023.**
+*   **Client Technical Lead:**
+    *   **Name:** Mr. David Chen
+    *   **Company:** Local Logistics Co.
+    *   **Email:** david.chen@locallogistics.com
+    *   **Phone:** +1-555-555-1212
+    *   **Status:** **Contact details may have changed.**
+
+---
+
+### 8. Known Issues & Limitations
+
+*   **Low User Adoption:** The primary reason for project pause. Root cause analysis is incomplete.
+*   **Inconsistent UI/UX:** Some screens may not be fully responsive or follow design guidelines.
+*   **Limited Error Handling:** The application lacks robust error handling and user feedback mechanisms.
+*   **No Offline Support:** The app requires a constant internet connection.
+*   **Security Vulnerabilities:** Hardcoded API keys and lack of proper input validation.
+*   **Version Mismatches:** Potential for conflicts between Flutter SDK, Firebase SDKs, and other dependencies.
+*   **Deprecated Methods:** Use of `admin.database()` for Firestore operations in Cloud Functions.
+*   **Missing Features:** Many planned features were not implemented due to the funding cutoff.
+
+---
+
+### 9. Future Work / TODOs (Uncompleted)
+
+*   Implement proper user authentication flows (e.g., email verification, password reset).
+*   Integrate Firebase Cloud Messaging for real-time push notifications.
+*   Conduct thorough user testing and gather feedback to address adoption issues.
+*   Refactor Cloud Functions to use Firestore SDK exclusively.
+*   Implement robust error handling and logging.
+*   Add offline support for critical functionalities.
+*   Securely manage API keys and credentials.
+*   Develop a comprehensive testing suite (unit, integration, end-to-end).
+*   Create detailed architecture diagrams and documentation.
+*   Optimize app performance and reduce battery consumption.
+*   Implement route optimization algorithms beyond basic Google Maps directions.
+*   Add features for proof of delivery (e.g., signature capture, photo uploads).
+
+---
+
+### 10. Appendices
+
+#### 10.1. Code Snippets (Illustrative)
+
+**Example: Driver Location Update (Flutter)**
+
+```dart
+// lib/services/location_service.dart
+
+import 'package:geolocator/geolocator.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+Future<void> updateDriverLocation(String driverId) async {
+  Position position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high);
+
+  // This is a deprecated way of writing to Firestore, should use .set() or .update()
+  Firestore.instance.collection('locations').add({
+    'driverId': driverId,
+    'latitude': position.latitude,
+    'longitude': position.longitude,
+    'timestamp': FieldValue.serverTimestamp(),
+  });
+}
+```
+
+**Example: Firebase Cloud Function (Node.js)**
+
+```javascript
+// functions/index.js
+
+const functions = require("firebase-functions");
+const admin = require("firebase-admin");
+admin.initializeApp();
+
+exports.updateDeliveryStatus = functions.https.onCall(async (data, context) => {
+  const deliveryId = data.deliveryId;
+  const newStatus = data.status;
+
+  // Deprecated usage of Realtime Database
+  return admin.database().ref(`/deliveries/${deliveryId}`).update({
+    status: newStatus,
+    updatedAt: admin.database.ServerValue.TIMESTAMP,
+  }).then(() => {
+    return { success: true };
+  }).catch((error) => {
+    console.error("Error updating delivery status:", error);
+    return { success: false, error: error.message };
+  });
+});
+```
+
+---
+**End of Runbook**

@@ -14,9 +14,10 @@ class ConversationState(TypedDict):
     # Core identifiers
     lead_id: str
     user_input: Optional[str]
-    
+
+    stage_guidance: Optional[str]
+
     #Conversation tracking
-    conversation_stage: Optional[str]  # Use string to avoid enum serialization issues
     lead_qualification_score: Optional[Dict[str, int]]  # budget_fit, authority, need_urgency, engagement
     detected_objections: Optional[List[str]]
     buying_signals_detected: Optional[List[str]]

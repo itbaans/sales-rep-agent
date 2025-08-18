@@ -1,0 +1,211 @@
+=== SYSTEMS LTD PROJECT DOCUMENT ===
+Project: Allied Bank RPA Automation
+=== METADATA ===
+{
+  "document_type": "email_thread",
+  "project_name": "Allied Bank RPA Automation",
+  "vendor": "Systems Ltd",
+  "client": "Allied Bank",
+  "project_code": "SL-4202-2022",
+  "issue_type": "scope management challenges",
+  "thread_length": 7,
+  "date_range": "7 days",
+  "participants": 4
+}
+
+=== CONTENT ===
+Subject: Urgent: Project SL-4202-2022 - Scope Creep & Performance Concerns
+
+**From:** Sarah Chen (sarah.chen@clientbank.com)
+**To:** Allied Bank RPA Delivery Team (rpa.delivery@alliedbank.com)
+**Date:** October 26, 2023, 10:15 AM PST
+
+Dear Allied Bank RPA Delivery Team,
+
+I am writing to express significant concerns regarding the ongoing implementation of Project SL-4202-2022, our RPA automation initiative. While we appreciate the effort invested, we are experiencing considerable challenges with scope management and a lack of clear performance m
+[Sent from mobile - please excuse typos]
+etrics.
+
+Specifically, the initial project scope, which focused on account opening, password reset, and basic customer service requests, appears to have expanded without formal change control. We are seeing additional functionalities being developed that were not part of the original agreement. This is impacting timelines and resource allocation.
+
+Furthermore, while internal user feedback indicates a reduction in manual errors, we have yet to receive any concrete ROI figures or baseline metrics to quantify the success of the automation. This makes it difficult to justify the investment and plan for future phases.
+
+We require an immediate update on the current scope, a clear plan for addressing the deviations, and a proposal for establishing robust performance tracking mechanisms.
+
+Regards,
+
+Sarah Chen
+Senior Project Manager
+Allied Bank
+
+---
+
+Subject: Re: Urgent: Project SL-4202-2022 - Scope Creep & Performance Concerns
+
+**From:** Allied Bank RPA Delivery Team (rpa.delivery@alliedbank.com)
+**To:** Sarah Chen (sarah.chen@clientbank.com)
+**Date:** October 26, 2023, 11:30 AM PKT
+
+Dear Sarah,
+
+Thank you for your email. We acknowledge your concerns regarding Project SL-4202-2022.
+
+Regarding scope management, our understanding was that the project was designed to be agile and adaptable to evolving business needs. The additional functionalities you mentioned were identified as critical enhancements during our iterative development cycles, aimed at maximizing the value proposition of the RPA solution. We believe these were implicitly agreed upon through ongoing stakeholder discussions.
+
+Concerning performance metrics, the initial project charter did not mandate the establishment of detailed baseline metrics. Our focus was on delivering a functional solution within the agreed-upon timeframe. We have successfully deployed bots for account opening, password reset, and customer service requests, which have demonstrably reduced manual intervention. We are currently compiling a post-implementation review that will include qualitative feedback and anecdotal evidence of efficiency gains.
+
+We will provide a more detailed response outlining our approach to formalizing any scope adjustments and exploring options for performance measurement in our next scheduled update.
+
+Best regards,
+
+RPA Delivery Team
+Allied Bank
+
+---
+
+Subject: Re: Urgent: Project SL-4202-2022 - Scope Creep & Performance Concerns
+
+**From:** David Lee (david.lee@clientbank.com)
+**To:** Allied Bank RPA Delivery Team (rpa.delivery@alliedbank.com)
+**Cc:** Sarah Chen (sarah.chen@clientbank.com)
+**Date:** October 27, 2023, 09:00 AM PST
+
+Team,
+
+I've been looped into this thread and need to escalate this further. Sarah's concerns are valid. The "agile and adapta
+[Attachment: missing_spec.docx NOT FOUND]
+ble" approach seems to have been interpreted as a free pass for uncontrolled scope expansion. We need formal change requests and approvals for any deviations from the original SOW.
+
+Furthermore, the lack of baseline metrics is unacceptable. We cannot demonstrate ROI or justify further investment without quantifiable data. The "qualitative feedback and anecdotal evidence" is not sufficient for executive reporting.
+
+I've requested a detailed breakdown of the current scope and a plan for establishing performance KPIs by EOD today. Please ensure this is provided.
+
+David Lee
+VP of Digital Transformation
+Allied Bank
+
+---
+
+Subject: Re: Urgent: Project SL-4202-2022 - Scope Creep & Performance Concerns
+
+**From:** Allied Bank RPA Delivery Team (rpa.delivery@alliedbank.com)
+**To:** David Lee (david.lee@clientbank.com), Sarah Chen (sarah.chen@clientbank.com)
+**Date:** October 27, 2023, 03:00 PM PKT
+
+Dear David and Sarah,
+
+Following up on your requests.
+
+Our technical assessment indicates that the additional functionalities were necessary to ensure the robustness and end-to-end efficiency of the automated workflows. For instance, the integration with the legacy CRM system for enhanced data validation was a critical dependency that emerged during the development phase. This was discussed with the business stakeholders during the sprint reviews.
+
+From a technical perspective, the Automation Anywhere platform itself provides logging capabilities that can be leveraged to extract performance data. However, the initial setup did not prioritize the granular collection of specific ROI-related metrics as per the original project charter. The development team focused on delivering the core automation logic.
+
+We are working on a revised scope document and a proposal for a post-implementation performance monitoring framework. Please find attached the preliminary scope overview.
+
+Best regards,
+
+RPA Delivery Team
+Allied Bank
+
+*Attachment: SL-4202-2022_Preliminary_Scope_Overview.docx*
+
+---
+
+Subject: Re: Urgent: Project SL-4202-2022 - Scope Creep & Performance Concerns
+
+**From:** Sarah Chen (sarah.chen@clientbank.com)
+**To:** Allied Bank RPA Delivery Team (rpa.delivery@alliedbank.com), David Lee (david.lee@clientbank.com)
+**Date:** October 28, 2023, 08:30 AM PST
+
+I'm sorry, but the attachment you mentioned, "SL-4202-2022_Preliminary_Scope_Overview.docx," was not included in your email. Please resend it.
+
+Furthermore, the claim that additional integrations were "discussed with business stakeholders during sprint reviews" is not entirely accurate. While we had review sessions, these were high-level demonstrations, and the full implications of these integrations on the overall scope and budget were not clearly articulated or formally approved.
+
+The development team's focus on "core automation logic" is understandable, but it's the responsibility of the delivery team to ensure that all aspects of the project, including necessary integrations and performance tracking, are accounted for from the outset.
+
+David, I'm concerned about the lack of accountability and the tendency to shift blame.
+
+---
+
+Subject: Re: Urgent: Project SL-4202-2022 - Scope Creep & Performance Concerns
+
+**From:** David Lee (david.lee@clientbank.com)
+**To:** Sarah Chen (sarah.chen@clientbank.com), Allied Bank RPA Delivery Team (rpa.delivery@alliedbank.com)
+**Date:** October 28, 2023, 10:00 AM PST
+
+Sarah, thank you for pointing out the missing attachment.
+
+To the RPA Delivery Team: This is becoming a pattern of missed deliverables and unclear communication. The "technical assessment" you provided is vague and doesn't address the core issue of uncontrolled scope. We need concrete action, not further explanations of what *wasn't* done.
+
+I've also received feedback from our internal IT security team that some sensitive customer data was inadvertently logged by the bots during testing. This is a serious breach of our data privacy protocols. Please confirm this has been rectified immediately and provide details on the remediation steps taken.
+
+This project is now at a critical juncture. We need a clear, actionable plan to bring it back on track, including a revised SOW, a robust performan
+--- Legal disclaimer automatically appended ---
+ce monitoring framework, and a comprehensive security incident report.
+
+---
+
+Subject: Re: Urgent: Project SL-4202-2022 - Scope Creep & Performance Concerns
+
+**From:** Allied Bank RPA Delivery Team (rpa.delivery@alliedbank.com)
+**To:** David Lee (david.lee@clientbank.com), Sarah Chen (sarah.chen@clientbank.com)
+**Date:** October 29, 2023, 02:00 PM PKT
+
+Dear David and Sarah,
+
+We apologize for the missing attachment and the oversight regarding the sensitive data logging. This was an isolated incident during the initial development phase and has been immediately addressed by the development team. All affected logs have been purged, and enhanced data masking protocols have been implemented within the bot configurations to prevent recurrence. A detailed security incident report is being prepared and will be shared shortly.
+
+Regarding the scope and performance metrics, we have reviewed the project deliverables and are committed to providing a comprehensive solution. We propose a phased approach to address the outstanding items.
+
+Phase 1: Scope Consolidation and Baseline Definition. This will involve a joint workshop to finalize the current scope and establish initial baseline metrics for the deployed functionalities. We aim to complete this within two weeks.
+
+Phase 2: Performance Monitoring Framework Implementation. This will focus on configuring the Automation Anywhere platform to capture and report on key performance indicators.
+
+We understand the urgency and are dedicated to achieving a satisfactory resolution. We will be scheduling a call to discuss the proposed plan in more detail.
+
+Best regards,
+
+RPA Delivery Team
+Allied Bank
+
+---
+
+Subject: Re: Urgent: Project SL-4202-2022 - Scope Creep & Performance Concerns
+
+**From:** Sarah Chen (sarah.chen@clientbank.com)
+**To:** Allied Bank RPA Delivery Team (rpa.delivery@alliedbank.com), David Lee (david.lee@clientbank.com)
+**Date:** October 30, 2023, 09:00 AM PST
+
+I'm forwarding this to David as I'm out of office on a pre-scheduled conference until November 2nd.
+
+David, I'm still not convinced this "phased approach" addresses the fundamental issues of scope control and the lack of initial planning for metrics. The "isolated incident" with sensitive data is concerning, and the "enhanced data masking protocols" should have been a standard practice from the beginning.
+
+I'll review the security incident report and the proposed plan upon my return. However, I remain skeptical about the team's ability to deliver on these commitments without further oversight.
+
+Regards,
+
+Sarah Chen
+
+---
+
+Subject: Re: Urgent: Project SL-4202-2022 - Scope Creep & Performance Concerns
+
+**From:** David Lee (david.lee@clientbank.com)
+**To:** Sarah Chen (sarah.chen@clientbank.com), Allied Bank RPA Delivery Team (rpa.delivery@alliedbank.com)
+**Date:** November 3, 2023, 11:00 AM PST
+
+Sarah, welcome back.
+
+I've reviewed the "preliminary scope overview" (which was finally attached to the last email) and the proposed "phased approach." Frankly, it's still not satisfactory. The scope consolidation is essentially a retrospective attempt to document what was already done, and the "baseline definition" is a reactive measure.
+
+The security incident report was also lacking in detail regarding the root cause analysis and preventative measures beyond generic statements.
+
+The RPA Delivery Team has committed to a "joint workshop" for scope consolidation and baseline definition. However, the proposed timeline of "two weeks" for this is still too long, given the project has already been delivered. We need immediate action.
+
+Furthermore, the "performance monitoring framework implementation" is still a vague promise. We have no concrete deliverables or timelines for when we will actually see quantifiable ROI.
+
+At this point, the project is considered **unsatisfactory**. We will be initiating a formal review of the vendor's performance and will be seeking a revised contract with stricter oversight and performance guarantees for any future engagements. The current situation is unacceptable.
+
+David Lee
+VP of Digital Transformation
+Allied Bank

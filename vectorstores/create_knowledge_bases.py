@@ -1,6 +1,7 @@
 import json
 import os
 import pickle
+import re
 from typing import List
 from dotenv import load_dotenv
 from PyPDF2 import PdfReader
@@ -39,6 +40,31 @@ def chunk_pdf_doc(pdf_path: str) -> List[Document]:
     pdf_text = "".join([page.extract_text() or "" for page in pdf_reader.pages])
     doc = Document(page_content=pdf_text, metadata={"source": pdf_path})
 
+    splitter = RecursiveCharacterTextSplitter(
+        chunk_size=1000,
+        chunk_overlap=200,
+        length_function=len,
+        is_separator_regex=False,
+    )
+    return splitter.split_documents([doc])
+
+def chunk_txt_doc(txt_path: str) -> List[Document]:
+    # Read the whole text file
+    with open(txt_path, "r", encoding="utf-8") as f:
+        txt_content = f.read()
+
+    # Remove metadata block if it exists
+    cleaned_text = re.sub(
+        r"=== METADATA ===\s*\{.*?\}\s*", 
+        "", 
+        txt_content, 
+        flags=re.DOTALL
+    )
+
+    # Wrap into a Document object
+    doc = Document(page_content=cleaned_text.strip(), metadata={"source": txt_path})
+
+    # Use the same splitter configuration
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=1000,
         chunk_overlap=200,
@@ -125,20 +151,31 @@ def initialize_vector_knowledge():
     bm25_path = os.getenv("BM25_PATH", "vectorstores/bm25_index.pkl")
     google_api_key = os.getenv("GOOGLE_API_KEY")
 
-    if not os.path.exists(faiss_path) or not os.path.exists(bm25_path):
-        print("Processing PDF and creating indexes...")
+    # Folders we care about
+    target_folders = ["capability_docs", "generated_docs", "pricing_docs", "project_docs"]
 
-        pdf_paths = [os.path.join(docs_dir, f) for f in os.listdir(docs_dir) if f.endswith('.pdf')]
-        if not pdf_paths:
-            raise FileNotFoundError("No PDF files found in the specified directory.")
-        
+    if not os.path.exists(faiss_path) or not os.path.exists(bm25_path):
+        print("Processing TXT files and creating indexes...")
+
+        txt_paths = []
+        for folder in target_folders:
+            folder_path = os.path.join(docs_dir, folder)
+            if os.path.exists(folder_path):
+                for f in os.listdir(folder_path):
+                    if f.endswith(".txt"):
+                        txt_paths.append(os.path.join(folder_path, f))
+
+        if not txt_paths:
+            raise FileNotFoundError("No TXT files found in the specified directories.")
+
         chunks = []
-        for pdf_path in pdf_paths:
-            print(f"Processing {pdf_path}...")
-            chunks.extend(chunk_pdf_doc(pdf_path))
+        for txt_path in txt_paths:
+            print(f"Processing {txt_path}...")
+            chunks.extend(chunk_txt_doc(txt_path))  # <-- You'll need a text chunker
 
         dense_retriever = create_faiss_index(chunks, google_api_key, faiss_path)
         bm25_retriever = create_bm25_index(chunks, bm25_path)
+
     else:
         print("Loading saved indexes...")
 
@@ -228,10 +265,15 @@ def search_knowledge_base_rag(question: str) -> str:
 
     # Build prompt
     prompt = (
-    f"You are given the following documents retrieved for the query.\n\n"
-    f"Query: {question}\n\n"
-    f"Documents:\n{joined_docs}\n\n"
-    f"Answer the query using only the information from the documents. If the documents do not contain enough information to answer, respond with 'Information not found in the provided documents.'"
+        f"You are given the following documents retrieved for the query.\n\n"
+        f"Query: {question}\n\n"
+        f"Documents:\n{joined_docs}\n\n"
+        f"Carefully read the documents and extract the most relevant information that answers the query. "
+        f"Use exact details, facts, numbers, or entities from the documents whenever possible. "
+        f"If multiple documents provide partial answers, combine them into a single, coherent response. "
+        f"Do not add information that is not explicitly present in the documents. "
+        f"If the documents do not contain enough information to answer, respond with: "
+        f"'Information not found in the provided documents.'"
     )
 
     # Run through LLM

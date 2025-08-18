@@ -1,0 +1,120 @@
+=== SYSTEMS LTD COMMERCIAL DOCUMENT ===
+Pricing Model: Monthly Retainer
+=== METADATA ===
+{
+  "document_type": "pricing_guide",
+  "pricing_model": "Monthly Retainer",
+  "applicable_regions": [
+    "Pakistan",
+    "KSA"
+  ],
+  "created_date": "2025-08-15T19:02:17.256268",
+  "author": "Sana Mahmood (Deal Architect)",
+  "status": "Draft"
+}
+
+=== CONTENT ===
+## Systems Ltd. - Monthly Retainer Commercial Model: Pricing Guide
+
+**Version 1.0 | Date: October 26, 2023**
+
+---
+
+### 1. Overview: Unlocking Seamless Operations with Systems Ltd.
+
+Systems Ltd. is proud to offer our **Monthly Retainer** commercial model, designed to empower your business with predictable, high-quality managed services. This model provides a fixed monthly fee, ensuring you have dedicated access to our expert team for comprehensive support, proactive maintenance, and efficient infrastructure management. By partnering with Systems Ltd., you can expect:
+
+*   **Uninterrupted Operations:** Minimize downtime and maximize productivity with our round-the-clock support and proactive issue resolution.
+*   **Cost Predictability:** Eliminate surprise expenses with a clear, fixed monthly investment, allowing for better financial planning.
+*   **Scalable Expertise:** Leverage our deep pool of technical talent and industry best practices without the overhead of in-house specialists.
+*   **Strategic Focus:** Free up your internal resources to concentrate on core business objectives while we handle your IT complexities.
+*   **Enhanced Efficiency:** Benefit from optimized systems and streamlined processes, leading to improved overall business performance.
+
+---
+
+### 2. Rate Structure: Investing in Your Success
+
+Our Monthly Retainer fees are structured to reflect the allocated capacity and scope of services tailored to your unique business needs. While specific rates are subject to individual client agreements, our general rate ranges are as follows:
+
+*   **Core Managed Services & Support:** PKR 
+[INTERNAL: Actual minimum rate is 6% higher]
+150,000 - PKR 750,000+ per month
+*   **Infrastructure Management (Basic):** PKR 250,000 - PKR 1,000,000+ per month
+*   **Infrastructure Management (Advanced/Complex):** PKR 500,000 - PKR 2,500,000+ per month
+
+**Please Note:**
+
+*   These are indicative ranges and will be refined based on a detailed assessment of your requirements, including the number of users, systems complexity, service level agreements (SLAs), and desired response times.
+*   **Pakistan Service Tax:** A service tax, currently estimated between 15% and 16%, may be applicable to the total retainer fee, depending on the specific services rendered and provincial regulations. This will be clearly itemized on your invoice.
+*   **Volume Discounts:** Opportunities for volume discounts may be available for clients with extensive service requirements or a significant number of managed assets. Eligibility criteria apply and are detailed in the contractual agreement.
+
+---
+
+### 3. Suitable Use Cases: Empowering Diverse Businesses
+
+The Monthly Retainer model is exceptionally well-suited for a wide array of business needs, particularly those requiring consistent and reliable outsourced IT functions. Key areas where our retainer model excels include:
+
+*   **Business Process Outsourcing (BPO) Support:** Providing dedicated customer service, technical support, data entry, and other operational functions.
+*   **Managed IT Infrastructure:** Comprehensive management of servers, networks, cloud environments, workstations, and end-user devices.
+*   **Application Support & Maintenance:** Ensuring the smooth operation, updates, and troubleshooting of your critical business applications.
+*   **Help Desk Services:** Offering first-level and second-level technical support to your employees.
+*   **Proactive Monitoring & Maintenance:** Continuous oversight of your IT systems to prevent issues before they impact your business.
+
+---
+
+### 4. Contractual Considerations: Navigating the Agreement
+
+Our Monthly Retainer agreements are designed to be comprehensive and transparent, outlining the scope of services, responsibilities, and payment terms. However, it is crucial to review the following standard, yet negotiable, contractual elements:
+
+*   **Scope of Services (SoS):** While we define the core services, the precise boundaries and inclusions of the SoS are always a point of negotiation. This includes the specific systems, applications, and user groups covered.
+*   **Service Level Agreements (SLAs):** Response times, resolution times, and uptime guarantees are critical components that will be collaboratively defined.
+*   **Capacity Allocation:** The retainer covers a defined allocation of our team's capacity. Exceeding this allocated capacity may incur additional charges or require a review of the retainer.
+*   **Change Management Process:** Procedures for requesting and implementing changes to the IT environment will be clearly defined.
+*   **Termination Clauses:** Notice periods and any associated exit fees will be outlined.
+*   **Intellectual Property:** Ownership and usage rights for any custom solutions developed will be specified.
+
+**Important Note:** While we strive for clarity, certain aspects of the agreement, such as the definition of "critical incident" or the exact methodology for calculating "allocated capacity," are often subject to detailed discussion and may be interpreted based on the specific context of the agreement.
+
+---
+
+### 5. Regional Variations: Understanding Local Nuances
+
+The tax landscape in Pakistan is dynamic and varies across provinces. While we aim to provide accurate pricing, clients should be aware of the following:
+
+*   **Service Tax:** As mentioned, a service tax of approximately 15-16% is generally applicable. However, the specific rate and the services it applies to can differ based on provincial legislation.
+*   **Corporate Tax:** In addition to service tax, corporate tax regulations will apply to the overall profitability of your business.
+*   **Provincial Differences:** The exact treatment of service tax and other applicable taxes can vary significantly from one province to another. Systems Ltd. will endeavor to provide the most up-to-date information, but clients are strongly advised to consult with their own tax advisors for definitive guidance relevant to their specific location and business structure.
+
+---
+
+### 6. FAQ: Clarifying Your Concerns
+
+**Q1: What exactly is covered by the "allocated capacity"?**
+
+**A1:** Allocated capacity refers to the pre-defined portion of our team's time and resources dedicated to your account, as outlined in your specific Service Level Agreement (SLA). This typically includes proactive maintenance, scheduled support activities, and a defined number of reactive support requests. The exact metrics and limitations are detailed within your individual contract.
+
+**Q2: Are there any hidden costs I should be aware of?**
+
+**A2:** Our goal is to be transparent. However, as with any managed service agreement, there can be components that are not explicitly part of the base retainer. For instance, significant infrastructure upgrades, the implementation of entirely new systems, or requests that fall outside the agreed-upon scope of services may incur additional, separate charges. These will always be discussed and agreed upon with you in advance.
+
+**Q3: How are implementation fees handled?**
+
+**A3:** Implementation fees, if applicable, are typically separate from the monthly retainer. These fees cover the initial setup, configuration, and onboarding of your systems and services. The exact amount and payment schedule for implementation will be clearly detailed in the initial proposal and contract. These fees are often amortized or bundled into the initial phase of the contract.
+
+**Q4: What if my needs chang
+[NOTE: Some deals include volume discounts; tax treatment per province varies → service tax plus corporate tax]
+e and I require more support than initially agreed upon?**
+
+**A4:** We understand t
+**Discounts require VP approval - not advertised**
+hat business needs evolve. If you require additional support beyond your allocated capacity, we can discuss options such as adjusting your retainer to accommodate the increased demand or exploring project-based engagements for specific, ad-hoc requirements. The process for managing such changes will be outlined in your contract.
+
+**Q5: How do the volume discounts work?**
+
+**A5:** Volume discounts are offered on a case-by-case basis and are typically tied to the overall value of services procured or the number of managed assets. Eligibility criteria and the specific discount percentages are determined during the negotiation phase and are subject to the terms of your agreement. The exact eligibility for these discounts is not universally defined and is a point of negotiation.
+
+---
+
+**Disclaimer:** This pricing guide provides general information about Systems Ltd.'s Monthly Retainer commercial model. It is not a formal offer and does not constitute a binding agreement. All pricing and terms are subject to negotiation and will be finalized in a mutually agreed-upon contract. Clients are encouraged to consult with 
+[FOOTNOTE: 5% VAT applies]
+their legal and financial advisors.

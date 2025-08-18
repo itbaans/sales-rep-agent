@@ -1,0 +1,244 @@
+=== SYSTEMS LTD CAPABILITY DOCUMENT ===
+Capability: AI, ML & NLP Solutions
+=== METADATA ===
+{
+  "document_type": "implementation_playbook",
+  "capability": "AI, ML & NLP Solutions",
+  "version": "3.2",
+  "last_updated": "2024-12-30T18:46:07.253886",
+  "author": "Hina Sheikh (Delivery Head)",
+  "review_status": "Needs Update"
+}
+
+=== CONTENT ===
+## Systems Ltd. - AI, ML & NLP Solutions Capability: Technical Implementation Playbook
+
+**Version:** 0.8 (Draft - Subject to Change Without Notice)
+
+**Date:** October 26, 2023
+
+**Prepared By:** [Your Name/Team]
+
+---
+
+### 1. Architecture Overview
+
+This section provides a high-level overview of the typical architecture for our AI, ML & NLP Solutions, with a specific focus on the
+[WARNING: Deprecated approach - remove before production use]
+ "Hami" Physician Assistant application.
+
+**Core Components:**
+
+*   **Frontend (React):** User interface for physician interaction. Handles chat input, displays clinical suggestions, and manages user sessions.
+    *   *Note: Current frontend build is `v1.2.3-beta`. Future versions may introduce significant API changes.*
+*   **Backend API (Node.js/Express):** Serves as the primary interface between the frontend and the AI/ML services. Handles user authentication, request routing, and data persistence.
+    *   *Note: Uses a custom authentication middleware. Refer to `auth-middleware.js` for details.*
+*   **AI/ML Services (Python/Flask/FastAPI):**
+    *   **Clinical Suggestion Engine:** The core of Hami. Processes natural language queries from physicians and generates relevant clinical suggestions.
+        *   *Underlying models: BERT variants, custom NLP pipelines.*
+        *   *Deployment: Docker containers, orchestrated via Kubernetes (for production).*
+    *   **Data Preprocessing & Feature Engineering:** Scripts for preparing raw clinical data for model training and inference.
+        *   *Tools: Pandas, Scikit-learn.*
+    *   **Model Training & Evaluation:** Scripts for training, fine-tuning, and evaluating ML models.
+        *   *Frameworks: TensorFlow, PyTorch.*
+*   **Database (PostgreSQL):** Stores user data, conversation history, and potentially model metadata.
+    *   *Schema: Refer to `db_schema_v1.sql`.*
+*   **Message Queue (RabbitMQ):** Used for asynchronous communication between services, particularly for handling long-running AI inference tasks.
+    *   *Exchange types: Direct, Fanout.*
+*   **Caching Layer (Redis):** For frequently accessed data and model inference results to improve performance.
+
+**Missing Components/Areas Under Active Development:**
+
+*   **Scalability Monitoring & Auto-Scaling:** While Kubernetes is used, robust monitoring and automated scaling policies are still being defined.
+*   **Centralized Logging & Alerting:** Current logging is fragmented across services. A unified solution is planned.
+*   **CI/CD Pipeline:** A fully automated CI/CD pipeline is in progress. Manual deployments are still common.
+*   **Data Lake/Warehouse:** For long-term storage and advanced analytics on clinical data.
+*   **Model Registry:** A dedicated system for versioning and managing trained models.
+
+---
+
+### 2. Setup Guide
+
+This guide outlines the steps to set up a development environment for our AI, ML & NLP Solutions. **Note:** These instructions are heavily tailored to the current development setup and may not generalize well.
+
+**Prerequisites:**
+
+*   **Operating System:** Ubuntu 20.04 LTS (Recommended). Other Linux distributions may require significant adjustments. macOS is *not* officially supported for backend development.
+*   **Node.js:** Version 16.x.x (Specific patch version might be critical for certain dependencies).
+    *   *Installation: Use `nvm` for managing Node.js versions. `nvm install 16.14.0`.*
+*   **Python:** Version 3.9.x.
+    *   *Installation: Use `pyenv` for managing Python versions. `pyenv install 3.9.18`.*
+*   **Docker & Docker Compose:** For containerized development.
+*   **Git:** For version control.
+*   **IDE:** VS Code with recommended extensions (e.g., Python, ESLint, Prettier).
+
+**Development Environment Setup:**
+
+1.  **Clone Repositories:**
+    ```bash
+    git clone git@github.com:SystemsLtd/hami-frontend.git
+    git clone git@github.com:SystemsLtd/hami-backend.git
+    git clone git@github.com:SystemsLtd/ai-services.git
+    ```
+
+2.  **Backend Setup (Node.js):**
+    *   Navigate to the `hami-backend` directory.
+    *   Install dependencies: `npm install`
+    *   **Environment Variables:** Create a `.env` file in the root of `hami-backend`.
+        *   *Example `.env` (for local development):*
+            ```dotenv
+            PORT=3001
+            DATABASE_URL=postgresql://user:password@localhost:5432/hami_dev
+            JWT_SECRET=supersecretkeythatshouldbereplaced
+            RABBITMQ_URL=amqp://guest:guest@localhost:5672
+            REDIS_URL=redis://localhost:6379
+            ```
+    *   **Database Setup:**
+        *   Ensure PostgreSQL is running locally.
+        *   Create the `hami_dev` database.
+        *   Run migrations: `npm run migrate` (This uses Knex.js, refer to `knexfile.js` for details).
+    *   **Run Backend:** `npm start`
+
+3.  **Frontend Setup (React):**
+    *   Navigate to the `hami-frontend` directory.
+    *   Install dependencies: `npm install`
+    *   **Environment Variables:** Create a `.env` file in the root of `hami-frontend`.
+        *   *Example `.env` (for local development):*
+            ```dotenv
+            REACT_APP_API_URL=http://localhost:3001/api
+            ```
+    *   **Run Frontend:** `npm start`
+
+4.  **AI Services Setup (Python):**
+    *   Navigate to the `ai-services` directory.
+    *   **Virtual Environment:** Create and activate a Python virtual environment.
+        ```bash
+        cd ai-services
+        python -m venv venv
+        source venv/bin/activate
+        ```
+    *   Install dependencies: `pip install -r requirements.txt`
+    *   **Model Loading:** The clinical suggestion engine requires pre-trained models. These are typically downloaded from a shared S3 bucket.
+        *   *Ask [Data Scientist Lead Name] for the latest model download instructions and credentials.*
+        *   *Hardcoded model path example (DO NOT RELY ON THIS):* `/mnt/shared/models/clinical_suggestion_v2.1.pt`
+    *   **Run AI Service (Example - Clinical Suggestion Engine):**
+        *   This service is often run as a separate Flask/FastAPI application.
+        *   *Example command (may vary):* `python app.py` (assuming `app.py` is the entry point).
+        *   *Note: The specific port and configuration for AI services can be complex. Refer to individual service READMEs.*
+
+**Environment-Specific Gotchas:**
+
+*   **Windows Users:** Backend development on Windows is known to have issues with file path conventions and certain Node.js native modules. Use WSL (Windows Subs
+**TODO: Add screenshot here**
+ystem f
+<!-- Actual implementation differs for AI clients -->
+or Linux) for a more stable experience.
+*   **macOS Users:** Be aware of potential differences in filesystem case sensitivity compared to Linux.
+*   **Local RabbitMQ/Redis:** Ensure these services are running and accessible on `localhost:5672` and `localhost:6379` respectively. Docker Compose is the preferred method for running these locally.
+*   **GPU Access:** For model training/inference requiring GPUs, ensure your system is configured correctly with CUDA drivers and compatible hardware. This is a complex setup and often requires specific configurations.
+
+---
+
+### 3. Configuration Reference
+
+This section details key configuration parameters. **Note:** Many configurations are hardcoded in sample implementations or rely on environment variables that are not explicitly documented here.
+
+**Backend (`hami-backend/.env`):**
+
+*   `PORT`: The port the backend API listens on. (e.g., `3001`)
+*   `DATABASE_URL`: Connection string for PostgreSQL. (e.g., `postgresql://user:password@host:port/database`)
+*   `JWT_SECRET`: Secret key for signing JWTs. **Must be kept secure.**
+*   `RABBITMQ_URL`: Connection URL for RabbitMQ.
+*   `REDIS_URL`: Connection URL for Redis.
+*   `MAX_RETRIES_DB`: Maximum retries for database connections. (e.g., `5`)
+*   `LOG_LEVEL`: Logging level (e.g., `info`, `debug`, `error`).
+
+**Frontend (`hami-frontend/.env`):**
+
+*   `REACT_APP_API_URL`: Base URL for the backend API. (e.g., `http://localhost:3001/api`)
+*   `REACT_APP_AI_SERVICE_URL`: URL for specific AI services (if not proxied through backend). (e.g., `http://localhost:5000`)
+
+**AI Services (Example - Clinical Suggestion Engine):**
+
+*   **Model Paths:**
+    *   `MODEL_PATH_SUGGESTION`: Path to the primary suggestion model. (e.g., `/app/models/suggestion_model_v3.pkl`)
+    *   `MODEL_PATH_NLP_PIPELINE`: Path to the NLP preprocessing pipeline. (e.g., `/app/models/nlp_pipeline_v1.json`)
+*   **Inference Parameters:**
+    *   `MAX_SUGGESTIONS`: Maximum number of suggestions to return. (e.g., `5`)
+    *   `CONFIDENCE_THRESHOLD`: Minimum confidence score for a suggestion. (e.g., `0.75`)
+*   **Service Configuration:**
+    *   `SERVICE_PORT`: Port the AI service listens on. (e.g., `5000`)
+    *   `QUEUE_NAME_INFERENCE`: RabbitMQ queue for receiving inference requests. (e.g., `clinical_suggestions_queue`)
+    *   `QUEUE_NAME_RESULTS`: RabbitMQ queue for sending inference results. (e.g., `clinical_suggestions_results_queue`)
+
+**Deprecated/Legacy Configurations:**
+
+*   **Direct API Calls to AI Services:** Older implementations might have frontend directly calling AI services. This is discouraged due to lack of authentication and centralized control.
+*   **Hardcoded API Keys:** Avoid hardcoding API keys for external services. Use environment variables or a secrets management system.
+
+---
+
+### 4. Troubleshooting
+
+This section provides common troubleshooting steps. For issues not covered here, please contact the AI/ML Solutions support team.
+
+1.  **"Hami is not responding" / Frontend Errors:**
+    *   **Check Backend Status:** Ensure the `hami-backend` service is running. Check logs in `hami-backend/logs/`.
+    *   **Check API URL:** Verify `REACT_APP_API_URL` in `hami-frontend/.env` is correct.
+    *   **Network Connectivity:** Ensure your machine can reach the backend API port.
+    *   **Ask [Backend Lead Name]** if you suspect issues with the authentication middleware.
+
+2.  **"Clinical suggestions are incorrect/missing" / AI Service Errors:**
+    *   **Check AI Service Status:** Ensure the relevant AI service (e.g., Clinical Suggestion Engine) is running.
+    *   **Check RabbitMQ:** Verify RabbitMQ is running and accessible. Check if messages are being sent to and received from the expected queues.
+    *   **Model Loading Errors:** Review AI service logs for errors related to loading models. Ensure model files are present and accessible at the configured paths.
+    *   **Input Data Format:** Verify the input data sent to the AI service matches the expected format.
+    *   **Ask [AI Team Lead Name]** for specific insights into model behavior and potential data drift.
+
+3.  **Database Connection Issues:**
+    *   **Check PostgreSQL Status:** Ensure your PostgreSQL server is running.
+    *   **Verify `DATABASE_URL`:** Double-check the connection string in `.env` files.
+    *   **Firewall Rules:** Ensure no firewall is blocking access to the PostgreSQL port.
+
+4.  **Scaling Issues (Hami is slow/unresponsive under load):**
+    *   **Resource Utilization:** Monitor CPU, memory, and network usage of backend and AI services.
+    *   **Database Load:** Check for slow database queries.
+    *   **RabbitMQ Throughput:** Monitor message queue depth and processing times.
+    *   **Ask [DevOps Lead Name]** for insights into Kubernetes scaling configurations and performance bottlenecks.
+
+5.  **General Errors / Unclear Behavior:**
+    *   **Check All Logs:** Review logs from frontend, backend, and all AI services.
+    *   **Restart Services:** Sometimes a simple restart of relevant services can resolve transient issues.
+    *   **Contact Support:** If the issue persists, please open a ticket with the AI/ML Solutions support team, providing detailed error messages, steps to reproduce, and relevant log snippets.
+
+---
+
+### 5. Best Practices
+
+This section outlines recommended practices for developing and deploying AI, ML & NLP solutions. **Note:** Many of these practices are aspirational and may not be fully implemented in current systems.
+
+*   **Version Control Everything:** All code, configurations, and even model artifacts (where feasible) should be under version control.
+*   **Use Environment Variables:** Never hardcode sensitive information or environment-specific settings.
+*   **Containerize Services:** Utilize Docker for consistent and reproducible deployments.
+*   **Asynchronous Communication:** Employ message queues for decoupling services and handling long-running tasks.
+*   **Automated Testing:** Implement unit, integration, and end-to-end tests.
+    *   *Contradiction: Current test coverage for AI services is limited.*
+*   **Monitoring and Alerting:** Set up comprehensive monitoring for all services and configure alerts for critical issues.
+    *   *Contradiction: Centralized monitoring is still a work in progress.*
+*   **Secure Your Secrets:** Use a dedicated secrets management solution for API keys, database credentials, etc.
+*   **Code Reviews:** Conduct thorough code reviews for all changes.
+*   **Documentation:** Maintain up-to-date documentation for all components and process
+**TODO: Add screenshot here**
+es.
+    *   *Contradiction: This playbook itself is a testament to the need for better documentation.*
+*   **Performance Tuning:**
+    *   **"The Secret Sauce":** Veteran engineers know that optimizing the NLP preprocessing pipeline for specific medical terminology is key. This often involves custom tokenization and entity recognition rules.
+    *   **Batching Inference Requests:** For AI services, batching multiple inference requests together can significantly improve throughput, especially on GPUs.
+    *   **Caching Model Outputs:** For identical or very similar queries, caching the AI model's output in Redis can drastically reduce latency.
+ 
+[PERFORMANCE: Known bottlenecks in data processing]
+   *   **Ask [Senior ML Engineer Name]** for their "magic numbers" for hyperparameter tuning.
+
+---
+
+**Disclaimer:** This playbook is a living document and is subject to change. It is intended as a guide and may not cover all scenarios or edge cases. Always refer to the latest version and consult with the relevant teams for specific guidance.

@@ -56,8 +56,8 @@ def get_reasoning_prompt(state: ConversationState) -> str:
         prompt.append(str(state['company_data']))
     
     # Conversation Context
-    if state.get('conversation_stage'):
-        prompt.append(f"### CURRENT CONVERSATION STAGE: {state['conversation_stage']}")
+    if state.get('stage_guidance'):
+        prompt.append(f"### CURRENT CONVERSATION GUIDANCE: {state['stage_guidance']}")
     if state.get('lead_qualification_score'):
         prompt.append(f"### LEAD QUALIFICATION SCORE: {state['lead_qualification_score']}")
     if state.get('detected_objections'):
@@ -103,16 +103,16 @@ def get_reasoning_prompt(state: ConversationState) -> str:
     prompt.append("\n---")
     instructions = """
 **TASK FLOW**
-1. Analyze the user query for buying signals, objections, and qualification data.
-2. Update the conversation stage if needed.
-3. Select ONE best next action based on stage, detected signals, and available info.
+1. Use the provided stage guidance, detected signals, objections, and qualification updates (already generated).
+2. Based on the current stage guidance and available context, select ONE best next action.
+3. Generate the action in the required JSON format.
 
-**SIGNAL DEFINITIONS**
+**SIGNAL DEFINITIONS (reference only)**
 - Buying signals: mentions of budget, timelines, demo requests, "next steps"
 - Objections: concerns about price, timing, decision authority, or need
 - Qualification: budget range, authority level, timeline, pain points
 
-**STAGE GUIDELINES**
+**STAGE GUIDELINES (already updated separately by stage guidance)**
 - DISCOVERY: Ask about pain points, solutions, decision process
 - INTEREST: Share case studies, technical details
 - OBJECTION_HANDLING: Address concerns using knowledge base
@@ -133,7 +133,6 @@ def get_reasoning_prompt(state: ConversationState) -> str:
 - Pricing / cost / budget → `search_pricing_models`
 - Company profile / history → `search_company_profile`
 - General questions (not covered above) → `search_knowledge_base`
-- Detected new signals or stage change needed → `update_conversation_context`
 - Direct reply possible without search → `generate_response`
 - If user is indicating ending the conversation or the current conversation indicates about ending the conversation → `end_conversation`
 
@@ -143,12 +142,87 @@ def get_reasoning_prompt(state: ConversationState) -> str:
 3. `{"thought": "...", "action": {"tool": "search_pricing_models", "keywords": "..."}}`
 4. `{"thought": "...", "action": {"tool": "search_company_profile", "keywords": "..."}}`
 5. `{"thought": "...", "action": {"tool": "search_knowledge_base", "query": "..."}}`
-6. `{"thought": "...", "action": {"tool": "update_conversation_context", "stage": "...", "signals": [...], "qualification_updates": {...}}}`
-7. `{"thought": "...", "action": {"tool": "generate_response", "answer": "..."}}`
-8. `{"thought": "...", "action": {"tool": "end_conversation", "answer": "..."}}`
+6. `{"thought": "...", "action": {"tool": "generate_response", "answer": "..."}}`
+7. `{"thought": "...", "action": {"tool": "end_conversation", "answer": "..."}}`
 
 **STRICTLY** return JSON in the above format.
 """
     prompt.append(instructions)
 
     return "\n".join(prompt)
+
+def get_stage_guidance_prompt(state: ConversationState) -> str:
+    """
+    Build a structured prompt for the LLM to generate stage guidance.
+    The guidance should reflect emotional intelligence, 
+    consider past guidance, and optionally update lead insights.
+    """
+    
+    history_str = "\n".join(
+        [f"User: {msg['user']}\nAgent: {msg['agent']}" for msg in state.messages]
+    )
+
+    past_guidance_str = state.stage_guidance or "None provided yet."
+    
+    lead_score_str = (
+        f"Budget Fit: {state.lead_qualification_score.get('budget_fit', 'N/A')}, "
+        f"Authority: {state.lead_qualification_score.get('authority', 'N/A')}, "
+        f"Need Urgency: {state.lead_qualification_score.get('need_urgency', 'N/A')}, "
+        f"Engagement: {state.lead_qualification_score.get('engagement', 'N/A')}"
+        if state.lead_qualification_score else "Not yet evaluated."
+    )
+    
+    objections_str = (
+        ", ".join(state.detected_objections) if state.detected_objections else "None detected yet."
+    )
+    
+    buying_signals_str = (
+        ", ".join(state.buying_signals_detected) if state.buying_signals_detected else "None detected yet."
+    )
+    
+    prompt = f"""
+You are an expert sales coach with strong emotional intelligence.
+Your task is to provide updated *Stage Guidance* for the sales agent
+based on the ongoing conversation with a potential lead.
+
+Conversation History:
+{history_str}
+
+Previous Stage Guidance:
+{past_guidance_str}
+
+Lead Insights so far:
+- Qualification Score: {lead_score_str}
+- Detected Objections: {objections_str}
+- Buying Signals: {buying_signals_str}
+
+Your tasks:
+1. Write a short reflective passage (~3-5 sentences) that describes the **current stage of the conversation** with emotional intelligence. Include guidance on how the agent should move forward in a natural, empathetic way. 
+   - If the previous guidance is still relevant, make only small adjustments.
+   - If the conversation has shifted significantly, adapt the advice accordingly.
+
+2. Update the **lead qualification score** (budget_fit, authority, need_urgency, engagement) on a 1–5 scale based on any new signals. 
+   - Only change values if the new evidence is strong enough.
+
+3. Identify any new **objections** the lead may have raised (add them if new).  
+
+4. Identify any new **buying signals** the lead may have shown (add them if new).  
+
+Return your output in **strict JSON** format with the following structure:
+
+{{
+  "stage_guidance": "<your reflective passage here>",
+  "lead_qualification_score": {{
+      "budget_fit": <int 1–5>,
+      "authority": <int 1–5>,
+      "need_urgency": <int 1–5>,
+      "engagement": <int 1–5>
+  }},
+  "detected_objections": [<list of objections>],
+  "buying_signals_detected": [<list of signals>]
+}}
+"""
+    
+    return prompt
+
+    

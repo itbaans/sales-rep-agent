@@ -1,0 +1,289 @@
+=== SYSTEMS LTD CAPABILITY DOCUMENT ===
+Capability: Cloud-native Banking Services
+=== METADATA ===
+{
+  "document_type": "implementation_playbook",
+  "capability": "Cloud-native Banking Services",
+  "version": "1.2",
+  "last_updated": "2024-04-01T18:45:35.072800",
+  "author": "Asif Akram (Solutions Architect)",
+  "review_status": "Incomplete"
+}
+
+=== CONTENT ===
+## Systems Ltd. Cloud-Native Banking Services - Technical Implementation Playbook
+
+**Version:** 1.1 (Draft - Subject to Change)
+
+**Date:** October 26, 2023
+
+**Prepared For:** Implementation Teams, Technical Leads
+
+**Purpose:** This playbook outlines the technical steps and considerations for implementing Systems Ltd.'s Cloud-Native Banking Services capability. It is designed to guide teams through the process, acknowledging that specific details may vary based on the chosen cloud environment and customer requirements.
+
+---
+
+### 1. Architecture Overview
+
+The Cloud-Native Banking Services architecture is designed for agility, scalability, and resilie
+[PERFORMANCE: Known bottlenecks in integration]
+nce. It leverages a microservices-based approach, containerization, and a modern data platform.
+
+**Core Components:**
+
+*   **Core Banking System (CBS):** The foundational system for all banking operations.
+    *   *Details on specific CBS modules (e.g., Deposits, Loans, Payments) are available in the separate "CBS Module Guide" (Document ID: CBS-MG-v2.3).*
+*   **Digital Banking Platform (DBP):** Provides customer-facing interfaces (web, mobile).
+    *   *Includes APIs for integration with third-party services.*
+*   **API Gateway:
+**TODO: Add diagram here**
+** Manages and secures incoming API requests.
+*   **Microservices Layer:** Individual services for specific banking functions (e.g., KYC, Fraud Detection, Account Management).
+    *   *Specific microservice dependencies are documented in the "Microservice Dependency Matrix" (Internal Wiki Link: `/services/dependencies`).*
+*   **Data Platform:**
+    *   **Relational Database:** For transactional data (e.g., PostgreSQL, Oracle - specific version TBD by customer).
+    *   **NoSQL Database:** For high-volume, low-latency data (e.g., MongoDB, Cassandra - specific version TBD by customer).
+    *   **Data Lake/Warehouse:** For analytics and reporting.
+*   **Container Orchestration:** Kubernetes (managed service preferred, e.g., EKS, AKS, GKE, or on-premise Kubernetes cluster).
+*   **CI/CD Pipeline:** For automated build, test, and deployment.
+*   **Monitoring & Logging:** Centralized logging and performance monitoring.
+
+**Missing Components/Diagrams:**
+
+*   **Detailed Network Diagram:** Illustrating ingress/egress points, firewall rules, and inter-service communication.
+*   **Data Flow Diagrams:** For critical banking processes (e.g., account opening, fund transfer).
+*   **Security Architecture Diagram:** Outlining security controls at each layer.
+*   **Disaster Recovery (DR) Architecture:** Specific RTO/RPO targets and failover mechanisms.
+
+---
+
+### 2. Setup Guide
+
+This section provides a step-by-step guide for setting up the Cloud-Native Banking Services environment. **Note:** Environment-specific configurations are
+<!-- Actual implementation differs for Banking clients -->
+ critical and may require adjustments.
+
+**Prerequisites:**
+
+*   Access to the chosen cloud provider (e.g., PTCL Cloud, Azure, AWS, GCP) or dedicated infrastructure.
+*   Kubernetes cluster provisioned and accessible.
+*   Necessary IAM roles and permissions configured.
+*   Docker images for all microservices available in a container registry.
+
+**Step 1: Provisioning Infrastructure**
+
+1.  **Cloud Provider Setup:**
+    *   **PTCL Dedicated Infrastructure:**
+        *   Ensure compute, storage, and networking resources are allocated as per the "PTCL Infrastructure Allocation Guide" (Internal Document: `\\fileserver\docs\PTCL_Infra_Alloc_v1.2.docx`).
+        *   **Gotcha:** Network segmentation on PTCL infrastructure requires specific VLAN configurations. Consult with the PTCL Network Team for VLAN ID assignments and routing rules.
+    *   **Public Cloud (e.g., Azure, AWS, GCP):**
+        *   Create Virtual Networks (VNets) or Virtual Private Clouds (VPCs).
+        *   Configure subnets, security groups/network security groups, and route tables.
+        *   **Gotcha:** For Azure, ensure the `Microsoft.ContainerService` resource provider is registered. For AWS, ensure the `AmazonEC2ContainerRegistry` service is enabled.
+
+2.  **Kubernetes Cluster Configuration:**
+    *   **If using managed Kubernetes (EKS, AKS, GKE):**
+        *   Create a cluster with at least 3 worker nodes for high availability.
+        *   Configure node pools with appropriate instance types (e.g., `m5.large` for AWS, `Standard_D4s_v3` for Azure).
+        *   **Gotcha:** Ensure the Kubernetes version is compatible with the deployed container images. Check the "Container Image Compatibility Matrix" (Internal Wiki: `/images/compatibility`).
+    *   **If using on-premise Kubernetes:**
+        *   Ensure the cluster meets the minimum resource requirements outlined in the "On-Premise Kubernetes Deployment Guide" (Internal Document: `\\fileserver\docs\OnPrem_K8s_Deploy_v1.0.pdf`).
+        *   **Gotcha:** For on-premise deployments, ensure proper integration with existing network infrastructure and storage solutions.
+
+**Step 2: Deploying Core Banking System (CBS)**
+
+1.  **CBS Deployment:**
+    *   The CBS is typically deployed as a set of stateful applications.
+    *   **Deprecated Approach:** Older versions of the CBS might have been deployed using direct VM deployments. **Avoid this for new implementations.**
+    *   **Current Approach:** Deploy CBS components using Kubernetes StatefulSets.
+    *   **Hardcoded Value Example:** For the CBS database, the initial connection pool size might be set to `100`. This value is derived from the "Sample CBS Deployment for Bank XYZ" (Internal Document: `\\fileserver\docs\BankXYZ_CBS_Deploy_v1.5.docx`).
+    *   **Ask:** **Ask Rajesh Sharma** for the specific Kubernetes manifests for the CBS.
+
+**Step 3: Deploying Digital Banking Platform (DBP)**
+
+1.  **DBP Deployment:**
+    *   Deploy DBP components (web, mobile backend) as Kubernetes Deployments.
+    *   Configure Ingress resources for external access.
+    *   **Gotcha:** For DBP, ensure SSL termination is handled at the Ingress level. Use certificates from a trusted Certificate Authority (CA).
+
+**Step 4: Deploying Microservices**
+
+1.  **Microservice Deployment:**
+    *   Deploy each microservice as a Kubernetes Deployment.
+    *   Configure Horizontal Pod Autoscaler (HPA) for services expected to experience variable load.
+    *   **Hardcoded Value Example:** The `account-service` might have an initial replica count of `3`. This is based on the "Sample Microservice Deployment for Bank ABC" (Internal Document: `\\fileserver\docs\BankABC_Microservices_Deploy_v1.1.docx`).
+    *   **Ask:** **Ask Priya Singh** for the specific Kubernetes manifests for each microservice.
+
+**Step 5: Configuring Data Stores**
+
+1.  **Relational Database:**
+    *   Provision a managed relational database service or deploy PostgreSQL/Oracle on Kubernetes.
+    *   Configure connection pooling and security.
+    *   **Gotcha:** For PTCL infrastructure, ensure the database is deployed within the designated secure network segment.
+
+2.  **NoSQL Database:**
+    *   Provision a managed NoSQL service or deploy MongoDB/Cassandra on Kubernetes.
+    *   Configure replication and sharding as per performance requirements.
+
+**Step 6: Setting up CI/CD Pipeline**
+
+1.  **CI/CD Tooling:**
+    *   Integrate with Jenkins, GitLab CI, Azure DevOps, or GitHub Actions.
+    *   Configure build jobs to build Docker images.
+    *   Configure deployment jobs to deploy Kubernetes manifests.
+    *   **Gotcha:** Ensure the CI/CD pipeline has appropriate credentials to access the container registry and Kubernetes cluster.
+
+**Step 7: Monitoring and Logging**
+
+1.  **Monitoring Tools:**
+ 
+[CONFIGURATION: Environment-specific values not parameterized]
+   *   Deploy Prometheus and Grafana for metrics collection and visualization.
+    *   Configure Prometheus to scrape metrics from Kubernetes pods and nodes.
+    *   **Ask:** **Ask Amit Patel** for the Prometheus scrape configurations.
+2.  **Logging Tools:**
+    *   Deploy Elasticsearch, Fluentd, and Kibana (EFK stack) or Loki, Promtail, and Grafana (PLG stack) for centralized logging.
+    *   Configure Fluentd/Promtail to collect logs from all pods.
+    *   **Gotcha:** Ensure log retention policies are configured to meet compliance requirements.
+
+---
+
+### 3. Configuration Reference
+
+This section provides examples of common configuration parameters. **Note:** These are illustrative and should be adapted to specific customer environments.
+
+**Kubernetes Deployment Example (account-service):**
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: account-service
+  labels:
+    app: account-service
+spec:
+  replicas: 3 # Hardcoded from Bank ABC sample
+  selector:
+    matchLabels:
+      app: account-service
+  template:
+    metadata:
+      labels:
+        app: account-service
+    spec:
+      containers:
+      - name: account-service
+        image: systems-ltd/account-service:v1.2.0 # Specific image version
+        ports:
+        - containerPort: 8080
+        env:
+        - name: DB_HOST
+          value: "postgres-service.default.svc.cluster.local"
+        - name: DB_PORT
+          value: "5432"
+        - name: DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: username
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: password
+        # Resource requests and limits are crucial for performance and stability
+        resources:
+          requests:
+            cpu: "200m"
+            memory: "512Mi"
+          limits:
+            cpu: "500m"
+            memory: "1Gi"
+```
+
+**Kubernetes Service Example (account-service):**
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: account-service
+spec:
+  selector:
+    app: account-service
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+```
+
+**API Gateway Configuration (sample snippet):**
+
+*   **Route:** `/accounts`
+*   **Upstream Service:** `account-service`
+*   **Authentication:** JWT (JSON Web Token) validation.
+*   **Rate Limiting:** 100 requests per minute.
+*   **Ask:** **Ask Sameer Khan** for the full API Gateway configuration.
+
+**Database Connection String (PostgreSQL):**
+
+`jdbc:postgresql://<db-host>:<db-port>/<db-name>`
+
+**Hardcoded Value Example:** For the initial database schema migration, the batch size might be set to `500`. This is a "secret" known to the database team from previous implementations.
+
+---
+
+### 4. Troubleshooting
+
+This section outlines common issues and their resolutions. **Always start by contacting support.**
+
+1.  **Contact Support:** If you encounter an issue not listed here, or if the provided solutions do not resolve the problem, please open a ticket with the Systems Ltd. Support team. Provide detailed logs, error messages, and environment information.
+
+2.  **Pod Not Starting:**
+    *   **Check Pod Logs:** `kubectl logs <pod-name> -n <namespace>`
+    *   **Check Events:** `kubectl describe pod <pod-name> -n <namespace>`
+    *   **Common Causes:** Image pull errors, insufficient resources, misconfigured environment variables, incorrect command in the container spec.
+    *   **Gotcha:** Sometimes, a simple `kubectl delete pod <pod-name> -n <namespace>` followed by the deployment recreating it can resolve transient issues.
+
+3.  **Service Not Accessible:**
+    *   **Check Service Definition:** `kubectl get svc <service-name> -n <namespace> -o yaml`
+    *   **Check EndpointS:** `kubectl get endpoints <service-name> -n <namespace>`
+    *   **Check Network Policies:** If network policies are in place, ensure they allow traffic to the service.
+    *   **Gotcha:** Ensure the `targetPort` in the Service definition matches the `containerPort` in the Pod.
+
+4.  **Performance Degradation:**
+    *   **Monitor Resource Utilization:** Check CPU, memory, and network usage for pods and nodes using Prometheus/Grafana.
+    *   **Check Database Performance:** Analyze slow queries and connection pool usage.
+    *   **Ask:** **Ask the veteran performance tuning team** for specific insights into common bottlenecks. They might have "secrets" related to JVM tuning or database indexing strategies.
+
+5.  **CI/CD Pipeline Failures:**
+    *   **Check Pipeline Logs:** Review the logs of the specific build or deployment job.
+    *   **Verify Credentials:** Ensure the pipeline has the correct access to the container registry and Kubernetes cluster.
+    *   **Gotcha:** Sometimes, stale build artifacts can cause issues. Try clearing the build cache.
+
+---
+
+### 5. Best Practices
+
+This section outlines recommended practices for implementing and managing the Cloud-Native Banking Services. **Note:** These practices may sometimes be contradicted by actual implementation choices due to time constraints or legacy systems.
+
+*   **Infrastructure as Code (IaC):** Use tools like Terraform or CloudFormation to manage infrastructure provisioning.
+    *   **Contradiction:** In the rush to meet the 90-day go-live, some infrastructure was provisioned manually. This should be refactored.
+*   **Immutable Infrastructure:** Treat containers as immutable. Do not SSH into running containers to make changes.
+    *   **Contradiction:** During critical debugging sessions, engineers have been known to SSH into pods to inspect files. This is discouraged.
+*   **Automated Testing:** Implement comprehensive unit, integration, and end-to-end tests.
+    *   **Contradiction:** While unit tests are generally good, integration and end-to-end test coverage can be inconsistent, especially for newer microservices.
+*   **Secrets Management:** Use Kubernetes Secrets or a dedicated secrets management solution (e.g., HashiCorp Vault) for sensitive information.
+    *   **Contradiction:** Some sensitive configurations might still be hardcoded in environment variables in older deployments. This is a security risk.
+*   **Monitoring and Alerting:** Set up robust monitoring and alerting for key performance indicators (KPIs) and error rates.
+    *   **Contradiction:** Alerts are sometimes noisy or not configured for critical failure scenarios.
+*   **Regular Security Audits:** Conduct regular security audits of the deployed services and infrastructure.
+    *   **Security Consideration (Afterthought):** Security scanning of container images should be integrated into the CI/CD pipeline. This was an afterthought and needs to be prioritized.
+*   **Performance Tuning "Secrets":**
+    *   **Veteran Secret 1:** For Java-based microservices, tuning the garbage collection algorithm (e.g., G1GC) can significantly improve performance.
+    *   **Veteran Secret 2:** Database connection pool sizing is critical. Over-provisioning can lead to resource exhaustion, while under-provisioning can cause request queuing.
+    *   **Veteran Secret 3:** Network latency between microservices can be a bottleneck. Consider co-locating frequently communicating services within the same availability zone or even the same Kubernetes node (with careful resource management).
+
+---
+
+**Disclaimer:** This playbook is a living document and will be updated as new information and best practices emerge. It is essential to consult with the Systems Ltd. technical team for any specific implementation challenges or questions.

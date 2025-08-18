@@ -3,6 +3,12 @@ from langgraph.graph import StateGraph, END
 from agent.state import ConversationState
 from agent.nodes import reasoning, finalization
 from agent.services.turn_manager import TurnManager
+from agent.nodes import stage_guidance
+
+def should_invoke_stage_guidance(state: ConversationState) -> bool:
+    turn_count = state.get("turn_counter", 0)
+    N = 3  # frequency
+    return turn_count % N == 0 and turn_count > 0
 
 def should_continue_reasoning(state: ConversationState) -> str:
     # Get reasoning from current turn actions
@@ -60,6 +66,7 @@ def create_agent_graph() -> StateGraph:
     # Add ALL nodes
     workflow.add_node("think", reasoning.think)
     workflow.add_node("execute_tool", reasoning.execute_tool)
+    workflow.add_node("stage_guidance", stage_guidance.stage_guidance)  # NEW
     workflow.add_node("finalize", finalization.update_summary_and_insights)
 
     # Set Entry Point
@@ -74,7 +81,20 @@ def create_agent_graph() -> StateGraph:
             "end_conversation": "finalize",
         },
     )
-    workflow.add_edge("execute_tool", "think")
+
+    # If we decide to invoke guidance
+    workflow.add_conditional_edges(
+        "execute_tool",
+        lambda state: "stage_guidance" if should_invoke_stage_guidance(state) else "think",
+        {
+            "stage_guidance": "stage_guidance",
+            "think": "think"
+        }
+    )
+
+    # After guidance → continue thinking
+    workflow.add_edge("stage_guidance", "think")
+
     workflow.add_edge("finalize", END)
 
     return workflow.compile()
