@@ -1,5 +1,32 @@
+import json
 from agent.state import ConversationState
 from agent.services.turn_manager import TurnManager
+
+def actions_to_narrative(actions):
+    narrative = []
+    last_result = None
+
+    if actions:
+        narrative.append(f"For the current query: \"{actions[0]['details']}\":")
+
+    for act in actions:
+        if act["action_type"] == "llm_reasoning":
+            stuff = json.loads(act['details']['reasoning_output'].split('```json\n')[-1].split('```')[0])
+            thought = stuff.get('thought', '')
+            if last_result:
+                narrative.append(f"Based on the previous result, I thought: {thought}")
+            else:
+                narrative.append(f"I thought: {thought}")
+        elif act["action_type"] == "tool_execution":
+            d = act["details"]
+            input_info = f"keywords {d.get('keywords')}" if "keywords" in d else f"query '{d.get('query')}'"
+            result = d['result']
+            narrative.append(f"I used the tool '{d['tool']}' with {input_info}.")
+            narrative.append(f"It returned: {result}")
+            last_result = result
+
+    return "\n".join(narrative)
+
 
 def get_system_persona() -> str:
     """Defines the agent's core identity."""
@@ -44,7 +71,7 @@ def get_opening_prompt(state: ConversationState) -> str:
 
 def get_reasoning_prompt(state: ConversationState) -> str:
     """Assemble a complete, structured reasoning prompt for the agent."""
-    
+
     prompt = [get_system_persona(), "\n---"]
 
     # Lead & Company Info
@@ -54,7 +81,7 @@ def get_reasoning_prompt(state: ConversationState) -> str:
     if state.get('company_data'):
         prompt.append("### COMPANY BASIC DETAILS:")
         prompt.append(str(state['company_data']))
-    
+
     # Conversation Context
     if state.get('stage_guidance'):
         prompt.append(f"### CURRENT CONVERSATION GUIDANCE: {state['stage_guidance']}")
@@ -77,23 +104,10 @@ def get_reasoning_prompt(state: ConversationState) -> str:
         for msg in state['messages']:
             prompt.append(f"{msg['role'].capitalize()}: {msg['content']}")
 
-    # Retrieved Docs
-    if state.get('retrieved_docs'):
-        prompt.append("\n### RETRIEVED KNOWLEDGE BASE INFO:")
-        for doc in state['retrieved_docs']:
-            prompt.append(f"- {doc}")
-
     # Actions for Current Turn
     if state.get('current_turn_actions'):
-        prompt.append("\n### CURRENT TURN ACTIONS:")
-        for action in state['current_turn_actions']:
-            prompt.append(f"- {action}")
-
-    # Previous Turn Scratchpad
-    if state.get('scratchpad'):
-        recent_summary = TurnManager.get_recent_turns_summary(state, num_turns=3)
-        prompt.append("\n### PREVIOUS TURN ANALYSIS:")
-        prompt.append(recent_summary)
+        prompt.append("\n### Current Thought process for the query so far:")
+        prompt.append(actions_to_narrative(state['current_turn_actions']))
 
     # Current Query
     prompt.append("\n---")
@@ -104,8 +118,11 @@ def get_reasoning_prompt(state: ConversationState) -> str:
     instructions = """
 **TASK FLOW**
 1. Use the provided stage guidance, detected signals, objections, and qualification updates (already generated).
-2. Based on the current stage guidance and available context, select ONE best next action.
-3. Generate the action in the required JSON format.
+2. Within this query, ensure each new thought directly connects to the previous step's tool result or reasoning.
+   - Example: "Based on the last tool result, I thought..." 
+   - Only the first thought may start independently.
+3. Based on the current stage guidance and available context, select ONE best next action.
+4. Generate the action in the required JSON format.
 
 **SIGNAL DEFINITIONS (reference only)**
 - Buying signals: mentions of budget, timelines, demo requests, "next steps"
@@ -150,6 +167,7 @@ def get_reasoning_prompt(state: ConversationState) -> str:
     prompt.append(instructions)
 
     return "\n".join(prompt)
+
 
 def get_stage_guidance_prompt(state: ConversationState) -> str:
     """
@@ -214,7 +232,6 @@ Return your output in **strict JSON** format with the following structure:
   "stage_guidance": "<your reflective passage here>",
   "lead_qualification_score": {{
       "budget_fit": <int 1–5>,
-      "authority": <int 1–5>,
       "need_urgency": <int 1–5>,
       "engagement": <int 1–5>
   }},

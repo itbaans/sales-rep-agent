@@ -52,28 +52,6 @@ class TurnManager:
     @staticmethod
     def finalize_turn(state: ConversationState, final_response: str) -> ConversationState:
         """Finalize the current turn and add it to scratchpad"""
-        # Add final response to turn actions
-        TurnManager.add_action_to_current_turn(
-            state,
-            action_type="final_response", 
-            details={"response": final_response}
-        )
-        
-        # Create comprehensive turn entry
-        turn_entry = {
-            "turn_number": state.get('turn_counter', 0),
-            "user_query": state.get('user_input', ''),
-            "actions_taken": state.get('current_turn_actions', []),
-            "final_response": final_response,
-            "turn_summary": TurnManager._generate_turn_summary(state),
-            "timestamp": datetime.now().isoformat()
-        }
-        
-        # Add to scratchpad
-        if not state.get('scratchpad'):
-            state['scratchpad'] = []
-        state['scratchpad'].append(turn_entry)
-        
         # Clear current turn actions
         if 'current_turn_actions' in state:
             state['current_turn_actions'].clear()  # Use .clear() method
@@ -82,45 +60,3 @@ class TurnManager:
         
         return state
     
-    @staticmethod
-    def _generate_turn_summary(state: ConversationState) -> str:
-        """Generate a brief summary of what happened in this turn"""
-        actions = state.get('current_turn_actions', [])
-        if not actions:
-            return "No actions taken"
-            
-        action_types = [action['action_type'] for action in actions]
-        tools_used = [action['details'].get('tool', '') for action in actions if action['action_type'] == 'tool_execution']
-        tools_used = [tool for tool in tools_used if tool]  # Remove empty strings
-        
-        summary_parts = []
-        
-        # Count different action types
-        if 'llm_reasoning' in action_types:
-            summary_parts.append("analyzed query")
-        if tools_used:
-            summary_parts.append(f"searched using: {', '.join(set(tools_used))}")
-        if 'context_update' in action_types:
-            summary_parts.append("updated conversation context")
-        if 'final_response' in action_types:
-            summary_parts.append("generated response")
-            
-        return " → ".join(summary_parts) if summary_parts else "completed turn"
-    
-    @staticmethod
-    def get_recent_turns_summary(state: ConversationState, num_turns: int = 3) -> str:
-        """Get a summary of recent turns for context"""
-        scratchpad = state.get('scratchpad', [])
-        if not scratchpad:
-            return "No previous turns recorded."
-            
-        recent_turns = scratchpad[-num_turns:]
-        summary_lines = []
-        
-        for turn in recent_turns:
-            turn_num = turn.get('turn_number', 0)
-            query = turn.get('user_query', '')[:50] + "..." if len(turn.get('user_query', '')) > 50 else turn.get('user_query', '')
-            turn_summary = turn.get('turn_summary', '')
-            summary_lines.append(f"Turn {turn_num}: '{query}' → {turn_summary}")
-            
-        return "\n".join(summary_lines)

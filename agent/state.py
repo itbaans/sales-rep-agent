@@ -30,7 +30,6 @@ class ConversationState(TypedDict):
     long_term_memory: Dict[str, Any]
     messages: List[Dict]
     retrieved_docs: List[str]
-    scratchpad: List[Dict[str, Any]]  # Changed to store structured turn data
 
     # Data loaded for the session
     lead_data: Dict

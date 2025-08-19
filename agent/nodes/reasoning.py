@@ -35,48 +35,12 @@ def think(state: ConversationState) -> ConversationState:
         action_type="llm_reasoning",
         details={
             "reasoning_output": response_str,
-            "prompt_length": len(prompt)
         }
     )
     
     #print(response_str)
     return state
 
-def update_conversation_context(state: ConversationState, stage: str, signals: list, qualification_updates: dict) -> str:
-    """Update conversation stage and qualification data"""
-    # Update stage
-    state['conversation_stage'] = stage
-    
-    # Initialize or update qualification score
-    if not state.get('lead_qualification_score'):
-        state['lead_qualification_score'] = {
-            "budget_fit": 5,
-            "authority_level": 5,
-            "need_urgency": 5,
-            "engagement_level": 5
-        }
-    
-    # Update qualification scores
-    for key, value in qualification_updates.items():
-        if key in state['lead_qualification_score']:
-            state['lead_qualification_score'][key] = max(1, min(10, value))
-    
-    # Track signals
-    if not state.get('buying_signals_detected'):
-        state['buying_signals_detected'] = []
-    if not state.get('detected_objections'):
-        state['detected_objections'] = []
-        
-    # Categorize signals
-    for signal in signals:
-        if any(word in signal.lower() for word in ["budget", "timeline", "demo", "next", "start"]):
-            if signal not in state['buying_signals_detected']:
-                state['buying_signals_detected'].append(signal)
-        elif any(word in signal.lower() for word in ["expensive", "sure", "think", "time", "other"]):
-            if signal not in state['detected_objections']:
-                state['detected_objections'].append(signal)
-    
-    return f"Updated to {stage} stage. Qualification score: {state['lead_qualification_score']}. New signals: {signals}"
 
 def execute_tool(state: ConversationState) -> ConversationState:
     print("---NODE: EXECUTE_TOOL---")
@@ -194,27 +158,7 @@ def execute_tool(state: ConversationState) -> ConversationState:
             }
         )
         state['retrieved_docs'].append(f"[GENERAL KB] {result}")
-        
-    elif tool == "update_conversation_context":
-        stage = action.get("stage", "discovery")
-        signals = action.get("signals", [])
-        qualification_updates = action.get("qualification_updates", {})
-        
-        context_result = update_conversation_context(state, stage, signals, qualification_updates)
-        
-        TurnManager.add_action_to_current_turn(
-            state,
-            action_type="context_update",
-            details={
-                "tool": "update_conversation_context",
-                "stage": stage,
-                "signals": signals,
-                "qualification_updates": qualification_updates,
-                "result": context_result,
-                "thought": thought
-            }
-        )
-        
+
     else:
         TurnManager.add_action_to_current_turn(
             state,
