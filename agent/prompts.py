@@ -104,14 +104,15 @@ def get_reasoning_prompt(state: ConversationState) -> str:
         for msg in state['messages']:
             prompt.append(f"{msg['role'].capitalize()}: {msg['content']}")
 
-    # Actions for Current Turn
-    if state.get('current_turn_actions'):
-        prompt.append("\n### Current Thought process for the query so far:")
-        prompt.append(actions_to_narrative(state['current_turn_actions']))
-
     # Current Query
     prompt.append("\n---")
     prompt.append(f"### CURRENT USER QUERY:\n{state['user_input']}")
+
+    # Actions for Current Turn
+    if state.get('current_turn_actions'):
+        prompt.append("\n### Current turn thought process and actions for the query so far:")
+        prompt.append(actions_to_narrative(state['current_turn_actions']))
+
 
     # Refined Instructions
     prompt.append("\n---")
@@ -241,5 +242,70 @@ Return your output in **strict JSON** format with the following structure:
 """
     
     return prompt
+
+
+def get_ops_agent_prompt(delegated_task: str) -> str:
+    """
+    Assemble a complete, structured reasoning prompt for the OpsAgent.
+    This version is context-free and relies solely on the delegated task description.
+    """
+    prompt = [get_system_persona(), "\n---"]
+
+    prompt.append("### YOUR ROLE: OpsAgent")
+    prompt.append("You are a specialized, non-conversational AI assistant. Your purpose is to execute operational tasks delegated by a Sales Agent. You have NO access to conversation history or user data. You must rely ONLY on the information provided in the `DELEGATED TASK`. Analyze the task, select the appropriate tool, and execute it.")
+
+    # The Core Task - The ONLY information the agent receives
+    prompt.append("\n---")
+    prompt.append(f"### DELEGATED TASK:\n{delegated_task}")
+
+    # Instructions for the OpsAgent
+    prompt.append("\n---")
+    instructions = """
+**TASK FLOW**
+1.  Carefully read the `DELEGATED TASK`. This is the ONLY information you have.
+2.  Assess if you have ALL the necessary details to perform the task (e.g., for sending an email, you need a recipient email, subject, and body).
+3.  If the task is clear and complete, select the **ONE** best tool from the `TOOL DECISION MAP` to accomplish it.
+4.  If the task is ambiguous or missing critical information, you MUST use the `clarify_and_request_info` tool. Do NOT guess or assume missing details.
+5.  Generate your chosen action in the required JSON format. Your thought process must precisely justify your tool and parameter choices based *only* on the task description.
+
+**TOOL DECISION MAP**
+
+-   **Scheduling a meeting, demo, or call:**
+    -   *Requires:* Specific attendees (with emails), topic, duration, and time frame.
+    -   → `schedule_meeting`
+
+-   **Sending an email:**
+    -   *Requires:* A specific recipient email, a subject, and the full content for the body.
+    -   → `send_email`
+
+-   **Conducting external research:**
+    -   *Requires:* A clear, concise query for a search engine.
+    -   → `web_search`
+
+-   **Creating a document or draft:**
+    -   *Requires:* The type of document (e.g., proposal, summary) and the core content.
+    -   → `create_document`
+
+-   **Task is impossible or out of scope:**
+    -   *Use for:* Requests you cannot fulfill with your tools.
+    -   → `report_task_unactionable`
+
+-   **Task is unclear or missing information:**
+    -   *Use for:* When the `DELEGATED TASK` lacks required details (e.g., "send an email" without the recipient's address).
+    -   → `clarify_and_request_info`
+
+**AVAILABLE ACTIONS (Pick ONE)**
+1.  `{"thought": "...", "action": {"tool": "schedule_meeting", "attendees": ["email1@example.com", "email2@example.com"], "duration_minutes": 30, "topic": "...", "time_preference": "..."}}`
+2.  `{"thought": "...", "action": {"tool": "send_email", "recipient_email": "...", "subject": "...", "body": "..."}}`
+3.  `{"thought": "...", "action": {"tool": "web_search", "query": "..."}}`
+4.  `{"thought": "...", "action": {"tool": "create_document", "document_type": "proposal|summary|quote", "content": "..."}}`
+5.  `{"thought": "...", "action": {"tool": "report_task_unactionable", "reason": "The reason why the task cannot be completed."}}`
+6.  `{"thought": "...", "action": {"tool": "clarify_and_request_info", "question_for_sales_agent": "The specific information you need to proceed."}}`
+
+**STRICTLY** return JSON in the above format.
+"""
+    prompt.append(instructions)
+
+    return "\n".join(prompt)
 
     
